@@ -8,7 +8,7 @@ public class StandaloneTool
 
     const string fullApkIdentify = "fullApkIdentify";
 
-    [MenuItem("Tools/打包/Standalone/生成本地资源")]
+    [MenuItem("Package/Standalone/生成本地资源")]
     public static void BuildStandaloneRes()
     {
 		FileUtilTool.CopyFile ("IOS_Build/appleversion.dat", Application.streamingAssetsPath + "/appleversion.dat");
@@ -18,7 +18,7 @@ public class StandaloneTool
         ResTool.BuildLocalRes();
     }
 
-    [MenuItem("Tools/打包/Standalone/完整包--重新打资源")]
+    [MenuItem("Package/Standalone/完整包--重新打资源")]
     public static void BuildStandaloneFull()
     {
 

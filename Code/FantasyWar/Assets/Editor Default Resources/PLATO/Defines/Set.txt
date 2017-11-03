@@ -1,0 +1,152 @@
+require('Assets/Editor Default Resources/PLATO/Defines/TypeDef')
+
+local Setter = {
+    Color = "#00ffffff",
+
+    Nodes = {
+        {
+            Title = 'SetBool',
+            In = {
+                { Title = 'Set', Type = 'null' },
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Value', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'self[{Name}] = {Value}',
+            FormatCSharp = '{VALUE_NAME} = {Value}',
+        },
+        {
+            Title = 'SetInt',
+            In = {
+                { Title = 'Set', Type = 'null' },
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Value', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'self[{Name}] = {Value}',
+            FormatCSharp = '{VALUE_NAME} = {Value}',
+        },
+        {
+            Title = 'SetFloat',
+            In = {
+                { Title = 'Set', Type = 'null' },
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Value', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'self[{Name}] = {Value}',
+            FormatCSharp = '{VALUE_NAME} = {Value}',
+        },
+        {
+            Title = 'SetString',
+            In = {
+                { Title = 'Set', Type = 'null' },
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Value', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'self[{Name}] = {Value}',
+            FormatCSharp = '{VALUE_NAME} = {Value}',
+        },
+        {
+            Title = 'SetObject',
+            In = {
+                { Title = 'Set', Type = 'null' },
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Value', Type = 'UnityEngine.GameObject' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'self[{Name}] = {Value}',
+            FormatCSharp = '{VALUE_NAME} = {Value}',
+        },
+        {
+            Title = 'SetUInt64',
+            In = {
+                { Title = 'Set', Type = 'null' },
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Value', Type = 'System.UInt64' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'self[{Name}] = {Value}',
+            FormatCSharp = '{VALUE_NAME} = {Value}',
+        },
+        {
+            Title = 'SetUInt64s',
+            In = {
+                { Title = 'Set', Type = 'null' },
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Value', Type = 'System.UInt64[]' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'self[{Name}] = {Value}',
+            FormatCSharp = '{VALUE_NAME} = {Value}',
+        },
+        {
+            Title = 'SetMapI32',
+            In = {
+                { Title = 'Set', Type = 'null' },
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Attribute', Type = System_MapI32 },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'self[{Name}] = {Attribute}',
+            FormatCSharp = '{VALUE_NAME} = {Attribute}',
+        },
+        {
+            Title = 'ReviseMapI32',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'InAttri', Type = System_MapI32 },
+                { Title = 'Add', Type = 'UnityEngine.UI.Button', Callback = 'AddReviseMapI32Pin', CSharpArg = 'Type:int;Value:float' },
+                { Title = 'Remove', Type = 'UnityEngine.UI.Button', Callback = 'RemoveReviseMapI32Pin' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'OutAttri', Type = System_MapI32 },
+            },
+        },
+        {
+            Title = 'SetMapIF32',
+            In = {
+                { Title = 'Set', Type = 'null' },
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Attribute', Type = System_MapIF32 },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'self[{Name}] = {Attribute}',
+            FormatCSharp = '{VALUE_NAME} = {Attribute}',
+        },
+        {
+            Title = 'ReviseMapIF32',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'InAttri', Type = System_MapIF32 },
+                { Title = 'Add', Type = 'UnityEngine.UI.Button', Callback = 'AddReviseMapI32Pin', CSharpArg = 'Tpye:int;Value:float' },
+                { Title = 'Remove', Type = 'UnityEngine.UI.Button', Callback = 'RemoveReviseMapI32Pin' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'OutAttri', Type = System_MapIF32 },
+            },
+        },
+    },
+}
+return Setter

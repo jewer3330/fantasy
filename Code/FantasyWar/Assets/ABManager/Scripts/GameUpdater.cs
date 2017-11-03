@@ -1382,7 +1382,7 @@ public class GameUpdater : MonoBehaviour
             GUILayout.Label("资源版本号：" + currentResVersion.ToString());
             GUILayout.Label("代码版本号：" + currentCodeVersion.ToString());
             GUILayout.Label("工作内容：" + tip);
-            GUILayout.Label("CDN地址：" + FileUtils.url);
+            //GUILayout.Label("CDN地址：" + FileUtils.url);
             GUILayout.Label(string.Format("平均速度 ：{0:F2} MB/S", networkAvgSpeed / 1024 / 1024 / (Time.time - timeStart)));
             GUI.color = Color.white;
         }

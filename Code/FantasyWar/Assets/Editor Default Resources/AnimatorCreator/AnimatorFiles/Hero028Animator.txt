@@ -1,0 +1,204 @@
+local Hero028Animator = {
+	Parameters = {
+		{ ParameterName = "AH", Type = "Float", DefaultValue = 0 },
+		{ ParameterName = "AV", Type = "Float", DefaultValue = 0 },
+		{ ParameterName = "RunSpeed", Type = "Float", DefaultValue = 0 },
+		{ ParameterName = "AimSpeed", Type = "Float", DefaultValue = 1 },
+		{ ParameterName = "Shoot1Speed", Type = "Float", DefaultValue = 1 },
+		{ ParameterName = "Shoot2Speed", Type = "Float", DefaultValue = 1 },
+		{ ParameterName = "ReloadSpeed", Type = "Float", DefaultValue = 1 },
+		{ ParameterName = "RechamberSpeed", Type = "Float", DefaultValue = 1 },
+		{ ParameterName = "Stopping", Type = "Bool", DefaultValue = false },
+		{ ParameterName = "Turning", Type = "Bool", DefaultValue = false },
+		{ ParameterName = "ArmBusy", Type = "Bool", DefaultValue = false },
+		{ ParameterName = "Reborn", Type = "Trigger" },
+		{ ParameterName = "Reload", Type = "Trigger" },
+		{ ParameterName = "Rechamber", Type = "Trigger" },
+		{ ParameterName = "Dead", Type = "Trigger" },
+		{ ParameterName = "KnockOut", Type = "Trigger" },
+		{ ParameterName = "Idle", Type = "Trigger" },
+		{ ParameterName = "Stun", Type = "Trigger" },
+		{ ParameterName = "Aim", Type = "Trigger" },
+		{ ParameterName = "AimLoop", Type = "Trigger" },
+		{ ParameterName = "Shoot1", Type = "Trigger" },
+		{ ParameterName = "Shoot2", Type = "Trigger" },
+		{ ParameterName = "TurnLeft", Type = "Trigger" },
+		{ ParameterName = "TurnRight", Type = "Trigger" },
+		{ ParameterName = "LowerMove", Type = "Trigger" },
+	},
+	Layers = {
+		{
+			LayerName = "Base Layer",
+			States = {
+				{ StateName = "Idle", Suffix = "Idle", BehaviorName = "PlayerRunState", },
+				{ StateName = "Run", Suffix = "Run", Speed = 1, SpeedParameter = "RunSpeed", BehaviorName = "PlayerRunState", },
+				{ StateName = "TurnLeft", Suffix = "Turn_Left_Lower", BehaviorName = "PlayerTurnState", },
+				{ StateName = "TurnRight", Suffix = "Turn_Right_Lower", BehaviorName = "PlayerTurnState", },
+				{ StateName = "Death", Suffix = "Death", BehaviorName = "PlayerDeadState", },
+				{ StateName = "KnockOut", Suffix = "KnockOut", BehaviorName = "PlayerDeadState", },
+			},
+			BlendTrees = {
+				{
+					StateName = "LowerMove", 
+					BlendType = "FreeformDirectional2D", 
+					Suffixs = "Idle;RunningAim_f_Lower;RunningAim_l_Lower;RunningAim_r_Lower;RunningAim_b_Lower",
+					Parameters = "AH;AV",
+					ParameterValues = "0:0:-1:1:0;0:1:0:0:-1",
+				},
+			},
+			Transitions = {
+				{ Type = "Entry", ToStateName = "Idle", },
+				{ Type = "Exit", FromStateName = "Death", 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Reborn", },
+					},
+				},
+				{ Type = "Exit", FromStateName = "KnockOut", 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Reborn", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Death", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Dead", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "KnockOut", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "KnockOut", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "LowerMove", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 1, ParameterName = "ArmBusy", },
+						{ ConditionMode = "IfNot", Threshold = 0, ParameterName = "Turning", },
+						{ ConditionMode = "Less", Threshold = 0.8, ParameterName = "RunSpeed", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Idle", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Idle", },
+					},
+				},
+				{ Type = "Normal", FromStateName = "Idle", ToStateName = "Run", 
+					Conditions = {
+						{ ConditionMode = "IfNot", Threshold = 0, ParameterName = "ArmBusy", },
+						{ ConditionMode = "Greater", Threshold = 0.1, ParameterName = "RunSpeed", },
+					},
+				},
+				{ Type = "Normal", FromStateName = "Run", ToStateName = "Idle", 
+					Conditions = {
+						{ ConditionMode = "Less", Threshold = 0.1, ParameterName = "RunSpeed", },
+					},
+				},
+				{ Type = "Normal", FromStateName = "LowerMove", ToStateName = "TurnLeft", 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "TurnLeft", },
+					},
+				},
+				{ Type = "Normal", FromStateName = "LowerMove", ToStateName = "TurnRight", 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "TurnRight", },
+					},
+				},
+				{ Type = "Normal", FromStateName = "TurnLeft", ToStateName = "Idle", ExitTime = 1, 
+					Conditions = {
+						{ ConditionMode = "IfNot", Threshold = 0, ParameterName = "ArmBusy", },
+					},
+				},
+				{ Type = "Normal", FromStateName = "TurnLeft", ToStateName = "LowerMove", ExitTime = 1, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 1, ParameterName = "ArmBusy", },
+						{ ConditionMode = "IfNot", Threshold = 0, ParameterName = "Turning", },
+					},
+				},
+				{ Type = "Normal", FromStateName = "TurnRight", ToStateName = "Idle", ExitTime = 1, 
+					Conditions = {
+						{ ConditionMode = "IfNot", Threshold = 0, ParameterName = "ArmBusy", },
+					},
+				},
+				{ Type = "Normal", FromStateName = "TurnRight", ToStateName = "LowerMove", ExitTime = 1, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 1, ParameterName = "ArmBusy", },
+						{ ConditionMode = "IfNot", Threshold = 0, ParameterName = "Turning", },
+					},
+				},
+			},
+		},
+		{
+			LayerName = "UpperBody",
+			States = {
+				{ StateName = "Idle", },
+				{ StateName = "Stun", Suffix = "Stun", },
+				{ StateName = "Aim", Suffix = "Idle_to_Aim_Upper", SpeedParameter = "AimSpeed", },
+				{ StateName = "AimLoop", Suffix = "Aim_Upper", },
+				{ StateName = "Shoot1", Suffix = "Shoot_Upper", SpeedParameter = "Shoot1Speed", },
+				{ StateName = "Shoot2", Suffix = "Shoot02_Upper", SpeedParameter = "Shoot2Speed", },
+				{ StateName = "Reload", Suffix = "Reload_Upper", SpeedParameter = "ReloadSpeed", },
+				{ StateName = "Rechamber", Suffix = "Rechamber_Upper", SpeedParameter = "RechamberSpeed", },
+				{ StateName = "Death", },
+			},
+			Transitions = {
+				{ Type = "Entry", ToStateName = "Idle", },
+				{ Type = "Exit", FromStateName = "Death", 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Reborn", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Death", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Dead", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Death", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "KnockOut", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Idle", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Idle", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Stun", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Stun", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Aim", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Aim", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "AimLoop", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "AimLoop", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Shoot1", CanTransitionToSelf = true, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Shoot1", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Shoot2", CanTransitionToSelf = true, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Shoot2", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Reload", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Reload", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Rechamber", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Rechamber", },
+					},
+				},
+			},
+		},
+	},
+}
+
+
+return Hero028Animator

@@ -73,6 +73,13 @@ public class UpdateController : MonoBehaviour {
 
     private void IgnoreVersion(float delta)
     {
+        StartCoroutine(StartGame());
+    }
+
+    private IEnumerator StartGame()
+    {
+        yield return AssetManifest.Init();
+        ABsManager.m_AssetBundleManifest = AssetManifest.manifest;
         ResManager.Instance.m_pattern = ResManager.Pattern.AssetBundle;
         ResManager.LoadLevel("Map");
     }

@@ -1,0 +1,82 @@
+local MonsterTemplate = {
+	CullingMode = "CullUpdateTransforms",
+	Parameters = {
+		{ ParameterName = "RunSpeed", Type = "Float", DefaultValue = 0 },
+		{ ParameterName = "Stopping", Type = "Bool", DefaultValue = false },
+		{ ParameterName = "OnAtk", Type = "Bool", DefaultValue = false },
+		{ ParameterName = "Idle", Type = "Trigger" },
+		{ ParameterName = "Stun", Type = "Trigger" },
+		{ ParameterName = "Roots", Type = "Trigger" },
+		{ ParameterName = "Dead", Type = "Trigger" },
+		{ ParameterName = "Run", Type = "Trigger" },
+		{ ParameterName = "Rotate", Type = "Trigger" },
+		{ ParameterName = "Hurt", Type = "Trigger" },
+		{ ParameterName = "BlowFly", Type = "Trigger" },
+	},
+	Layers = {
+		{
+			LayerName = "Base Layer",
+			States = {
+				{ StateName = "Spawn", PosX = 50, PosY = 50, Suffix = "Spawn", BehaviorName = "SpawnState", },
+				{ StateName = "Idle", PosX = 100, PosY = 100, Suffix = "Idle", },
+				{ StateName = "Stun", PosX = 150, PosY = 150, Suffix = "Stun", },
+				{ StateName = "Roots", PosX = 200, PosY = 200, Suffix = "Idle", },
+				{ StateName = "Run", PosX = 250, PosY = 250, Suffix = "Run_Fwd", },
+				{ StateName = "Rotate", PosX = 300, PosY = 300, Suffix = "Idle", },
+				{ StateName = "Hurt", PosX = 350, PosY = 350, Suffix = "HitReaction", },
+				{ StateName = "Death", PosX = 400, PosY = 400, Suffix = "Death", BehaviorName = "DeadState", },
+				{ StateName = "BlowFly", PosX = 450, PosY = 450, Suffix = "Idle", },
+			},
+			Transitions = {
+				{ Type = "Entry", ToStateName = "Spawn", },
+				{ Type = "Normal", FromStateName = "Spawn", ToStateName = "Idle", ExitTime = 1, 
+					Conditions = {
+					},
+},
+				{ Type = "AnyState", ToStateName = "Death", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Dead", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Idle", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Idle", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Stun", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Stun", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "BlowFly", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "BlowFly", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Roots", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Roots", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Rotate", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Rotate", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Run", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Run", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Hurt", CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Hurt", },
+					},
+				},
+			},
+		},
+	},
+}
+
+
+return MonsterTemplate

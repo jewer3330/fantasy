@@ -1,0 +1,74 @@
+local Npc008Animator = {
+	Parameters = {
+		{ ParameterName = "RunSpeed", Type = "Float", DefaultValue = 0 },
+		{ ParameterName = "Stopping", Type = "Bool", DefaultValue = false },
+		{ ParameterName = "OnAtk", Type = "Bool", DefaultValue = false },
+		{ ParameterName = "Idle", Type = "Trigger" },
+		{ ParameterName = "Stun", Type = "Trigger" },
+		{ ParameterName = "Roots", Type = "Trigger" },
+		{ ParameterName = "Dead", Type = "Trigger" },
+		{ ParameterName = "Run", Type = "Trigger" },
+		{ ParameterName = "Rotate", Type = "Trigger" },
+		{ ParameterName = "Hurt", Type = "Trigger" },
+	},
+	Layers = {
+		{
+			LayerName = "Base Layer",
+			States = {
+				{ StateName = "Spawn", PosX = "0", PosY = "0", Suffix = "Spawn", BehaviorName = "SpawnState", },
+				{ StateName = "Idle", PosX = "0", PosY = "0", Suffix = "Idle", },
+				{ StateName = "Stun", PosX = "0", PosY = "0", Suffix = "Stun", },
+				{ StateName = "Roots", PosX = "0", PosY = "0", Suffix = "Idle", },
+				{ StateName = "Run", PosX = "0", PosY = "0", Suffix = "Run_Fwd", },
+				{ StateName = "Rotate", PosX = "0", PosY = "0", Suffix = "Idle", },
+				{ StateName = "Hurt", PosX = "0", PosY = "0", Suffix = "HitReaction", },
+				{ StateName = "Death", PosX = "0", PosY = "0", Suffix = "Death", BehaviorName = "DeadState", },
+			},
+			Transitions = {
+				{ Type = "Entry", ToStateName = "Spawn", Duration = 0.1, },
+				{ Type = "Normal", FromStateName = "Spawn", ToStateName = "Idle", Duration = 0.1, 
+					Conditions = {
+					},
+},
+				{ Type = "AnyState", ToStateName = "Death", Duration = 0.1, CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Dead", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Idle", Duration = 0.1, CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Idle", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Stun", Duration = 0.1, CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Stun", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Roots", Duration = 0.1, CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Roots", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Rotate", Duration = 0.1, CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Rotate", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Run", Duration = 0.05, CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Run", },
+					},
+				},
+				{ Type = "AnyState", ToStateName = "Hurt", Duration = 0.1, CanTransitionToSelf = false, 
+					Conditions = {
+						{ ConditionMode = "If", Threshold = 0, ParameterName = "Hurt", },
+					},
+				},
+			},
+		},
+	},
+}
+
+
+return Npc008Animator

@@ -1,0 +1,802 @@
+require('Assets/Editor Default Resources/PLATO/Defines/TypeDef')
+
+local Action = {
+    Color = '#ffec04ff',
+
+    Nodes = {
+        {
+            Title = 'Spawn',
+            In = {
+                { Title = 'Spawn', Type = 'null' },
+                { Title = 'Target', Type = 'UnityEngine.GameObject' },
+                { Title = 'SpawnCount', Type = 'System.Int32' },
+                { Title = 'AliveCount', Type = 'System.Int32' },
+                { Title = 'Delay', Type = 'System.Single' },
+                { Title = 'Waypoints', Type = 'System.String' },
+                { Title = 'ServerLv', Type = 'System.Int32', CppSkip = true },
+            },
+            Out = {
+                { Title = 'Spawned', Type = 'null', IsEvent = true },
+                { Title = 'Dead', Type = 'null', IsEvent = true },
+                { Title = 'AllSpawned', Type = 'null', IsEvent = true },
+                { Title = 'AllDead', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'SpawnAI',
+            In = {
+                { Title = 'Spawn', Type = 'null' },
+                { Title = 'StopSpawn', Type = 'null' },
+                { Title = 'BotID', Type = 'System.Int32' },
+                { Title = 'Camp', Type = 'System.Int32' },
+                { Title = 'Target', Type = 'UnityEngine.GameObject' },
+                { Title = 'RespawnTime', Type = 'System.Single' },
+                { Title = 'Waypoint', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Spawned', Type = 'null', IsEvent = true },
+                { Title = 'Dead', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'LoopSpawn',
+            In = {
+                { Title = 'In', Type = 'null' },
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'IDs', Type = 'System.String' },
+                { Title = 'Radius', Type = 'System.Single' },
+                { Title = 'NumPerWave', Type = 'System.Int32' },
+                { Title = 'MaxAlive', Type = 'System.Int32' },
+                { Title = 'RespawnDelay', Type = 'System.Single' },
+                { Title = 'Target', Type = 'UnityEngine.GameObject' },
+                { Title = 'Waypoints', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Out', Type = 'null' },
+            },
+        },
+        {
+            Title = 'StopSpawn',
+            In = {
+                { Title = 'Stop', Type = 'null' },
+                { Title = 'Target', Type = 'UnityEngine.GameObject' },
+                { Title = 'Delay', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'StopLoopSpawn',
+            In = {
+                { Title = 'Stop', Type = 'null' },
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Delay', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'Destroy',
+            In = {
+                { Title = 'Destroy', Type = 'null' },
+                { Title = 'Target', Type = 'UnityEngine.GameObject' },
+            },
+            Out = {
+                { Title = 'Destroyed', Type = 'null' },
+            },
+            Format = 'GameObject.Destroy(PlatoUtil.DesignLevel.transform:Find({Target}).gameObject)',
+            FormatCSharp = 'GameObject.Destroy({Target})',
+        },
+        {
+            Title = 'CallFunction',
+            In = {
+                { Title = 'Call', Type = 'null' },
+                { Title = 'Function', Type = 'UnityEngine.UI.Dropdown', Callback = 'RefreshFunction' },
+                { Title = 'Refresh', Type = 'UnityEngine.UI.Button', Callback = 'RefreshFunction' },
+            },
+            Out = {
+                { Title = 'Called', Type = 'null' },
+            },
+			Format = 'self[{Function}](self, {DYNAMIC_INPUTS})',
+            FormatCSharp = '{FUNCTION_NAME}({DYNAMIC_INPUTS})',
+        },
+        {
+            Title = 'ShowResultWindow',
+            In = {
+                { Title = 'Show', Type = 'null' },
+                { Title = 'Text', Type = 'System.String' },
+                { Title = 'Duration', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'ShowAllResultWindow',
+            In = {
+                { Title = 'Show', Type = 'null' },
+                { Title = 'Duration', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'ShowLoseWindow',
+            In = {
+                { Title = 'Show', Type = 'null' },
+            },
+            Out = {
+            },
+        },
+        {
+            Title = 'BackToMainWindow',
+            In = {
+                { Title = 'Back', Type = 'null' },
+            },
+        },
+        {
+            Title = 'ColliderActive',
+            In = {
+                { Title = 'Set', Type = 'null' },
+                { Title = 'Target', Type = 'UnityEngine.GameObject' },
+                { Title = 'IsActive', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'PlatoUtil.DesignLevel.transform:Find({Target}).gameObject:GetComponent("Collider").enabled = {IsActive}',
+            FormatCSharp = '{Target}.GetComponent<Collider>().enabled = {IsActive}',
+        },
+        {
+            Title = 'ObjectActive',
+            In = {
+                { Title = 'Set', Type = 'null' },
+                { Title = 'Target', Type = 'UnityEngine.GameObject' },
+                { Title = 'IsActive', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'PlatoUtil.DesignLevel.transform:Find({Target}).gameObject:SetActive({IsActive})',
+            FormatCSharp = '{Target}.SetActive({IsActive})',
+        },
+        {
+            Title = 'TeleportMainPlayer',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Point', Type = 'UnityEngine.GameObject' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'TeleportAll',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Target', Type = 'UnityEngine.GameObject' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'Dialog',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Bust', Type = 'System.String' },
+                { Title = 'Text1', Type = 'System.String' },
+                { Title = 'Text2', Type = 'System.String' },
+                { Title = 'Text3', Type = 'System.String' },
+                { Title = 'FinishTime', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+                { Title = 'Skip', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'Pause',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'IsPause', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'Streaming',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'GAIA', Type = 'UnityEngine.UI.Dropdown', Callback = 'RefreshGAIA' },
+                { Title = 'Refresh', Type = 'UnityEngine.UI.Button', Callback = 'RefreshGAIA' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'CameraSwitch',
+            In = {
+                { Title = 'Switch', Type = 'null' },
+                { Title = 'Camera', Type = 'UnityEngine.UI.Dropdown', Callback = 'RefreshCamera' },
+                { Title = 'Script', Type = 'UnityEngine.UI.Dropdown', Callback = 'RefreshCameraScript' },
+                { Title = 'RefreshCamera', Type = 'UnityEngine.UI.Button', Callback = 'RefreshCamera' },
+                { Title = 'RefreshScript', Type = 'UnityEngine.UI.Button', Callback = 'RefreshCameraScript' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'KillAll',
+            In = {
+                { Title = 'Kill', Type = 'null' },
+                { Title = 'Radius', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'EnemyManager.instance:KillAll({Radius})',
+            FormatCSharp = 'EnemyManager.instance.KillAll({Radius})',
+        },
+        {
+            Title = 'TaskCompleted',
+            In = {
+                { Title = 'Complete', Type = 'null' },
+                { Title = 'ID', Type = 'System.Int32' },
+                { Title = 'Task', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'TaskFail',
+            In = {
+                { Title = 'Fail', Type = 'null' },
+                { Title = 'ID', Type = 'System.Int32' },
+                { Title = 'Task', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'SetInputEnable',
+            In = {
+                { Title = 'Set', Type = 'null' },
+                { Title = 'Enable', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'InputManagerHelper.SwitchOff({Enable})',
+            FormatCSharp = 'InputManagerHelper.SwitchOff({Enable})',
+        },
+        {
+            Title = 'WaitForEnemyAllDead',
+            In = {
+                { Title = 'Wait', Type = 'null' },
+                { Title = 'WaitTime', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'AllDead', Type = 'null', IsEvent = true },
+                { Title = 'TimeOut', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'ShowBattleUI',
+            In = {
+                { Title = 'In', Type = 'null' },
+                { Title = 'UI', Type = 'UnityEngine.UI.Dropdown', Items = 'MoveJoystick;ShootJoystick;Skill1;Skill2;Skill3;Head;Setting;SkillInfo;Reload;Weapon;Cancel;SettingButton;StaticsButton;Shop;All' },
+                { Title = 'Show', Type = 'System.Boolean' },
+                { Title = 'MoveShootStick', Type = 'System.Boolean' },
+
+            },
+            Out = {
+                { Title = 'Out', Type = 'null' },
+            },
+        },
+        {
+            Title = 'AddBuff',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'BuffID', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Format = 'PlatoUtil.AddBuff({BuffID})',
+            FormatCSharp = 'PlatoUtil.AddBuff({BuffID})',
+        },
+        {
+            Title = 'WaveStart',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Index', Type = 'System.Int32' },
+                { Title = 'Count', Type = 'System.Int32' },
+                { Title = 'Delay', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'WaveEnd',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Index', Type = 'System.Int32' },
+                { Title = 'IsBoss', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'Fade',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Type', Type = 'UnityEngine.UI.Dropdown', Items = 'In;Out' },
+                { Title = 'FadeTime', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'UIImage',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Duration', Type = 'System.Single' },
+                { Title = 'ImgName', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'UIEffect',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Type', Type = 'UnityEngine.UI.Dropdown', Items = 'Add;Remove' },
+                { Title = 'PosX', Type = 'System.Single' },
+                { Title = 'PosY', Type = 'System.Single' },
+                { Title = 'EffectID', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+
+        {
+            Title = 'UIMessageUpgrades',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Type', Type = 'UnityEngine.UI.Dropdown', Items = 'Add;Remove' },
+                { Title = 'PosX', Type = 'System.Single' },
+                { Title = 'PosY', Type = 'System.Single' },
+                { Title = 'AnchorsX', Type = 'System.Single' },
+                { Title = 'AnchorsY', Type = 'System.Single' },
+
+                { Title = 'Text', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+               {
+            Title = 'UIEffectUpgrades',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Type', Type = 'UnityEngine.UI.Dropdown', Items = 'Add;Remove' },
+                { Title = 'PosX', Type = 'System.Single' },
+                { Title = 'PosY', Type = 'System.Single' },
+                { Title = 'AnchorsX', Type = 'System.Single' },
+                { Title = 'AnchorsY', Type = 'System.Single' },
+                { Title = 'EffectID', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'UIMessage',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Type', Type = 'UnityEngine.UI.Dropdown', Items = 'Add;Remove' },
+                { Title = 'PosX', Type = 'System.Single' },
+                { Title = 'PosY', Type = 'System.Single' },
+                { Title = 'Text', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+
+
+        {
+            Title = 'Delay',
+            In = {
+                { Title = 'Delay', Type = 'null' },
+                { Title = 'Time', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'SetUltimate',
+            In = {
+                { Title = 'Set', Type = 'null' },
+                { Title = 'Rate', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'CreateTriggerNewPene',
+            In = {
+                { Title = 'Create', Type = 'null' },
+                { Title = 'ColliderID', Type = 'System.UInt64' },
+                { Title = 'Type', Type = 'UnityEngine.UI.Dropdown', Items = 'In;Tick',
+                  PinDefines = 'Null:null;Interval:System.Single'
+                },
+                { Title = 'State', Type = 'UnityEngine.UI.Dropdown', Items = 'Alive;Dead;All' },
+                { Title = 'CheckFaction', Type = 'UnityEngine.UI.Dropdown', Items = 'Friend;Enemy;Any' },
+                { Title = 'OnHero', Type = 'System.Boolean' },
+                { Title = 'OnMinion', Type = 'System.Boolean' },
+                { Title = 'OnDestruct', Type = 'System.Boolean' },
+                { Title = 'OnShield', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'OnCreated', Type = 'null' },
+                { Title = 'OnTrigged', Type = 'null', IsEvent = true },
+				{ Title = 'OnDetectNone', Type = 'null', IsEvent = true },
+                { Title = 'TriggerID', Type = 'System.UInt64' },
+                { Title = 'Other', Type = 'System.UInt64[]' },
+            },
+        },
+        {
+            Title = 'TriggerCheck',
+            In = {
+                { Title = 'Start', Type = 'null' },
+                { Title = 'Add', Type = 'UnityEngine.UI.Button', Callback = 'Trigger', ExportType = 'System.UInt64', CSharpArg = 'Trigger:ulong' },
+                { Title = 'Remove', Type = 'UnityEngine.UI.Button', Callback = 'RemoveTrigger' },
+            },
+        },
+		{
+            Title = 'All',
+            In = {
+                { Title = 'Check1', Type = 'null' },
+                { Title = 'Check2', Type = 'null' },
+            },
+			Out =
+			{
+				{ Title = 'Done', Type = 'null' , IsEvent = true},
+			},
+			Sync = true,
+        },
+        {
+            Title = 'ActorFilterNewPene',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Input', Type = 'System.UInt64[]' },
+                { Title = 'Hero', Type = 'System.Boolean' },
+                { Title = 'Minion', Type = 'System.Boolean' },
+                { Title = 'Destruct', Type = 'System.Boolean' },
+                { Title = 'Shield', Type = 'System.Boolean' },
+                { Title = 'TotalCount', Type = 'System.Int32' },
+                { Title = 'PerCount', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+                { Title = 'Output', Type = 'System.UInt64[]' },
+                { Title = 'None', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'IsType',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Input', Type = 'System.UInt64' },
+                { Title = 'Hero', Type = 'System.Boolean' },
+                { Title = 'Actor', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'TypeFilter',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Input', Type = 'System.UInt64[]' },
+                { Title = 'Hero', Type = 'System.Boolean' },
+                { Title = 'Actor', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Output', Type = 'System.UInt64[]' },
+            },
+        },
+        {
+            Title = 'OffsetCalculate',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'PosX', Type = 'System.Single' },
+                { Title = 'PosY', Type = 'System.Single' },
+                { Title = 'PosZ', Type = 'System.Single' },
+                { Title = 'OffsetX', Type = 'System.Single' },
+                { Title = 'OffsetY', Type = 'System.Single' },
+                { Title = 'OffsetZ', Type = 'System.Single' },
+                { Title = 'Rotation', Type = 'System.Single' },
+                { Title = 'RotOffset', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'OutPosX', Type = 'System.Single' },
+                { Title = 'OutPosY', Type = 'System.Single' },
+                { Title = 'OutPosZ', Type = 'System.Single' },
+                { Title = 'OutRotation', Type = 'System.Single' },
+            },
+        },
+        {
+            Title = 'GetBuffAttribute',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'Attribute', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Int32' },
+            },
+        },
+        {
+            Title = 'Disable',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Cancle', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'Move', Type = 'System.Boolean' },
+                { Title = 'Skill', Type = 'System.Boolean' },
+                { Title = 'Shoot', Type = 'System.Boolean' },
+                { Title = 'Time', Type = 'System.Single' },
+                { Title = 'Rotate', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Cancel', Type = 'null', IsEvent = true }
+            },
+        },
+        {
+            Title = 'LineCheckNewPene',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Targets', Type = 'System.UInt64[]' },
+                { Title = 'FromX', Type = 'System.Single' },
+                { Title = 'FromY', Type = 'System.Single' },
+                { Title = 'PeneProjectile', Type = 'System.Int32'},
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+                { Title = 'None', Type = 'null', IsEvent = true },
+                { Title = 'Output', Type = 'System.UInt64[]' },
+            },
+        },
+        {
+            Title = 'TimeDown',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Cancel', Type = 'null' },
+                { Title = 'Time', Type = 'System.Single' },
+                { Title = 'Num', Type = 'System.Int32' },
+                { Title = 'IsImmediateFirst', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+                { Title = 'CancelDone', Type = 'null', IsEvent = true },
+                { Title = 'OutTime', Type = 'System.Single' },
+                { Title = 'LeftNum', Type = 'System.Int32' }
+            },
+        },
+        {
+            Title = 'ShieldCheck',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Targets', Type = 'System.UInt64[]' },
+                { Title = 'OffsetX', Type = 'System.Single' },
+                { Title = 'OffsetY', Type = 'System.Single' },
+                { Title = 'OffsetOri', Type = 'System.Single' },
+                { Title = 'ColliderId', Type = 'System.UInt64' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+                { Title = 'None', Type = 'null', IsEvent = true },
+                { Title = 'Output', Type = 'System.UInt64[]' },
+            },
+        },
+        {
+            Title = 'GetSelf',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+            },
+        },
+        {
+            Title = 'AreaCollisionNewPene',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'State', Type = 'UnityEngine.UI.Dropdown', Items = 'Alive;Dead;All' },
+                { Title = 'Faction', Type = 'UnityEngine.UI.Dropdown', Items = 'Friend;Enemy;Any' },
+                { Title = 'OnHero', Type = 'System.Boolean' },
+                { Title = 'OnMinion', Type = 'System.Boolean' },
+                { Title = 'OnDestruct', Type = 'System.Boolean' },
+                { Title = 'OnShield', Type = 'System.Boolean' },
+                { Title = 'Type', Type = 'UnityEngine.UI.Dropdown', Items = 'Circle;Rect;Sector',
+                   PinDefines = 'Radius:System.Single;Length:System.Single-Width:System.Single;Radius:System.Single-Angle:System.Single',
+                },
+                { Title = 'PositionX', Type = 'System.Single' },
+                { Title = 'PositionY', Type = 'System.Single' },
+                { Title = 'PositionZ', Type = 'System.Single' },
+                { Title = 'Rotation', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+                { Title = 'Colliders', Type = 'System.UInt64[]' },
+                { Title = 'None', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'GetProjOwnerAttr',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Type', Type = 'System.Int32[]' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Attribute', Type = System_MapI32 },
+            },
+        },
+        {
+            Title = 'GetAllObject',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'State', Type = 'UnityEngine.UI.Dropdown', Items = 'Alive;Dead;StateAll' },
+                { Title = 'CheckFaction', Type = 'UnityEngine.UI.Dropdown', Items = 'Friend;Enemy;All' },
+                { Title = 'OnHero', Type = 'System.Boolean' },
+                { Title = 'OnMinion', Type = 'System.Boolean' },
+                { Title = 'OnDestruct', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'OutPut', Type = 'System.UInt64[]' },
+            },
+        },
+        {
+            Title = 'MaterialChange',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'IsClose', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'FindSkillBuff',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'SelfTarget', Type = 'System.UInt64' },
+                { Title = 'DetectTarget', Type = 'System.UInt64' },
+                { Title = 'ConfigID', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Result', Type = 'System.Boolean' },
+            },
+        },
+        {
+            Title = 'SetObjAttribute',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'Attribute', Type = System_MapIF32 },
+                { Title = 'Add', Type = 'UnityEngine.UI.Button', Callback = 'AddReviseMapI32Pin', CSharpArg = 'Type:int;Value:float' },
+                { Title = 'Remove', Type = 'UnityEngine.UI.Button', Callback = 'RemoveReviseMapI32Pin' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'FilterSelf',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Targets', Type = 'System.UInt64[]' },
+            },
+            Out = {
+                { Title = 'HaveSelf', Type = 'null', IsEvent = true },
+                { Title = 'NoSelf', Type = 'null', IsEvent = true },
+                { Title = 'SelfTarget', Type = 'System.UInt64' },
+                { Title = 'OtherTargets', Type = 'System.UInt64[]' },
+            },
+        },
+        {
+            Title = 'FilterTarget',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Detect', Type = 'System.UInt64' },
+                { Title = 'Targets', Type = 'System.UInt64[]' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+                { Title = 'None', Type = 'null', IsEvent = true },
+                { Title = 'Others', Type = 'System.UInt64[]' },
+            },
+        },
+        {
+            Title = 'RecordInnerEffect',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Effect', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'SetCameraFollow',
+            In = {
+                { Title = 'Follow', Type = 'null' },
+                { Title = 'Back', Type = 'null' },
+                { Title = 'Target', Type = 'UnityEngine.GameObject' },
+                { Title = 'Speed', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'FollowDone', Type = 'null', IsEvent = true },
+                { Title = 'BackDone', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'TutorialPicWindow',
+            In = {
+                { Title = 'Open', Type = 'null' },
+                { Title = 'Index', Type = 'System.String' },
+                { Title = 'PopupTime', Type = 'System.Single' },
+                { Title = 'PopupName', Type = 'System.String' },
+                { Title = 'FinishTime', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Closed', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'ActorSort',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Targets', Type = 'System.UInt64[]' },
+                { Title = 'Range', Type = 'System.Single' },
+                { Title = 'PosX', Type = 'System.Single' },
+                { Title = 'PosY', Type = 'System.Single' },
+                { Title = 'PosZ', Type = 'System.Single' },
+                { Title = 'LineRotation', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Output', Type = 'System.UInt64[]' },
+            },
+        },
+    },
+}
+return Action

@@ -101,7 +101,7 @@ public class FileUtilTool : MonoBehaviour
         }
     }
 
-    public static void WriteFile(string outFile, string content)
+    public static bool WriteFile(string outFile, string content)
     {
         CreateFolderForFile(outFile);
         try
@@ -112,10 +112,13 @@ public class FileUtilTool : MonoBehaviour
             sw.Close();
             file.Close();
         }
-        catch(System.Exception e )
+        catch (System.Exception e)
         {
-            Debug.LogError("Write" + outFile + " error " +  e.ToString());
+            Debug.LogError("Write" + outFile + " error " + e.ToString());
+            return false;
         }
+
+        return true;
     }
 
     /// <summary>
