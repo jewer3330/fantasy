@@ -1,0 +1,715 @@
+local SkillScript10174 = {
+    nodes = {
+        {
+            id = 80,
+            type = 'Detect',
+            posX = 175,
+            posY = 377,
+            inPins = {
+                {
+                    title = 'Stop',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Self',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Event',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Type',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Start_Skill',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'MarkID',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'On',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 87,
+            type = 'FindSkillBuff',
+            posX = 939,
+            posY = 376,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 90,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'SelfTarget',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'DetectTarget',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ConfigID',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 101742,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Result',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 90,
+            type = 'TimeDown',
+            posX = 560,
+            posY = 375,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 80,
+                            prevTitle = 'On',
+                        },
+                    },
+                },
+                {
+                    title = 'Cancel',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Num',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 24,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'IsImmediateFirst',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'CancelDone',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'OutTime',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'LeftNum',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 92,
+            type = 'If',
+            posX = 1279,
+            posY = 376,
+            inPins = {
+                {
+                    title = 'If',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 87,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Condition',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                        {
+                            prevId = 87,
+                            prevTitle = 'Result',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'True',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'False',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 94,
+            type = 'PlayAnimation',
+            posX = 1575,
+            posY = 316,
+            inPins = {
+                {
+                    title = 'Play',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 92,
+                            prevTitle = 'True',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Animation',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Parameter',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Run2',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = true,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 96,
+            type = 'PlayAnimation',
+            posX = 1578,
+            posY = 518,
+            inPins = {
+                {
+                    title = 'Play',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 92,
+                            prevTitle = 'False',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Animation',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Parameter',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Run2',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 98,
+            type = 'AddSkillBuff',
+            posX = 2480,
+            posY = 301,
+            inPins = {
+                {
+                    title = 'Add',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 106,
+                            prevTitle = 'False',
+                        },
+                    },
+                },
+                {
+                    title = 'ConfigID',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 101746,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ConfigIDs',
+                    type = 'System.Int32[]',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Attribute',
+                    type = 'System.Collections.Generic.Dictionary`2[System.Int32,System.Int32]',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 101,
+            type = 'RemoveSkillBuff',
+            posX = 1987,
+            posY = 518,
+            inPins = {
+                {
+                    title = 'Remove',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 96,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'BuffID',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'BuffIDs',
+                    type = 'System.UInt64[]',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ConfigID',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 101746,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 104,
+            type = 'FindSkillBuff',
+            posX = 1903,
+            posY = 303,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 94,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'SelfTarget',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'DetectTarget',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ConfigID',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 101746,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Result',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 106,
+            type = 'If',
+            posX = 2239,
+            posY = 298,
+            inPins = {
+                {
+                    title = 'If',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 104,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Condition',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                        {
+                            prevId = 104,
+                            prevTitle = 'Result',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'True',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'False',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+    },
+    comments = {
+    },
+}
+return SkillScript10174

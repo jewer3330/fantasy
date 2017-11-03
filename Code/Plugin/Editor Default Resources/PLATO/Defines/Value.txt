@@ -1,0 +1,109 @@
+require('Assets/Editor Default Resources/PLATO/Defines/TypeDef')
+
+local Value = {
+    Color = "#00ffffff",
+
+    Nodes = {
+        {
+            Title = 'Bool',
+            In = {
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Default', Type = 'System.Boolean' },
+            },
+            Format = 'self[{Name}] = {Default}',
+            FormatCpp = 'addVariable({Name}, new DramaVariable({Default}));',
+            FormatCSharp = 'bool {Name} = {Default};',
+        },
+        {
+            Title = 'Int',
+            In = {
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Default', Type = 'System.Int32' },
+            },
+            Format = 'self[{Name}] = {Default}',
+            FormatCpp = 'addVariable({Name}, new DramaVariable({Default}));',
+            FormatCSharp = 'int {Name} = {Default};',
+        },
+        {
+            Title = 'Float',
+            In = {
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Default', Type = 'System.Single' },
+            },
+            Format = 'self[{Name}] = {Default}',
+            FormatCpp = 'addVariable({Name}, new DramaVariable({Default}));',
+            FormatCSharp = 'float {Name} = {Default};',
+        },
+        {
+            Title = 'String',
+            In = {
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Default', Type = 'System.String' },
+            },
+            Format = 'self[{Name}] = {Default}',
+            FormatCpp = 'addVariable({Name}, new DramaVariable({Default}));',
+            FormatCSharp = 'string {Name} = {Default};',
+        },
+        {
+            Title = 'Object',
+            In = {
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Default', Type = 'UnityEngine.GameObject' },
+            },
+            Format = 'self[{Name}] = {Default}',
+            FormatCpp = 'addVariable({Name}, new DramaVariable({Default}));',
+            FormatCSharp = 'GameObject {Name} = {Default};',
+        },
+        {
+            Title = 'UInt64',
+            In = {
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Default', Type = 'System.UInt64' },
+            },
+            Format = 'self[{Name}] = {Default}',
+            FormatCpp = 'addVariable({Name}, new DramaVariable({Default}));',
+            FormatCSharp = 'ulong {Name} = {Default};',
+        },
+        {
+            Title = 'Int32s',
+            In = {
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Default', Type = 'System.Int32[]' },
+            },
+            Format = 'self[{Name}] = {Default}',
+            FormatCpp = 'addVariable({Name}, new DramaVariable({Default}));',
+            FormatCSharp = 'int[] {Name} = {Default};',
+        },
+        {
+            Title = 'UInt64s',
+            In = {
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Default', Type = 'System.UInt64[]' },
+            },
+            Format = 'self[{Name}] = {Default}',
+            FormatCpp = 'addVariable({Name}, new DramaVariable({Default}));',
+            FormatCSharp = 'ulong[] {Name} = {Default};',
+        },
+        {
+            Title = 'MapI32',
+            In = {
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Default', Type = System_MapI32 },
+            },
+            Format = 'self[{Name}] = {Default}',
+            FormatCpp = 'addVariable({Name}, new DramaVariable({Default}));',
+            FormatCSharp = 'Dictionary<int, int> {Name} = {Default};',
+        },
+        {
+            Title = 'MapIF32',
+            In = {
+                { Title = 'Name', Type = 'System.String' },
+                { Title = 'Default', Type = System_MapIF32 },
+            },
+            Format = 'self[{Name}] = {Default}',
+            FormatCpp = 'addVariable({Name}, new DramaVariable({Default}));',
+            FormatCSharp = 'Dictionary<int, float> {Name} = {Default};',
+        },
+    },
+}
+return Value

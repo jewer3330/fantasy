@@ -1,0 +1,4893 @@
+local PVE_014_L2_Main = {
+    nodes = {
+        {
+            id = 106,
+            type = 'OnLevelStart',
+            posX = 117,
+            posY = 267,
+            inPins = {
+            },
+            outPins = {
+                {
+                    title = 'Start',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 107,
+            type = 'Delay',
+            posX = 285,
+            posY = 267,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 106,
+                            prevTitle = 'Start',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 109,
+            type = 'SetInputEnable',
+            posX = 972,
+            posY = 262,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 107,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Enable',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = true,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 110,
+            type = 'Delay',
+            posX = 1207,
+            posY = 260,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 109,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 111,
+            type = 'CallFunction',
+            posX = 1574,
+            posY = 259,
+            inPins = {
+                {
+                    title = 'Call',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 110,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Function',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Wave2',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Refresh',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Called',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 112,
+            type = 'OnLevelLoad',
+            posX = 115,
+            posY = 146,
+            inPins = {
+            },
+            outPins = {
+                {
+                    title = 'Loaded',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 113,
+            type = 'Delay',
+            posX = 310,
+            posY = 147,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 112,
+                            prevTitle = 'Loaded',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.2,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 114,
+            type = 'SetInputEnable',
+            posX = 644,
+            posY = 148,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 113,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Enable',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 165,
+            type = 'Streaming',
+            posX = 3522,
+            posY = 2437,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 266,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'GAIA',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'GAIA_PVE_014_L3_Main',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Refresh',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 211,
+            type = 'FunctionStart',
+            posX = 118,
+            posY = 1148,
+            inPins = {
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Wave2',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Start',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Add',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Remove',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 212,
+            type = 'Delay',
+            posX = 122,
+            posY = 1376,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 215,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 213,
+            type = 'Destroy',
+            posX = 436,
+            posY = 1148,
+            inPins = {
+                {
+                    title = 'Destroy',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 212,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Volume/Block_Volume_Sand2/DB_Volume_02_A',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Destroyed',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 214,
+            type = 'ObjectActive',
+            posX = 440,
+            posY = 1244,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 213,
+                            prevTitle = 'Destroyed',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Volume/Block_Volume_Sand2/DB_Volume_02_B',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'IsActive',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = true,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 215,
+            type = 'ObjectActive',
+            posX = 120,
+            posY = 1264,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 211,
+                            prevTitle = 'Start',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Cue2',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'IsActive',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = true,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 216,
+            type = 'UIMessage',
+            posX = 766,
+            posY = 1193,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 214,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Type',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Add',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 200,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Text',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '<color=#eec900>目标</color>：消灭右侧来袭的暴徒',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 217,
+            type = 'Spawn',
+            posX = 1106,
+            posY = 1130,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 216,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner03',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 218,
+            type = 'Spawn',
+            posX = 1425,
+            posY = 1127,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 217,
+                            prevTitle = 'AllSpawned',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner06',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 219,
+            type = 'Spawn',
+            posX = 1753,
+            posY = 1124,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 218,
+                            prevTitle = 'AllSpawned',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner04',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 220,
+            type = 'Counter',
+            posX = 2086,
+            posY = 1231,
+            inPins = {
+                {
+                    title = 'Count',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 219,
+                            prevTitle = 'AllDead',
+                        },
+                        {
+                            prevId = 218,
+                            prevTitle = 'AllDead',
+                        },
+                        {
+                            prevId = 217,
+                            prevTitle = 'AllDead',
+                        },
+                        {
+                            prevId = 227,
+                            prevTitle = 'AllDead',
+                        },
+                        {
+                            prevId = 226,
+                            prevTitle = 'AllDead',
+                        },
+                        {
+                            prevId = 225,
+                            prevTitle = 'AllDead',
+                        },
+                    },
+                },
+                {
+                    title = 'Increase',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Start',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'End',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 6,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Reached',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 221,
+            type = 'ObjectActive',
+            posX = 2417,
+            posY = 1135,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 220,
+                            prevTitle = 'Reached',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Cue2',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'IsActive',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 222,
+            type = 'Delay',
+            posX = 2415,
+            posY = 1247,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 221,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 223,
+            type = 'UIMessage',
+            posX = 2416,
+            posY = 1344,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 222,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Type',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Remove',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 200,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Text',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '<color=#eec900>目标</color>：消灭右侧来袭的暴徒',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 224,
+            type = 'Delay',
+            posX = 2734,
+            posY = 1133,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 223,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 225,
+            type = 'Spawn',
+            posX = 1105,
+            posY = 1312,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 216,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner01',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 226,
+            type = 'Spawn',
+            posX = 1427,
+            posY = 1305,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 225,
+                            prevTitle = 'AllSpawned',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner07',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 227,
+            type = 'Spawn',
+            posX = 1751,
+            posY = 1300,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 226,
+                            prevTitle = 'AllSpawned',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner05',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 228,
+            type = 'FunctionStart',
+            posX = 119,
+            posY = 536,
+            inPins = {
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Wave1',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Start',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Add',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Remove',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 229,
+            type = 'Delay',
+            posX = 123,
+            posY = 808,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 233,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 230,
+            type = 'UIMessage',
+            posX = 126,
+            posY = 911,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 229,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Type',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Add',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 200,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Text',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '<color=#eec900>目标</color>：消灭左侧来袭的暴徒',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 231,
+            type = 'Destroy',
+            posX = 453,
+            posY = 539,
+            inPins = {
+                {
+                    title = 'Destroy',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 230,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Volume/Block_Volume_Sand1/DB_Volume_02_A',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Destroyed',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 232,
+            type = 'ObjectActive',
+            posX = 453,
+            posY = 643,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 231,
+                            prevTitle = 'Destroyed',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Volume/Block_Volume_Sand1/DB_Volume_02_B',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'IsActive',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = true,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 233,
+            type = 'ObjectActive',
+            posX = 119,
+            posY = 692,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 228,
+                            prevTitle = 'Start',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Cue1',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'IsActive',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = true,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 234,
+            type = 'Spawn',
+            posX = 1089,
+            posY = 570,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 271,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner08',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 235,
+            type = 'Spawn',
+            posX = 1098,
+            posY = 837,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 272,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner09',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 236,
+            type = 'Spawn',
+            posX = 767,
+            posY = 623,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 232,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner10',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 237,
+            type = 'Counter',
+            posX = 1452,
+            posY = 703,
+            inPins = {
+                {
+                    title = 'Count',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 236,
+                            prevTitle = 'AllDead',
+                        },
+                        {
+                            prevId = 235,
+                            prevTitle = 'AllDead',
+                        },
+                        {
+                            prevId = 234,
+                            prevTitle = 'AllDead',
+                        },
+                        {
+                            prevId = 242,
+                            prevTitle = 'AllDead',
+                        },
+                    },
+                },
+                {
+                    title = 'Increase',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Start',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'End',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 4,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Reached',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 238,
+            type = 'ObjectActive',
+            posX = 1796,
+            posY = 567,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 237,
+                            prevTitle = 'Reached',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Cue1',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'IsActive',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 239,
+            type = 'Delay',
+            posX = 1795,
+            posY = 677,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 238,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 240,
+            type = 'UIMessage',
+            posX = 1792,
+            posY = 774,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 239,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Type',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Remove',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 200,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Text',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '<color=#eec900>目标</color>：消灭左侧来袭的暴徒',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 241,
+            type = 'Delay',
+            posX = 2132,
+            posY = 571,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 240,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 242,
+            type = 'Spawn',
+            posX = 770,
+            posY = 825,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 232,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner11',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 243,
+            type = 'CallFunction',
+            posX = 2737,
+            posY = 1229,
+            inPins = {
+                {
+                    title = 'Call',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 224,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Function',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Wave1',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Refresh',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Called',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 244,
+            type = 'CallFunction',
+            posX = 2136,
+            posY = 667,
+            inPins = {
+                {
+                    title = 'Call',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 241,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Function',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Wave3',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Refresh',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Called',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 245,
+            type = 'FunctionStart',
+            posX = 122,
+            posY = 1560,
+            inPins = {
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Wave3',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Start',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Add',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Remove',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 246,
+            type = 'Delay',
+            posX = 126,
+            posY = 1835,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 252,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 247,
+            type = 'UIMessage',
+            posX = 126,
+            posY = 1941,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 246,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Type',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Add',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 200,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Text',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '<color=#eec900>目标</color>：消灭前方来袭的暴徒',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 248,
+            type = 'Destroy',
+            posX = 489,
+            posY = 1566,
+            inPins = {
+                {
+                    title = 'Destroy',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 247,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Volume/Block_Volume_Sand3/DB_Volume_02_A',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Destroyed',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 249,
+            type = 'Destroy',
+            posX = 486,
+            posY = 1664,
+            inPins = {
+                {
+                    title = 'Destroy',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 248,
+                            prevTitle = 'Destroyed',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Volume/Block_Volume_Sand4/DB_Volume_02_A',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Destroyed',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 250,
+            type = 'ObjectActive',
+            posX = 487,
+            posY = 1770,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 249,
+                            prevTitle = 'Destroyed',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Volume/Block_Volume_Sand3/DB_Volume_02_B',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'IsActive',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = true,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 251,
+            type = 'ObjectActive',
+            posX = 485,
+            posY = 1882,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 250,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Volume/Block_Volume_Sand4/DB_Volume_02_B',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'IsActive',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = true,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 252,
+            type = 'ObjectActive',
+            posX = 120,
+            posY = 1703,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 245,
+                            prevTitle = 'Start',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Cue3',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'IsActive',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = true,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 253,
+            type = 'Spawn',
+            posX = 831,
+            posY = 1775,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 251,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner16',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 254,
+            type = 'Spawn',
+            posX = 830,
+            posY = 1970,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 253,
+                            prevTitle = 'AllSpawned',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner14',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 255,
+            type = 'Spawn',
+            posX = 1898,
+            posY = 2374,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 273,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner15',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 256,
+            type = 'Spawn',
+            posX = 1897,
+            posY = 2574,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 273,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner18',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 257,
+            type = 'Spawn',
+            posX = 1868,
+            posY = 1801,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 258,
+                            prevTitle = 'Reached',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner19',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 2,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 2,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 258,
+            type = 'Counter',
+            posX = 1539,
+            posY = 2004,
+            inPins = {
+                {
+                    title = 'Count',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 253,
+                            prevTitle = 'AllDead',
+                        },
+                        {
+                            prevId = 254,
+                            prevTitle = 'AllDead',
+                        },
+                        {
+                            prevId = 268,
+                            prevTitle = 'AllDead',
+                        },
+                    },
+                },
+                {
+                    title = 'Increase',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Start',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'End',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 3,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Reached',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 259,
+            type = 'ObjectActive',
+            posX = 2605,
+            posY = 2354,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 270,
+                            prevTitle = 'Reached',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Cue3',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'IsActive',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 260,
+            type = 'Delay',
+            posX = 2608,
+            posY = 2461,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 259,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 261,
+            type = 'UIMessage',
+            posX = 2905,
+            posY = 2347,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 260,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Type',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Remove',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 200,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Text',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '<color=#eec900>目标</color>：消灭前方来袭的暴徒',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 262,
+            type = 'Delay',
+            posX = 2909,
+            posY = 2487,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 261,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 265,
+            type = 'ShowBattleUI',
+            posX = 3518,
+            posY = 2221,
+            inPins = {
+                {
+                    title = 'In',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 262,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'UI',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'All',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Show',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Out',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 266,
+            type = 'ShowResultWindow',
+            posX = 3520,
+            posY = 2331,
+            inPins = {
+                {
+                    title = 'Show',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 265,
+                            prevTitle = 'Out',
+                        },
+                    },
+                },
+                {
+                    title = 'Text',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '第2关 挑战成功',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Duration',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 3,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 267,
+            type = 'Spawn',
+            posX = 1875,
+            posY = 2113,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 258,
+                            prevTitle = 'Reached',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner20',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 2,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 2,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 268,
+            type = 'Spawn',
+            posX = 1176,
+            posY = 2010,
+            inPins = {
+                {
+                    title = 'Spawn',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 269,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'UnityEngine.GameObject',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Spawner/Spawner02',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SpawnCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AliveCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Delay',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Waypoints',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ServerLv',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Spawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Dead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllSpawned',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'AllDead',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 269,
+            type = 'Delay',
+            posX = 834,
+            posY = 2149,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 254,
+                            prevTitle = 'AllSpawned',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 270,
+            type = 'Counter',
+            posX = 2303,
+            posY = 2405,
+            inPins = {
+                {
+                    title = 'Count',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 257,
+                            prevTitle = 'AllDead',
+                        },
+                        {
+                            prevId = 267,
+                            prevTitle = 'AllDead',
+                        },
+                        {
+                            prevId = 255,
+                            prevTitle = 'AllDead',
+                        },
+                        {
+                            prevId = 256,
+                            prevTitle = 'AllDead',
+                        },
+                    },
+                },
+                {
+                    title = 'Increase',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Start',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'End',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 4,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Reached',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 271,
+            type = 'Delay',
+            posX = 1088,
+            posY = 476,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 242,
+                            prevTitle = 'AllSpawned',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 272,
+            type = 'Delay',
+            posX = 1095,
+            posY = 747,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 234,
+                            prevTitle = 'AllSpawned',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 273,
+            type = 'Delay',
+            posX = 1560,
+            posY = 2376,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 268,
+                            prevTitle = 'AllSpawned',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.5,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+    },
+    comments = {
+        {
+            title = 'Wave2',
+            id = 280,
+            posX = 98,
+            posY = 1074,
+            width = 2934,
+            height = 420,
+            childs = {
+                {
+                    id = 211,
+                    offsetX = -20,
+                    offsetY = -74,
+                },
+                {
+                    id = 215,
+                    offsetX = -22,
+                    offsetY = -190,
+                },
+                {
+                    id = 212,
+                    offsetX = -24,
+                    offsetY = -302,
+                },
+                {
+                    id = 213,
+                    offsetX = -338,
+                    offsetY = -74,
+                },
+                {
+                    id = 214,
+                    offsetX = -342,
+                    offsetY = -170,
+                },
+                {
+                    id = 216,
+                    offsetX = -668,
+                    offsetY = -119,
+                },
+                {
+                    id = 217,
+                    offsetX = -1008,
+                    offsetY = -56,
+                },
+                {
+                    id = 218,
+                    offsetX = -1327,
+                    offsetY = -53,
+                },
+                {
+                    id = 219,
+                    offsetX = -1655,
+                    offsetY = -50,
+                },
+                {
+                    id = 220,
+                    offsetX = -1988,
+                    offsetY = -157,
+                },
+                {
+                    id = 221,
+                    offsetX = -2319,
+                    offsetY = -61,
+                },
+                {
+                    id = 222,
+                    offsetX = -2317,
+                    offsetY = -173,
+                },
+                {
+                    id = 223,
+                    offsetX = -2318,
+                    offsetY = -270,
+                },
+                {
+                    id = 224,
+                    offsetX = -2636,
+                    offsetY = -59,
+                },
+                {
+                    id = 243,
+                    offsetX = -2639,
+                    offsetY = -155,
+                },
+                {
+                    id = 225,
+                    offsetX = -1007,
+                    offsetY = -238,
+                },
+                {
+                    id = 226,
+                    offsetX = -1329,
+                    offsetY = -231,
+                },
+                {
+                    id = 227,
+                    offsetX = -1653,
+                    offsetY = -226,
+                },
+            },
+        },
+        {
+            title = 'Wave1',
+            id = 282,
+            posX = 99,
+            posY = 426,
+            width = 2331,
+            height = 635,
+            childs = {
+                {
+                    id = 228,
+                    offsetX = -20,
+                    offsetY = -110,
+                },
+                {
+                    id = 233,
+                    offsetX = -20,
+                    offsetY = -266,
+                },
+                {
+                    id = 229,
+                    offsetX = -24,
+                    offsetY = -382,
+                },
+                {
+                    id = 230,
+                    offsetX = -27,
+                    offsetY = -485,
+                },
+                {
+                    id = 231,
+                    offsetX = -354,
+                    offsetY = -113,
+                },
+                {
+                    id = 232,
+                    offsetX = -354,
+                    offsetY = -217,
+                },
+                {
+                    id = 236,
+                    offsetX = -668,
+                    offsetY = -197,
+                },
+                {
+                    id = 237,
+                    offsetX = -1353,
+                    offsetY = -277,
+                },
+                {
+                    id = 238,
+                    offsetX = -1697,
+                    offsetY = -141,
+                },
+                {
+                    id = 239,
+                    offsetX = -1696,
+                    offsetY = -251,
+                },
+                {
+                    id = 240,
+                    offsetX = -1693,
+                    offsetY = -348,
+                },
+                {
+                    id = 241,
+                    offsetX = -2033,
+                    offsetY = -145,
+                },
+                {
+                    id = 244,
+                    offsetX = -2037,
+                    offsetY = -241,
+                },
+                {
+                    id = 242,
+                    offsetX = -671,
+                    offsetY = -399,
+                },
+                {
+                    id = 271,
+                    offsetX = -989,
+                    offsetY = -50,
+                },
+                {
+                    id = 234,
+                    offsetX = -990,
+                    offsetY = -144,
+                },
+                {
+                    id = 272,
+                    offsetX = -996,
+                    offsetY = -321,
+                },
+                {
+                    id = 235,
+                    offsetX = -999,
+                    offsetY = -411,
+                },
+            },
+        },
+    },
+}
+return PVE_014_L2_Main

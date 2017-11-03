@@ -1,0 +1,354 @@
+local W_Initialize = {
+    nodes = {
+        {
+            id = 1,
+            type = 'MacroInputs',
+            posX = 283,
+            posY = 522,
+            inPins = {
+            },
+            outPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Add',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Remove',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 2,
+            type = 'MacroOutputs',
+            posX = 1616,
+            posY = 666,
+            inPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 6,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Add',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Remove',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+            },
+        },
+        {
+            id = 5,
+            type = 'If',
+            posX = 586,
+            posY = 656,
+            inPins = {
+                {
+                    title = 'If',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 1,
+                            prevTitle = 'Do',
+                        },
+                    },
+                },
+                {
+                    title = 'Condition',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                        {
+                            prevId = 10,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'True',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'False',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 6,
+            type = 'SetBool',
+            posX = 1311,
+            posY = 669,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 5,
+                            prevTitle = 'True',
+                        },
+                        {
+                            prevId = 9,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Initialized',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = true,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 8,
+            type = 'GetCurTime',
+            posX = 820,
+            posY = 745,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 5,
+                            prevTitle = 'False',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Result',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 9,
+            type = 'SetFloat',
+            posX = 995,
+            posY = 747,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 8,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'MagTimer',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 8,
+                            prevTitle = 'Result',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 10,
+            type = 'GetBool',
+            posX = 273,
+            posY = 742,
+            inPins = {
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Initialized',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Value',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 11,
+            type = 'Bool',
+            posX = 650,
+            posY = 394,
+            inPins = {
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Initialized',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Default',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+            },
+        },
+    },
+    comments = {
+    },
+}
+return W_Initialize

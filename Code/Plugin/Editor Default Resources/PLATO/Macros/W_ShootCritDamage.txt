@@ -1,0 +1,1302 @@
+local W_ShootCritDamage = {
+    nodes = {
+        {
+            id = 67,
+            type = 'MacroInputs',
+            posX = 117,
+            posY = 452,
+            inPins = {
+            },
+            outPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'System.UInt64',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    value = 'AAAAAAAAAAA=',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'OriginX',
+                    type = 'System.Single',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'OriginY',
+                    type = 'System.Single',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'OriginZ',
+                    type = 'System.Single',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Rotation',
+                    type = 'System.Single',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Add',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Remove',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 73,
+            type = 'Macro-W_CalChargeDamage',
+            posX = 909,
+            posY = 844,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 103,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Damage',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 75,
+            type = 'FloatOperation',
+            posX = 1197,
+            posY = 487,
+            inPins = {
+                {
+                    title = 'Operation',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 73,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Base',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 73,
+                            prevTitle = 'Damage',
+                        },
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 103,
+                            prevTitle = 'Rate',
+                        },
+                    },
+                },
+                {
+                    title = 'Method',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Multi',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Final',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 77,
+            type = 'CalcLineCritRate',
+            posX = 1583,
+            posY = 613,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 126,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'AAAAAAAAAAA=',
+                    prevs = {
+                        {
+                            prevId = 67,
+                            prevTitle = 'Target',
+                        },
+                    },
+                },
+                {
+                    title = 'WeaponCritRate',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'CritMin',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 124,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+                {
+                    title = 'CritMax',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 126,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+                {
+                    title = 'FromX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 67,
+                            prevTitle = 'OriginX',
+                        },
+                    },
+                },
+                {
+                    title = 'FromY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 67,
+                            prevTitle = 'OriginY',
+                        },
+                    },
+                },
+                {
+                    title = 'FromZ',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 67,
+                            prevTitle = 'OriginZ',
+                        },
+                    },
+                },
+                {
+                    title = 'Rotation',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 67,
+                            prevTitle = 'Rotation',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 79,
+            type = 'ReviseMapI32',
+            posX = 2232,
+            posY = 667,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 77,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'InAttri',
+                    type = 'System.Collections.Generic.Dictionary`2[System.Int32,System.Int32]',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 86,
+                            prevTitle = 'Attribute',
+                        },
+                    },
+                },
+                {
+                    title = 'type0',
+                    type = 'System.Int32',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    value = 203,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'value0',
+                    type = 'System.Single',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 1,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 75,
+                            prevTitle = 'Final',
+                        },
+                    },
+                },
+                {
+                    title = 'type1',
+                    type = 'System.Int32',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 2,
+                    value = 28,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'value1',
+                    type = 'System.Single',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 3,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 77,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+                {
+                    title = 'Add',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Remove',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'OutAttri',
+                    type = 'System.Collections.Generic.Dictionary`2[System.Int32,System.Int32]',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 81,
+            type = 'MacroOutputs',
+            posX = 3137,
+            posY = 709,
+            inPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 97,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Add',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Remove',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+            },
+        },
+        {
+            id = 86,
+            type = 'GetMapI32',
+            posX = 1897,
+            posY = 681,
+            inPins = {
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Player',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Attribute',
+                    type = 'System.Collections.Generic.Dictionary`2[System.Int32,System.Int32]',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 87,
+            type = 'MapI32',
+            posX = 1801,
+            posY = 144,
+            inPins = {
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Player',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Default',
+                    type = 'System.Collections.Generic.Dictionary`2[System.Int32,System.Int32]',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+            },
+        },
+        {
+            id = 97,
+            type = 'AddSkillBuffs',
+            posX = 2835,
+            posY = 709,
+            inPins = {
+                {
+                    title = 'Add',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 101,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'ConfigID',
+                    type = 'System.Int32[]',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '6',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'System.UInt64[]',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 101,
+                            prevTitle = 'Result',
+                        },
+                    },
+                },
+                {
+                    title = 'Attribute',
+                    type = 'System.Collections.Generic.Dictionary`2[System.Int32,System.Int32]',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 79,
+                            prevTitle = 'OutAttri',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 101,
+            type = 'TurnToArray',
+            posX = 2557,
+            posY = 750,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 79,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Single',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'AAAAAAAAAAA=',
+                    prevs = {
+                        {
+                            prevId = 67,
+                            prevTitle = 'Target',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Result',
+                    type = 'System.UInt64[]',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 103,
+            type = 'CalcReduceRate',
+            posX = 810,
+            posY = 606,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 115,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'StartX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 67,
+                            prevTitle = 'OriginX',
+                        },
+                    },
+                },
+                {
+                    title = 'StartY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 67,
+                            prevTitle = 'OriginY',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'AAAAAAAAAAA=',
+                    prevs = {
+                        {
+                            prevId = 67,
+                            prevTitle = 'Target',
+                        },
+                    },
+                },
+                {
+                    title = 'DistMin',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 118,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+                {
+                    title = 'DistMid',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 116,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+                {
+                    title = 'DistMax',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 117,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+                {
+                    title = 'RateMin',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 112,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+                {
+                    title = 'RateMid',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 114,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+                {
+                    title = 'RateMax',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 115,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Rate',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ColorIndex',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 112,
+            type = 'GetWeaponFloatAttribute',
+            posX = 370,
+            posY = 908,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 117,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Attribute',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'DamageMin',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 114,
+            type = 'GetWeaponFloatAttribute',
+            posX = 369,
+            posY = 998,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 112,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Attribute',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'DamageMid',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 115,
+            type = 'GetWeaponFloatAttribute',
+            posX = 367,
+            posY = 1088,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 114,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Attribute',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'DamageMax',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 116,
+            type = 'GetWeaponFloatAttribute',
+            posX = 373,
+            posY = 721,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 118,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Attribute',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'DistRangeMid',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 117,
+            type = 'GetWeaponFloatAttribute',
+            posX = 372,
+            posY = 809,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 116,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Attribute',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'DistRangeMax',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 118,
+            type = 'GetWeaponFloatAttribute',
+            posX = 372,
+            posY = 632,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 67,
+                            prevTitle = 'Do',
+                        },
+                    },
+                },
+                {
+                    title = 'Attribute',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'DistRangeMin',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 124,
+            type = 'GetWeaponFloatAttribute',
+            posX = 1197,
+            posY = 785,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 75,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Attribute',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'CritMin',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 126,
+            type = 'GetWeaponFloatAttribute',
+            posX = 1205,
+            posY = 902,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 124,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Attribute',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'CritMax',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+    },
+    comments = {
+    },
+}
+return W_ShootCritDamage

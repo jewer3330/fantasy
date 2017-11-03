@@ -1,0 +1,1414 @@
+local SkillScript15031 = {
+    nodes = {
+        {
+            id = 1,
+            type = 'StartPhase',
+            posX = 204,
+            posY = 111,
+            inPins = {
+            },
+            outPins = {
+                {
+                    title = 'Start',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 2,
+            type = 'EndPhase',
+            posX = 1580,
+            posY = 213,
+            inPins = {
+                {
+                    title = 'Stop',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 25,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+            },
+            outPins = {
+            },
+        },
+        {
+            id = 4,
+            type = 'TriggerUpdate',
+            posX = 206,
+            posY = 192,
+            inPins = {
+            },
+            outPins = {
+            },
+        },
+        {
+            id = 6,
+            type = 'ResetCD',
+            posX = 385,
+            posY = 111,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 1,
+                            prevTitle = 'Start',
+                        },
+                    },
+                },
+                {
+                    title = 'LockSkill',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 8,
+            type = 'GetLocation',
+            posX = 374,
+            posY = 202,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 6,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'AAAAAAAAAAA=',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'X',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Y',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 10,
+            type = 'GetRotation',
+            posX = 368,
+            posY = 309,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 8,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'AAAAAAAAAAA=',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Angle',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 12,
+            type = 'OffsetCalculate',
+            posX = 602,
+            posY = 113,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 36,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'PosX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 8,
+                            prevTitle = 'X',
+                        },
+                    },
+                },
+                {
+                    title = 'PosY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 8,
+                            prevTitle = 'Y',
+                        },
+                    },
+                },
+                {
+                    title = 'PosZ',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'OffsetX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'OffsetY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1.1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'OffsetZ',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1.74,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Rotation',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 32,
+                            prevTitle = 'Rotation',
+                        },
+                    },
+                },
+                {
+                    title = 'RotOffset',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'OutPosX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'OutPosY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'OutPosZ',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'OutRotation',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 14,
+            type = 'PlayAnimation',
+            posX = 924,
+            posY = 110,
+            inPins = {
+                {
+                    title = 'Play',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 12,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'AAAAAAAAAAA=',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Animation',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Skill1S1',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Parameter',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 16,
+            type = 'Delay',
+            posX = 1240,
+            posY = 110,
+            inPins = {
+                {
+                    title = 'Delay',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 14,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.2,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 20,
+            type = 'SpawnProjectile',
+            posX = 1250,
+            posY = 639,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 22,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'DataId',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 51503,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 8,
+                            prevTitle = 'X',
+                        },
+                    },
+                },
+                {
+                    title = 'PosY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 8,
+                            prevTitle = 'Y',
+                        },
+                    },
+                },
+                {
+                    title = 'PosZ',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'EndPosX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'EndPosY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'EndPosZ',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 12,
+                            prevTitle = 'OutPosZ',
+                        },
+                    },
+                },
+                {
+                    title = 'Rotation',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 12,
+                            prevTitle = 'OutRotation',
+                        },
+                    },
+                },
+                {
+                    title = 'MaxCount',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ProjectileId',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'AAAAAAAAAAA=',
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 22,
+            type = 'PlaySound',
+            posX = 1251,
+            posY = 467,
+            inPins = {
+                {
+                    title = 'Play',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 26,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'SoundID',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'SE_Hero103_Skill_A_P2',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'AAAAAAAAAAA=',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'UsePos',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosZ',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 25,
+            type = 'SkillEndNotify',
+            posX = 1580,
+            posY = 122,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 16,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'ReturnType',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = true,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 26,
+            type = 'Macro-Monster_PlayEffect',
+            posX = 1248,
+            posY = 223,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 14,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'EffectID',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 101043,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ChangeColor',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = true,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'WithTarget',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'TargetID',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'AAAAAAAAAAA=',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Node',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Scale',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 1,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 8,
+                            prevTitle = 'X',
+                        },
+                    },
+                },
+                {
+                    title = 'PosY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 8,
+                            prevTitle = 'Y',
+                        },
+                    },
+                },
+                {
+                    title = 'PosZ',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Rotation',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 10,
+                            prevTitle = 'Angle',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 28,
+            type = 'GetBBParamUInt64',
+            posX = 386,
+            posY = 435,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 10,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'BBName',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'AtkTarget',
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 30,
+            type = 'GetLocation',
+            posX = 385,
+            posY = 526,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 28,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Target',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                        {
+                            prevId = 28,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'X',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Y',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 32,
+            type = 'GetLineRotation',
+            posX = 380,
+            posY = 633,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 30,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'StartX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 8,
+                            prevTitle = 'X',
+                        },
+                    },
+                },
+                {
+                    title = 'StartY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 8,
+                            prevTitle = 'Y',
+                        },
+                    },
+                },
+                {
+                    title = 'EndX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 30,
+                            prevTitle = 'X',
+                        },
+                    },
+                },
+                {
+                    title = 'EndY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 30,
+                            prevTitle = 'Y',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Rotation',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 34,
+            type = 'SpawnCollider',
+            posX = 378,
+            posY = 775,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 32,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'StopExtend',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Mesh',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'MeshScale',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'EffectID',
+                    type = 'System.Int32',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'EffectScale',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Type',
+                    type = 'UnityEngine.UI.Dropdown',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'Circle',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Radius',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = 'Type',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Time',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0.2,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'PosX',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 8,
+                            prevTitle = 'X',
+                        },
+                    },
+                },
+                {
+                    title = 'PosY',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 8,
+                            prevTitle = 'Y',
+                        },
+                    },
+                },
+                {
+                    title = 'PosZ',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Rotation',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 32,
+                            prevTitle = 'Rotation',
+                        },
+                    },
+                },
+                {
+                    title = 'reentry',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'CheckPeneSound',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ColliderID',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 36,
+            type = 'AttachTo',
+            posX = 673,
+            posY = 776,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 34,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Parent',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                        {
+                            prevId = 34,
+                            prevTitle = 'ColliderID',
+                        },
+                    },
+                },
+                {
+                    title = 'Child',
+                    type = 'System.UInt64',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = '',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'ChangeRotation',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = true,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'reentry',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+    },
+    comments = {
+    },
+}
+return SkillScript15031

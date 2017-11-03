@@ -1,0 +1,1174 @@
+local W_UpdateAimSys = {
+    nodes = {
+        {
+            id = 1,
+            type = 'MacroInputs',
+            posX = 71,
+            posY = 629,
+            inPins = {
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'InputX',
+                    type = 'System.Single',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'InputY',
+                    type = 'System.Single',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'SolidArea',
+                    type = 'System.Boolean',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'FirstTouch',
+                    type = 'null',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Add',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Remove',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 2,
+            type = 'MacroOutputs',
+            posX = 1947,
+            posY = 644,
+            inPins = {
+                {
+                    title = 'MidTrue',
+                    type = 'null',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 23,
+                            prevTitle = 'True',
+                        },
+                    },
+                },
+                {
+                    title = 'MidFalse',
+                    type = 'null',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 23,
+                            prevTitle = 'False',
+                        },
+                        {
+                            prevId = 25,
+                            prevTitle = 'False',
+                        },
+                    },
+                },
+                {
+                    title = 'MoveTrue',
+                    type = 'null',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 29,
+                            prevTitle = 'True',
+                        },
+                    },
+                },
+                {
+                    title = 'MoveFalse',
+                    type = 'null',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 29,
+                            prevTitle = 'False',
+                        },
+                        {
+                            prevId = 27,
+                            prevTitle = 'False',
+                        },
+                    },
+                },
+                {
+                    title = 'FirstTure',
+                    type = 'null',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 35,
+                            prevTitle = 'True',
+                        },
+                    },
+                },
+                {
+                    title = 'FirstFalse',
+                    type = 'null',
+                    dynamic = true,
+                    parent = 'Add',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 33,
+                            prevTitle = 'False',
+                        },
+                        {
+                            prevId = 35,
+                            prevTitle = 'False',
+                        },
+                    },
+                },
+                {
+                    title = 'Add',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Remove',
+                    type = 'UnityEngine.UI.Button',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+            outPins = {
+            },
+        },
+        {
+            id = 13,
+            type = 'If',
+            posX = 307,
+            posY = 635,
+            inPins = {
+                {
+                    title = 'If',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 1,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Condition',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                        {
+                            prevId = 1,
+                            prevTitle = 'SolidArea',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'True',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'False',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 15,
+            type = 'SetFloat',
+            posX = 1069,
+            posY = 284,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 25,
+                            prevTitle = 'True',
+                        },
+                    },
+                },
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'InputX',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 1,
+                            prevTitle = 'InputX',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 16,
+            type = 'SetFloat',
+            posX = 1068,
+            posY = 397,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 15,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'InputY',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 1,
+                            prevTitle = 'InputY',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 17,
+            type = 'SetFloat',
+            posX = 1075,
+            posY = 686,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 27,
+                            prevTitle = 'True',
+                        },
+                    },
+                },
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'InputX',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 1,
+                            prevTitle = 'InputX',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 18,
+            type = 'SetFloat',
+            posX = 1074,
+            posY = 799,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 17,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'InputY',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 1,
+                            prevTitle = 'InputY',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 22,
+            type = 'GetShootEnable',
+            posX = 1408,
+            posY = 400,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 16,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 23,
+            type = 'If',
+            posX = 1591,
+            posY = 400,
+            inPins = {
+                {
+                    title = 'If',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 22,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Condition',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                        {
+                            prevId = 22,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'True',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'False',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 24,
+            type = 'GetTouchingState',
+            posX = 574,
+            posY = 457,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 13,
+                            prevTitle = 'True',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 25,
+            type = 'If',
+            posX = 766,
+            posY = 457,
+            inPins = {
+                {
+                    title = 'If',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 24,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Condition',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                        {
+                            prevId = 24,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'True',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'False',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 26,
+            type = 'GetTouchingState',
+            posX = 576,
+            posY = 645,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 13,
+                            prevTitle = 'False',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 27,
+            type = 'If',
+            posX = 761,
+            posY = 645,
+            inPins = {
+                {
+                    title = 'If',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 26,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Condition',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                        {
+                            prevId = 26,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'True',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'False',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 28,
+            type = 'GetShootEnable',
+            posX = 1406,
+            posY = 802,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 18,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 29,
+            type = 'If',
+            posX = 1589,
+            posY = 802,
+            inPins = {
+                {
+                    title = 'If',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 28,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Condition',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                        {
+                            prevId = 28,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'True',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'False',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 30,
+            type = 'SetFloat',
+            posX = 1078,
+            posY = 1046,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 33,
+                            prevTitle = 'True',
+                        },
+                    },
+                },
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'InputX',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 1,
+                            prevTitle = 'InputX',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 31,
+            type = 'SetFloat',
+            posX = 1077,
+            posY = 1159,
+            inPins = {
+                {
+                    title = 'Set',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 30,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Name',
+                    type = 'System.String',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 'InputY',
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Single',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = 0,
+                    prevs = {
+                        {
+                            prevId = 1,
+                            prevTitle = 'InputY',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 32,
+            type = 'GetTouchingState',
+            posX = 582,
+            posY = 1104,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 1,
+                            prevTitle = 'FirstTouch',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 33,
+            type = 'If',
+            posX = 774,
+            posY = 1104,
+            inPins = {
+                {
+                    title = 'If',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 32,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Condition',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                        {
+                            prevId = 32,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'True',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'False',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 34,
+            type = 'GetShootEnable',
+            posX = 1409,
+            posY = 1162,
+            inPins = {
+                {
+                    title = 'Do',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 31,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'Done',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'Value',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                    },
+                },
+            },
+        },
+        {
+            id = 35,
+            type = 'If',
+            posX = 1592,
+            posY = 1162,
+            inPins = {
+                {
+                    title = 'If',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                        {
+                            prevId = 34,
+                            prevTitle = 'Done',
+                        },
+                    },
+                },
+                {
+                    title = 'Condition',
+                    type = 'System.Boolean',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    value = false,
+                    prevs = {
+                        {
+                            prevId = 34,
+                            prevTitle = 'Value',
+                        },
+                    },
+                },
+            },
+            outPins = {
+                {
+                    title = 'True',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+                {
+                    title = 'False',
+                    type = 'null',
+                    dynamic = false,
+                    parent = '',
+                    index = 0,
+                    prevs = {
+                    },
+                },
+            },
+        },
+    },
+    comments = {
+    },
+}
+return W_UpdateAimSys

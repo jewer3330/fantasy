@@ -1,0 +1,588 @@
+local Weapon = {
+    Color = '#ffff00ff',
+
+    Nodes = {
+        {
+            Title = 'IdleEnd',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'AimEnd',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'ShootEnd',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'ReloadEnd',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'ExitEnd',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'OnUpdateEnd',
+            In = {
+                { Title = 'Update', Type = 'null' },
+            },
+        },
+        {
+            Title = 'UntilTouchingState',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'EquelsTrue', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+            },
+        },
+        {
+            Title = 'PlayAnimationByName',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Animation', Type = 'System.String' },
+                { Title = 'Time', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'SetRunSpeed',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Modifier', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'Spread',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'SpreadID', Type = 'System.Int32' },
+                { Title = 'OriginalAngle', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'ResultAngle', Type = 'System.Single' },
+            },
+        },
+        {
+            Title = 'CallEvent',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Event', Type = 'System.String' },
+            },
+            FormatCSharp = 'ClearUpdate();{EVENT_NAME}()',
+        },
+        {
+            Title = 'GetWeaponIntAttribute',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String', TableName = 'Weapon' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Int32' },
+            },
+        },
+        {
+            Title = 'GetWeaponIntAttributes',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String', TableName = 'Weapon' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Int32[]' },
+            },
+        },
+        {
+            Title = 'GetWeaponFloatAttribute',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String', TableName = 'Weapon' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Single' },
+            },
+        },
+        {
+            Title = 'GetWeaponFloatAttributes',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String', TableName = 'Weapon' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Single[]' },
+            },
+        },
+        {
+            Title = 'GetWeaponBoolAttribute',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String', TableName = 'Weapon' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Boolean' },
+            },
+        },
+        {
+            Title = 'GetWeaponBoolAttributes',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String', TableName = 'Weapon' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Boolean[]' },
+            },
+        },
+        {
+            Title = 'GetWeaponStringAttribute',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String', TableName = 'Weapon' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.String' },
+            },
+        },
+        {
+            Title = 'SetWeaponIntAttribute',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String', TableName = 'Weapon' },
+                { Title = 'Value', Type = 'System.Int32' },
+                { Title = 'PostToServer', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'SetWeaponFloatAttribute',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String', TableName = 'Weapon' },
+                { Title = 'Value', Type = 'System.Single' },
+                { Title = 'PostToServer', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'SetWeaponBoolAttribute',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String', TableName = 'Weapon' },
+                { Title = 'Value', Type = 'System.Boolean' },
+                { Title = 'PostToServer', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'SetWeaponStringAttribute',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String', TableName = 'Weapon' },
+                { Title = 'Value', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'ExplodeDamageReduce',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'PositionX', Type = 'System.Single' },
+                { Title = 'PositionY', Type = 'System.Single' },
+                { Title = 'PositionZ', Type = 'System.Single' },
+                { Title = 'BaseDamage', Type = 'System.Single' },
+                { Title = 'Radius',	Type = 'System.Single' },
+                { Title = 'ReductionRadius', Type = 'System.Single' },
+                { Title = 'Rate', Type = 'System.Single' },
+                { Title = 'Actor', Type = 'System.UInt64' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Damage', Type = 'System.Single' },
+            },
+        },
+        {
+            Title = 'DoCritical',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'CritRate', Type = 'System.Single' },
+                { Title = 'CritDamage', Type = 'System.Single' },
+                { Title = 'SceneObj', Type = 'System.UInt64' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'IsCritical', Type = 'System.Boolean' },
+                { Title = 'DamageRate', Type = 'System.Single' },
+            },
+        },
+        {
+            Title = 'WeaponDamage',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attacker', Type = 'System.UInt64' },
+                { Title = 'Damaged', Type = 'System.UInt64' },
+                { Title = 'Damage', Type = 'System.Single' },
+                { Title = 'CritDamageRate', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'RealDamage', Type = 'System.Int32' },
+            },
+        },
+        {
+            Title = 'GetProjectileId',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Id', Type = 'System.UInt64' },
+            },
+        },
+        {
+            Title = 'GetProjectileOwner',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Id', Type = 'System.UInt64' },
+            },
+        },
+        {
+            Title = 'GetProjectileAttrInt',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'AttrName', Type = 'System.String' , TableName = 'Projectile'},
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Data', Type = 'System.Int32' },
+            },
+        },
+        {
+            Title = 'GetProjectileAttrInts',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String', TableName = 'Projectile' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Int32[]' },
+            },
+        },
+        {
+            Title = 'GetProjectileAttrFloat',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'AttrName', Type = 'System.String' , TableName = 'Projectile'},
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Data', Type = 'System.Single' },
+            },
+        },
+        {
+            Title = 'GetProjectileAttrBool',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'AttrName', Type = 'System.String' , TableName = 'Projectile'},
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Data', Type = 'System.Boolean' },
+            },
+        },
+        {
+            Title = 'GetProjectileAttrString',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'AttrName', Type = 'System.String' , TableName = 'Projectile'},
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Data', Type = 'System.String' },
+            },
+        },
+        {
+            Title = 'MagzineChange',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'MagType', Type = 'System.Int32' },
+                { Title = 'Cur', Type = 'System.Int32' },
+                { Title = 'OverHeat', Type = 'System.Int32' },
+                { Title = 'Max', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'ReloadMessage',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'MagType', Type = 'System.Int32' },
+                { Title = 'ReloadTime', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'MagRecover',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'MagType', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'GetOwnerBBParamUInt64',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'BBName', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.UInt64' },
+            },
+        },
+        {
+            Title = 'GetOwnerBBParamFloat',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'BBName', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Single' },
+            },
+        },
+        {
+            Title = 'GetOwnerBBParamInt',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'BBName', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Int32' },
+            },
+        },
+        {
+            Title = 'GetOwnerBBParamBool',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'BBName', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Boolean' },
+            },
+        },
+        {
+            Title = 'DamageReduce',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'OriginX', Type = 'System.Single' },
+                { Title = 'OriginY', Type = 'System.Single' },
+                { Title = 'OriginZ', Type = 'System.Single' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'ReductionDist', Type = 'System.Single' },
+                { Title = 'Rate',	Type = 'System.Single' },
+                { Title = 'MinRate', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Ratio', Type = 'System.Single' },
+            },
+        },
+        {
+            Title = 'CheckTouchStart',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'CheckTouchEnd',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'LineCollision',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'State', Type = 'UnityEngine.UI.Dropdown', Items = 'Alive;Dead;All' },
+                { Title = 'Faction', Type = 'UnityEngine.UI.Dropdown', Items = 'Friend;Enemy;Any' },
+                { Title = 'OnHero', Type = 'System.Boolean' },
+                { Title = 'OnMinion', Type = 'System.Boolean' },
+                { Title = 'OnDestruct', Type = 'System.Boolean' },
+                { Title = 'OnShield', Type = 'System.Boolean' },
+                { Title = 'IncludeSpecial', Type = 'System.Boolean' },
+                { Title = 'FromX', Type = 'System.Single' },
+                { Title = 'FromY', Type = 'System.Single' },
+                { Title = 'FromZ', Type = 'System.Single' },
+                { Title = 'Rotation', Type = 'System.Single' },
+                { Title = 'Width', Type = 'System.Single' },
+                { Title = 'Range', Type = 'System.Single' },
+                { Title = 'Penetration', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+                { Title = 'None', Type = 'null', IsEvent = true },
+                { Title = 'Output', Type = 'System.UInt64[]' },
+                { Title = 'HitPointX', Type = 'System.Single[]' },
+                { Title = 'HitPointY', Type = 'System.Single[]' },
+                { Title = 'HitPointZ', Type = 'System.Single[]' },
+                { Title = 'FartherPointX', Type = 'System.Single' },
+                { Title = 'FartherPointY', Type = 'System.Single' },
+                { Title = 'FartherPointZ', Type = 'System.Single' },
+            },
+        },
+        {
+            Title = 'CalcLineCritRate',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'WeaponCritRate', Type = 'System.Single' },
+                { Title = 'CritMin', Type = 'System.Single' },
+                { Title = 'CritMax', Type = 'System.Single' },
+                { Title = 'FromX', Type = 'System.Single' },
+                { Title = 'FromY', Type = 'System.Single' },
+                { Title = 'FromZ', Type = 'System.Single' },
+                { Title = 'Rotation', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Single' },
+            },
+        },
+        {
+            Title = 'CalcReduceRate',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'StartX', Type = 'System.Single' },
+                { Title = 'StartY', Type = 'System.Single' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'DistMin', Type = 'System.Single' },
+                { Title = 'DistMid', Type = 'System.Single' },
+                { Title = 'DistMax', Type = 'System.Single' },
+                { Title = 'RateMin', Type = 'System.Single' },
+                { Title = 'RateMid', Type = 'System.Single' },
+                { Title = 'RateMax', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Rate', Type = 'System.Single' },
+                { Title = 'ColorIndex', Type = 'System.Int32' },
+            },
+        },
+		{
+            Title = 'IsLowerMove',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'IsLowerMove', Type = 'System.Boolean' },
+            },
+        },
+		{
+            Title = 'GetNeedAutoReload',
+            In = {
+				{ Title = 'Do', Type = 'null' },
+            },
+            Out = {
+				{ Title = 'Done', Type = 'null' },
+                { Title = 'NeedAutoReload', Type = 'System.Boolean' },
+            },
+        },
+		{
+            Title = 'TotalCount',
+            In = {
+                { Title = 'Do', Type = 'null' },                
+            },
+            Out = {
+				{ Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Int32' },               
+            },
+        },
+		{
+            Title = 'HitCount',
+            In = {
+                { Title = 'Do', Type = 'null' },                  
+            },
+            Out = {
+				{ Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Int32' },        
+            },
+        },
+        {
+			Title = 'GetDirXY',
+			In = {
+				{ Title = 'Do', Type = 'null' },
+				{ Title = 'Rotation', Type = 'System.Single' },
+			},
+			Out = {
+				{ Title = 'Done', Type = 'null' },
+				{ Title = 'DirX', Type = 'System.Single' },
+				{ Title = 'DirY', Type = 'System.Single' },
+			},
+		},
+    },
+}
+return Weapon

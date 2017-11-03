@@ -1,0 +1,299 @@
+local AimSystem = {
+    Color = '#61CEFAFF',
+
+    Nodes = {
+        {
+            Title = 'OnAimSysEnd',
+            In = {
+                { Title = 'AimEnd', Type = 'null' },
+            },
+        },
+        {
+            Title = 'SetShootDir',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'DirX', Type = 'System.Single' },
+                { Title = 'DirY', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'UpdateAimRaycast',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Type', Type = 'System.Int32' },
+                { Title = 'Index', Type = 'System.Int32' },
+                { Title = 'ChangeColor', Type = 'System.Boolean' },
+                { Title = 'RaycastRange', Type = 'System.Single' },
+                { Title = 'InputX', Type = 'System.Single' },
+                { Title = 'InputY', Type = 'System.Single' },
+                { Title = 'StartPosX', Type = 'System.Single' },
+                { Title = 'StartPosY', Type = 'System.Single' },
+                { Title = 'StartPosZ', Type = 'System.Single' },
+                { Title = 'EndPosX', Type = 'System.Single' },
+                { Title = 'EndPosY', Type = 'System.Single' },
+                { Title = 'EndPosZ', Type = 'System.Single' },
+                { Title = 'Offset', Type = 'System.Single' },
+                { Title = 'CastAngle', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'UpdateAssistAim',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'FirstShooted', Type = 'System.Boolean' },
+                { Title = 'NeedInSight', Type = 'System.Boolean' },
+                { Title = 'IsAimTangent', Type = 'System.Boolean' },
+                { Title = 'EnableSector', Type = 'System.Boolean' },
+                { Title = 'AutoAssistAngle', Type = 'System.Single' },
+                { Title = 'ManuAssistAngle', Type = 'System.Single' },
+                { Title = 'BulletRange', Type = 'System.Single' },
+                { Title = 'WeaponCritRate', Type = 'System.Single' },
+                { Title = 'CritMin', Type = 'System.Single' },
+                { Title = 'CritMax', Type = 'System.Single' },
+                { Title = 'PeneProjectile', Type = 'System.Int32'},
+                { Title = 'InputX', Type = 'System.Single' },
+                { Title = 'InputY', Type = 'System.Single' },
+                { Title = 'NodePosX', Type = 'System.Single' },
+                { Title = 'NodePosY', Type = 'System.Single' },
+                { Title = 'NodePosZ', Type = 'System.Single' },
+                { Title = 'NodeRotation', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'DirX', Type = 'System.Single' },
+                { Title = 'DirY', Type = 'System.Single' },
+            },
+        },
+        {
+            Title = 'HideAimLine',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Index', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'ScanTarget',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'EffectIndex', Type = 'System.Int32' },
+                { Title = 'AimSysOn', Type = 'System.Boolean' },
+                { Title = 'NeedInSight', Type = 'System.Boolean' },
+                { Title = 'MinAngle', Type = 'System.Single'},
+                { Title = 'PeneProjectile', Type = 'System.Int32'},
+                { Title = 'InputX', Type = 'System.Single' },
+                { Title = 'InputY', Type = 'System.Single' },
+                { Title = 'ScanRange', Type = 'System.Single' },
+                { Title = 'NodePosX', Type = 'System.Single' },
+                { Title = 'NodePosY', Type = 'System.Single' },
+                { Title = 'NodePosZ', Type = 'System.Single' },
+                { Title = 'NodeRotation', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+                { Title = 'None', Type = 'null', IsEvent = true },
+                { Title = 'DirX', Type = 'System.Single' },
+                { Title = 'DirY', Type = 'System.Single' },
+                { Title = 'Target', Type = 'System.UInt64' },
+            },
+        },
+        {
+            Title = 'ScanTargetNew',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'EffectIndex', Type = 'System.Int32' },
+                { Title = 'AimSysOn', Type = 'System.Boolean' },
+                { Title = 'EnableSector', Type = 'System.Boolean' },
+                { Title = 'NeedInSight', Type = 'System.Boolean' },
+                { Title = 'MinAngle', Type = 'System.Single'},
+                { Title = 'PeneProjectile', Type = 'System.Int32'},
+                { Title = 'InputX', Type = 'System.Single' },
+                { Title = 'InputY', Type = 'System.Single' },
+                { Title = 'ScanRange', Type = 'System.Single' },
+                { Title = 'ScanAngle', Type = 'System.Single'},
+                { Title = 'WeaponCritRate', Type = 'System.Single'},
+                { Title = 'CritMin', Type = 'System.Single'},
+                { Title = 'CritMax', Type = 'System.Single'},
+                { Title = 'NodePosX', Type = 'System.Single' },
+                { Title = 'NodePosY', Type = 'System.Single' },
+                { Title = 'NodePosZ', Type = 'System.Single' },
+                { Title = 'NodeRotation', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+                { Title = 'None', Type = 'null', IsEvent = true },
+                { Title = 'DirX', Type = 'System.Single' },
+                { Title = 'DirY', Type = 'System.Single' },
+                { Title = 'Target', Type = 'System.UInt64' },
+            },
+        },
+        {
+            Title = 'UpdateAimSystem',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'NeedInSight', Type = 'System.Boolean' },
+                { Title = 'AimSysOn', Type = 'System.Boolean' },
+                { Title = 'GetTarget', Type = 'UnityEngine.UI.Dropdown', Items = 'SmallestAngle;ClosestDistance' },
+                { Title = 'PeneProjectile', Type = 'System.Int32'},
+                { Title = 'EffectIndex', Type = 'System.Int32' },
+                { Title = 'InputX', Type = 'System.Single' },
+                { Title = 'InputY', Type = 'System.Single' },
+                { Title = 'MinScanAngle', Type = 'System.Single'},
+                { Title = 'ScanAngle', Type = 'System.Single'},
+                { Title = 'ScanRange', Type = 'System.Single' },
+                { Title = 'ShotgunAngle', Type = 'System.Single' },
+                { Title = 'SectorRange', Type = 'System.Single' },
+                { Title = 'NodePointCenter', Type = 'System.Boolean' },
+                { Title = 'NodePosX', Type = 'System.Single' },
+                { Title = 'NodePosY', Type = 'System.Single' },
+                { Title = 'NodePosZ', Type = 'System.Single' },
+                { Title = 'NodeRotation', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+                { Title = 'None', Type = 'null', IsEvent = true },
+                { Title = 'DirX', Type = 'System.Single' },
+                { Title = 'DirY', Type = 'System.Single' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'ShowAimLine', Type = 'System.Boolean' },
+                { Title = 'IsAssistAim', Type = 'System.Boolean' },
+            },
+        },
+        {
+            Title = 'ClearAimSysSector',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'ClearScanTarget',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'UpdateAimEffect',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'CrossHair', Type = 'System.Int32' },
+                { Title = 'BulletRange', Type = 'System.Single' },
+                { Title = 'NodePosX', Type = 'System.Single' },
+                { Title = 'NodePosY', Type = 'System.Single' },
+                { Title = 'NodePosZ', Type = 'System.Single' },
+                { Title = 'NodeRotation', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'ClearAimEffect',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'UpdateRangeEffect',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'BulletRange', Type = 'System.Single' },
+                { Title = 'NodePosX', Type = 'System.Single' },
+                { Title = 'NodePosY', Type = 'System.Single' },
+                { Title = 'NodePosZ', Type = 'System.Single' },
+                { Title = 'OffsetX', Type = 'System.Single' },
+                { Title = 'OffsetY', Type = 'System.Single' },
+                { Title = 'OffsetZ', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'ClearRangeEffect',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'UpdateScanTargetEffect',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'EffectIndex', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'ClearScanTargetEffect',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'SetCameraFov',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Delay', Type = 'System.Single' },
+                { Title = 'Distance', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'ResetCameraFov',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'GetShootEnable',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Boolean' },
+            },
+        },
+        {
+            Title = 'SetFlagColor',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'ColorIndex', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+    },
+}
+return AimSystem

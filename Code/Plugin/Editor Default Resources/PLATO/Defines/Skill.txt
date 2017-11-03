@@ -1,0 +1,714 @@
+require('Assets/Editor Default Resources/PLATO/Defines/TypeDef')
+require('Assets/Editor Default Resources/PLATO/Defines/EventDef')
+
+local Skill = {
+    Color = '#ff8e00ff',
+
+    Nodes = {
+        {
+            Title = 'SpawnCollider',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'StopExtend', Type = 'null' },
+                { Title = 'Mesh', Type = 'System.String' },
+                { Title = 'MeshScale', Type = 'System.Single' },
+                { Title = 'EffectID', Type = 'System.Int32' },
+                { Title = 'EffectScale', Type = 'System.Single' },
+                { Title = 'Type', Type = 'UnityEngine.UI.Dropdown', Items = 'Circle;Rect;Sector',
+                   PinDefines = 'Radius:System.Single;Length:System.Single-Width:System.Single-ExtendType:System.Single-ExtendSpeed:System.Single-ExtendTime:System.Single;Radius:System.Single-Angle:System.Single',
+                },
+                { Title = 'Time', Type = 'System.Single' },
+                { Title = 'PosX', Type = 'System.Single' },
+                { Title = 'PosY', Type = 'System.Single' },
+                { Title = 'PosZ', Type = 'System.Single' },
+                { Title = 'Rotation', Type = 'System.Single' },
+                { Title = 'reentry', Type = 'System.Boolean' },
+                { Title = 'CheckPeneSound', Type = 'System.Boolean'}
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'ColliderID', Type = 'System.UInt64' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'DestroyCollider',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'ColliderID', Type = 'System.UInt64' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'SpawnActor',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'ConfigID', Type = 'System.Int32' },
+                { Title = 'Time', Type = 'System.Single' },
+                { Title = 'PosX', Type = 'System.Single' },
+                { Title = 'PosY', Type = 'System.Single' },
+                { Title = 'PosZ', Type = 'System.Single' },
+                { Title = 'Rotation', Type = 'System.Single' },
+                { Title = 'Level', Type = 'System.Int32' },
+                { Title = 'MaxCount', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'ActorID', Type = 'System.UInt64' },
+            },
+        },
+        {
+            Title = 'DestroyActor',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'ActorID', Type = 'System.UInt64' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'AttachTo',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Parent', Type = 'System.UInt64' },
+                { Title = 'Child', Type = 'System.UInt64' },
+                { Title = 'ChangeRotation', Type = 'System.Boolean' },
+                { Title = 'reentry', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'MoveNewPene',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Stop', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'PeneType', Type = 'UnityEngine.UI.Dropdown', Items = 'Move;Projectile' },
+                { Title = 'PeneValue', Type = 'System.Int32'},
+                { Title = 'Type', Type = 'UnityEngine.UI.Dropdown', Items = 'Charge;Jump;Trace;Teleport',
+                  PinDefines = 'Speed:System.Single-Range:System.Single-Rotation:System.Single-RotOffset:System.Single;JumpX:System.Single-JumpY:System.Single-Height:System.Single-Time:System.Single;TraceTarget:System.UInt64-Speed:System.Single-ArrivalThreshold:System.Single;PosX:System.Single-PosY:System.Single'
+                },
+                { Title = 'reentry', Type = 'System.Boolean' },
+                { Title = 'StopWhenFail', Type = 'System.Boolean' },
+                { Title = 'CheckFaction', Type = 'UnityEngine.UI.Dropdown', Items = 'Enemy;Friend;All' },
+            },
+            Out = {
+                { Title = 'StartMove', Type = 'null' },
+                { Title = 'Done', Type = 'null', IsEvent = true },
+                { Title = 'BlockByWall', Type = 'null', IsEvent = true },
+                { Title = 'BlockByShield', Type = 'null', IsEvent = true },
+                { Title = 'StopTarget', Type = 'System.UInt64' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'PlayAnimation',
+            In = {
+                { Title = 'Play', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'Animation', Type = 'System.String' },
+                { Title = 'Parameter', Type = 'System.String' },
+                { Title = 'Value', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'PlaySound',
+            In = {
+                { Title = 'Play', Type = 'null' },
+                { Title = 'SoundID', Type = 'System.String' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'UsePos', Type = 'System.Boolean' },
+                { Title = 'PosX', Type = 'System.Single' },
+                { Title = 'PosY', Type = 'System.Single' },
+                { Title = 'PosZ', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'StopSound',
+            In = {
+                { Title = 'Stop', Type = 'null' },
+                { Title = 'SoundID', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'AddSkillBuff',
+            In = {
+                { Title = 'Add', Type = 'null' },
+                { Title = 'ConfigID', Type = 'System.Int32' },
+                { Title = 'ConfigIDs', Type = 'System.Int32[]' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'Attribute', Type = System_MapI32 },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'AddCurMag',
+            In = {
+                { Title = 'Add', Type = 'null' },
+                { Title = 'DeltaMag', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'StopWeapon',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'AddSkillBuffs',
+            In = {
+                { Title = 'Add', Type = 'null' },
+                { Title = 'ConfigID', Type = 'System.Int32[]' },
+                { Title = 'Target', Type = 'System.UInt64[]' },
+                { Title = 'Attribute', Type = System_MapI32 },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'RemoveSkillBuff',
+            In = {
+                { Title = 'Remove', Type = 'null' },
+                { Title = 'BuffID', Type = 'System.UInt64' },
+                { Title = 'BuffIDs', Type = 'System.UInt64[]' },
+                { Title = 'ConfigID', Type = 'System.Int32' },
+                { Title = 'Target', Type = 'System.UInt64' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'GetActorAttribute',
+            In = {
+                { Title = 'Get', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'Type', Type = 'System.Int32[]' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Attribute', Type = System_MapI32 },
+            },
+        },
+        {
+            Title = 'RaiseEvent',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Event', Type = 'System.String' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'Type', Type = 'UnityEngine.UI.Dropdown', Items = RaiseDefine.Items, PinDefines = RaiseDefine.Defins }
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'SwitchWeapon',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'Time', Type = 'System.Single'},
+                { Title = 'Shots', Type = 'System.Int32'},
+                { Title = 'WeaponID', Type = 'System.Int32' },
+                { Title = 'SaveMag', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null', IsEvent = true },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'CameraOffset',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'OffsetX', Type = 'System.Single' },
+                { Title = 'OffsetY', Type = 'System.Single' },
+                { Title = 'OffsetZ', Type = 'System.Single' },
+                { Title = 'Speed', Type = 'System.Single'},
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'LimitInputRotation',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Rotation', Type = 'System.Single' },
+                { Title = 'LimitDegree', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'CameraShake',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'Frequency', Type = 'System.Single' },
+                { Title = 'Amplitude', Type = 'System.Single' },
+                { Title = 'Duration', Type = 'System.Single' },
+                { Title = 'Falloff', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'CameraXYZShake',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Stop', Type = 'null' },
+                { Title = 'ShakeStyle', Type = 'System.Int32'},
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'X', Type = 'System.Single' },
+                { Title = 'Y', Type = 'System.Single' },
+                { Title = 'Z', Type = 'System.Single' },
+                { Title = 'Duration', Type = 'System.Single' },
+                { Title = 'Times', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'ResetCD',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'LockSkill', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'ResetChargedTime',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'SkillId', Type = 'System.Int32'},
+                { Title = 'Time', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'UnlockSkill',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'SkillID', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'ActorSelect',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'ConfigID', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Targets',Type = 'System.UInt64[]'},
+            },
+        },
+        {
+            Title = 'SetLocation',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'X', Type = 'System.Single' },
+                { Title = 'Y', Type = 'System.Single' },
+                { Title = 'VX', Type = 'System.Single' },
+                { Title = 'VY', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'SetRotation',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'Angle', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'SetBuffAttribute',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'Attribute', Type = 'System.Int32' },
+                { Title = 'Value', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'CostBuffAttribute',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Target', Type = 'System.UInt64' },
+                { Title = 'Attribute', Type = 'System.Int32' },
+                { Title = 'Value', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'EndPhase',
+            In = {
+                { Title = 'Stop', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'EndFlow',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'SpawnProjectile',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'DataId', Type = 'System.Int32' },
+                { Title = 'PosX', Type = 'System.Single' },
+                { Title = 'PosY', Type = 'System.Single' },
+                { Title = 'PosZ', Type = 'System.Single' },
+                { Title = 'EndPosX', Type = 'System.Single' },
+                { Title = 'EndPosY', Type = 'System.Single' },
+                { Title = 'EndPosZ', Type = 'System.Single' },
+                { Title = 'Rotation', Type = 'System.Single' },
+                { Title = 'MaxCount', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'ProjectileId', Type = 'System.UInt64' },
+            },
+        },
+        {
+            Title = 'ProjectileEnd',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+        },
+        {
+            Title = 'ProjectileDestroyEnd',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+        },
+        {
+            Title = 'GetMaxMag',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Mag', Type = 'System.Int32' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'PlayEffect',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'EffectID', Type = 'System.Int32' },
+                { Title = 'ChangeColor', Type = 'System.Boolean' },
+                { Title = 'Type', Type = 'UnityEngine.UI.Dropdown', Items = 'ToPos;WithTarget',
+                  PinDefines = 'PosX:System.Single-PosY:System.Single-PosZ:System.Single;TargetId:System.UInt64-Node:System.String-OffsetX:System.Single-OffsetY:System.Single-OffsetZ:System.Single-NotFollowRotation:System.Boolean'
+                },
+                { Title = 'Rotation', Type = 'System.Single' },
+                { Title = 'Scale', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'StopEffect',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'EffectID', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'SetEffectInfo',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'EffectID', Type = 'System.Int32' },
+                { Title = 'ChangePos', Type = 'System.Boolean' },
+                { Title = 'ChangeRotation', Type = 'System.Boolean' },
+                { Title = 'ChangeScale', Type = 'System.Boolean' },
+                { Title = 'ChangeColor', Type = 'System.Boolean' },
+                { Title = 'PosX', Type = 'System.Single' },
+                { Title = 'PosY', Type = 'System.Single' },
+                { Title = 'PosZ', Type = 'System.Single' },
+                { Title = 'Rotation', Type = 'System.Single' },
+                { Title = 'ScaleX', Type = 'System.Single' },
+                { Title = 'ScaleY', Type = 'System.Single' },
+                { Title = 'ScaleZ', Type = 'System.Single' },
+                { Title = 'ColorIndex', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'GetBBParamUInt64',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'BBName', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.UInt64' },
+            },
+        },
+        {
+            Title = 'GetBBParamFloat',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'BBName', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Single' },
+            },
+        },
+        {
+            Title = 'GetBBParamInt',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'BBName', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Int32' },
+            },
+        },
+        {
+            Title = 'GetBBParamBool',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'BBName', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Boolean' },
+            },
+        },
+        {
+            Title = 'ResetSkill',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'SkillID', Type = 'System.Int32[]' },
+                { Title = 'Time', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'ResetSkillRate',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'SkillID', Type = 'System.Int32[]' },
+                { Title = 'Rate', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'SkillEndNotify',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'ReturnType', Type = 'System.Boolean' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'IsInterruptType',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Type', Type = 'System.Int32' },
+            },
+            Out = {
+                { Title = 'None', Type = 'null', IsEvent = true },
+                { Title = 'Buff', Type = 'null', IsEvent = true },
+                { Title = 'Raise', Type = 'null', IsEvent = true },
+                { Title = 'PosChange', Type = 'null', IsEvent = true },
+                { Title = 'StartFire', Type = 'null', IsEvent = true },
+                { Title = 'UseSkill', Type = 'null', IsEvent = true },
+				{ Title = 'StartAim', Type = 'null', IsEvent = true },
+				{ Title = 'StartReload', Type = 'null', IsEvent = true },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'StartPreInput',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'DelayTime', Type = 'System.Single' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'StopPreInput',
+            In = {
+                { Title = 'Do', Type = 'null' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+            Sync = true,
+        },
+        {
+            Title = 'GetCommonSkillInt',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Int32' },
+            },
+        },
+        {
+            Title = 'GetCommonSkillFloat',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Single' },
+            },
+        },
+        {
+            Title = 'GetCommonSkillBool',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Boolean' },
+            },
+        },
+        {
+            Title = 'GetCommonSkillString',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'Attribute', Type = 'System.String' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.String' },
+            },
+        },
+        {
+            Title = 'PlayUIEffect',
+            In = {
+                { Title = 'Do', Type = 'null'},
+                { Title = 'Time', Type = 'System.Single'},
+                { Title = 'Type', Type = 'System.Int32'},
+            },
+            Out = {
+                { Title = 'Done', Type = 'null'},
+            },
+            Sync = true,
+        },
+        {
+            Title = 'AddMark',
+            In = {
+                { Title = 'Add', Type = 'null' },
+                { Title = 'ConfigIDs', Type = 'System.Int32[]' },
+                { Title = 'ReleaseTarget', Type = 'System.UInt64' },
+                { Title = 'ActionTarget', Type = 'System.UInt64[]' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+            },
+        },
+        {
+            Title = 'GetMark',
+            In = {
+                { Title = 'Do', Type = 'null' },
+                { Title = 'ConfigID', Type = 'System.Int32' },
+                { Title = 'ReleaseTarget', Type = 'System.UInt64' },
+                { Title = 'ActionTarget', Type = 'System.UInt64' },
+            },
+            Out = {
+                { Title = 'Done', Type = 'null' },
+                { Title = 'Value', Type = 'System.Int32' },
+            },
+        },
+
+    },
+}
+return Skill
