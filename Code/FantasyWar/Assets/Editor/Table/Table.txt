@@ -1,0 +1,105 @@
+﻿/* !!auto gen do not change
+ 
+ */
+
+using UnityEngine;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace Table
+{
+    public partial class {Name}
+    {
+	    static bool loaded = false;
+{Struct_Field}
+{Member_Count}
+        public {Struct_Name}()
+        {
+        }
+
+        public {Struct_Name}({Struct_Construct_Params})
+        {
+{Struct_Construct_Assign}
+        }
+        public static Dictionary<{Key_Type}, {Struct_Name}> _datas = new Dictionary<{Key_Type}, {Struct_Name}>();
+		
+		    public static  Dictionary<{Key_Type}, {Struct_Name}>  datas
+        {
+            get
+            {
+                if(!loaded)
+                {
+                    loaded = true;
+                    LoadFromResources();
+                }
+                return _datas;
+            }
+			
+			set
+			{
+			_datas = value;
+			}
+        }
+		
+{LoadFromString}
+        public static void LoadFromResources()
+        {           
+		TextAsset data = null;
+            #if UNITY_IOS
+                data = ResManager.Load("{Path_IOS}.csv") as TextAsset;
+            #else
+                data = ResManager.Load("{Path}.csv") as TextAsset;
+            #endif
+            
+				if(data == null)
+				{
+				    Debug.LogError("{Path}.csv 不存在！！！！");
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPaused = true;
+#endif
+                    
+					
+					return;
+				}
+                string text = data.text;
+				if(string.IsNullOrEmpty(text))
+				{
+					
+				    Debug.LogError("{Path}.csv 没有内容");
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPaused = true;
+#endif
+                    
+				
+					return;
+				}
+                {Name}.LoadFromString(text);
+        }
+        public static void LoadFromStreaming()
+        {
+            try
+            {
+                string url = "{Path}.csv";
+                string content = FileUtils.ReadStringFromStreaming(url);
+
+                LoadFromString(content);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(string.Format("表{Name}数据有误! ({0})",ex.Message));
+            }
+        }
+
+
+        public static void Clear()
+        {
+            datas.Clear();
+        }
+
+{Contains}
+{Get}
+
+{Get_Field}
+    }
+}

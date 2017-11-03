@@ -1,0 +1,1332 @@
+//1. 使用规则：
+//	(1) 字段只能加，不能减；
+//	(2) 增加的字段只能是optional类型，且必须给出default值，最好还有相关说明；
+//	(3) 不能改变原来字段的序号。
+
+//2. 命名规则：
+//	XXXXReq/Rsp：客户端发来的请求以Req结尾，服务端的相应包以Rsp结尾，
+//					中间的XXXX代表对应的功能，比如LoginReq/Rsp。
+//
+//
+enum PlayerStateType
+{
+    PLAYER_STATE_NONE 		= 0;
+    PLAYER_STATE_IDLE		= 1;
+    PLAYER_STATE_MATCH		= 2;
+    PLAYER_STATE_BATTLE		= 3;
+    PLAYER_STATE_FLEE		= 4;
+	PLAYER_STATE_PUNISH 	= 5;
+}
+
+enum ChangeInfo
+{
+    enm_corps_id = 1;// corps in 1 - 10 
+    enm_corps_autoagree = 2;
+    enm_stagingpost_freeTimes = 11;
+   	enm_fireCount = 12;
+   	enm_superBulletBuyCount = 13;
+   	enm_refreshAssign = 14;
+   	enm_assignTaskLimit = 15;
+}
+
+message PlayerPilotSkill
+{
+	required uint32 skillID	= 1;
+	required uint32 lv	= 2;
+
+}
+
+message PlayerPilot
+{
+	required uint32 level = 1;
+	required uint32 id = 2;
+	required uint32 subid = 3;
+	repeated PlayerPilotSkill skills = 4;
+}
+
+message PlayerTank
+{
+	required uint32 tankID 		= 1;
+	required uint32 tankType 	= 2;
+	required uint32 tankLv 		= 3;
+
+	repeated PlayerPilot 	pilots	= 4;
+}
+
+message PlayerBasicInfo
+{
+	required uint32 gold	= 1;
+	required uint32 coin	= 2;
+	required uint32 exp	= 3;
+	required uint32 lv	= 4;
+	required uint32 rank	= 5;
+	required uint32 type	= 6;
+	required bytes name     = 7; // 玩家昵称
+}
+
+
+
+message PlayerLoginRsp
+{
+	required PlayerBasicInfo info	= 1;
+	required PlayerTank tank	= 2;
+}
+
+
+message PlayerHurtInfo
+{
+	required uint32 target		= 1;
+	required uint32	hurt		= 2;
+}
+
+message PlayerSkill
+{
+	required uint32	skillID			= 1;
+	repeated PlayerHurtInfo	hurtInfos	= 2;
+}
+
+
+message PlayerSkillRsp
+{
+	required uint32	skillID			= 1;
+	repeated PlayerHurtInfo	hurtInfos	= 2;
+}
+
+message PlayerPPVEMatchRsp
+{
+	required uint32	errorCode 	= 1;
+	required uint32	time		= 2;
+}
+
+message PlayerLoginFinishedRsp
+{
+	required bool isInBattle		= 1;
+}
+
+message PlayerRedoJoinBattle
+{
+	required bool isJoinBattle		= 1;
+}
+
+
+
+message PlayerRedoBattleInfo
+{
+	required uint32 remainTime		= 1;
+	required uint32 group1_kill		= 2;
+	required uint32 group2_kill		= 3;
+}
+
+message PlayerRedoBuffInfo
+{
+	required uint32 attacker		= 1;
+	required uint32 buffID			= 2;
+}
+
+message PlayerRedoPlayerInfo
+{
+	required uint32 userID			= 1;
+	required uint32	currHP			= 2;
+	required uint32 speed			= 3;
+	required uint32 group			= 4;
+	required int32	x			= 5;
+	required int32	y			= 6;
+	required int32  z			= 7;
+	required uint32 powerMax		= 8;
+	required uint32 power			= 9;
+
+	repeated PlayerRedoBuffInfo buffInfo	= 10;
+}
+
+message PlayerRedoMonsterInfo
+{
+	required uint32 tankID			= 1;
+	required uint32 tankType		= 2;
+	required uint32	currHP			= 3;
+	required uint32 speed			= 4;
+	required uint32 group			= 5;
+	required int32	x			= 6;
+	required int32	y			= 7;
+	required int32	z			= 8;
+	repeated PlayerRedoBuffInfo buffInfo	= 9;
+}
+
+message PlayerRedoSceneObjInfo
+{
+	required uint32 objID			= 1;
+	required uint32	currHP			= 2;
+	required int32	x			= 3;
+	required int32	y			= 4;
+	required int32	z			= 5;
+}
+
+message PlayerRedoBattleInfoRsp
+{
+	required PlayerRedoBattleInfo	battleInfo	= 1;
+	repeated PlayerRedoPlayerInfo	playerInfo	= 2;
+	repeated PlayerRedoMonsterInfo	monsterInfo	= 3;
+	repeated PlayerRedoSceneObjInfo objectInfo	= 4;
+}
+
+message PlayerState
+{
+}
+
+message PlayerStateRsp
+{
+	required uint32	playerState = 1;
+}
+
+
+enum RankListType
+{
+    RankListType_None 						= 0;
+    RankListType_Lv							= 1;
+    RankListType_Ladder					= 2;
+    RankListType_MatchTimes					= 3;
+    RankListType_Max					= 4;	
+}
+
+enum RankParamType
+{
+    RankParamType_None 						= 0;
+    RankParamType_Lv							= 1;
+    RankParamType_LadderLv				= 2;
+    RankParamType_Lv_Rank					= 3;
+    RankParamType_LadderLv_Rank		= 4;
+}
+
+message RankParam
+{
+	required int32 type = 1;
+	required int32 value = 2;
+}
+
+message PlayerRankInfo
+{
+	required bytes name     = 1; // 玩家昵称
+	required uint32 id     = 2; // 
+	required uint32 avatarid  = 3; // 
+	repeated RankParam rankParamList	= 4;
+}
+
+message AskRankListReq
+{
+	required RankListType RankListType		= 1;
+	required uint32	StartIndex			= 2;
+	required int32	AskCount				= 3;
+}
+
+message AskRankListRsp
+{
+	required RankListType RankListType		= 1;
+	required uint32	StartIndex			= 2;
+	repeated PlayerRankInfo playerInfo	= 3;
+}
+
+message AskMyRankReq
+{
+	required RankListType RankListType              = 1;
+}
+
+message AskMyRankRsp
+{	
+	required RankListType RankListType              = 1;
+	required uint32 Rank = 2;
+	required uint32 Score = 3;
+	required uint32 Popular = 4;
+	optional uint32 Param = 5[default = 0];	
+}
+
+
+message AskPilotTankExpReq
+{
+	required uint32	pilotid		= 1;
+}
+
+message PilotTankExp
+{
+	required uint32	tankID			= 1;
+	required uint32	tankExp			= 2;
+}
+
+message AskPilotTankExpRsp
+{
+	required uint32	pilotid			= 1;
+	repeated PilotTankExp	explist		= 2;
+}
+////////////////// Act Message//////////////////
+message SubActivityInfo
+{
+	required uint32 subid = 1;
+	required uint32 flag = 2;//0.未完成 1.已完成可领取 2.已完成已领取
+	required string	giftItem = 3;
+	required string eventParam = 4;
+}
+
+message ActivityInfo
+{
+	required uint32 id = 1;
+	required uint32 descid = 2;
+	required uint32 counter1 = 3;
+	required uint32 counter2 = 4;
+	required uint32 counter3 = 5;
+	repeated SubActivityInfo subinfo = 6;
+}
+
+message ActivityList
+{
+}
+
+message ActivityListRsp
+{
+	repeated ActivityInfo actlist = 1;
+}
+
+message Activity
+{
+	required uint32 id = 1;
+}
+
+message ActivityRsp
+{
+	required ActivityInfo act = 1;
+}
+
+message ActivityGet
+{
+	required uint32 id = 1;
+	required uint32 subid = 2;
+}
+
+message ActivityDesc
+{
+	required uint32 descid = 1;
+}
+
+message ActivityDescRsp
+{
+	required uint32 descid = 1;
+	required string eventname = 2;
+	required uint32 eventgroup = 3;
+	required string eventdesc = 4;
+	required string showcontent = 5;
+	required uint32 showtype = 6;
+}
+
+message LightNoticeRsp
+{
+	required uint32 noticetype = 1;
+	required string context = 2;
+	required uint32 starttime = 3;
+	required uint32 endtime = 4;
+	required uint32 delay = 5;
+}
+
+message QuickNotify
+{
+	required  uint32 type = 1;//1前进、2撤退、3集合
+}
+
+message QuickTalk
+{
+	required  uint32 mood = 1;
+}
+
+message UnlockTank
+{
+	required uint32 tankconfigid   = 1;
+	required uint32 type 		   = 2; //1钻石,2经验,3金币
+}
+
+message ActivedTankIDRsp
+{
+	repeated uint32 tankconfigid   = 1;		
+}
+
+message GuideInfo
+{
+}
+
+message GuideFinish
+{
+}
+
+message GuideLog
+{
+	required uint32 step = 1;
+	required uint32 substep = 2;
+}
+
+message ShopReq
+{
+	required uint32 shopid = 1;
+}
+
+message ShopVec
+{
+	required uint32	shopid = 1;
+	required string	shopname = 2;
+}
+
+message ShopStu
+{
+	required uint32	shopid = 1;
+	required uint32	subid  = 2;     
+	required uint32	order  = 3;      //序号
+	required uint32	itemid  = 4;	 //道具ID
+	required uint32	moneytype  = 5;  //货币类型
+	required uint32	discount  = 6;   //原价
+	required uint32	shoplabel  = 7;  //标签
+	required uint32	easybuy  = 8;    //快速购买
+	required uint32	limitnum  = 9;  //单次购买上限
+	required uint32	limitshow  = 10; //限购显示
+	required uint32	itemnum = 11; //道具数量
+	required uint32	firstrecharge = 12; //首充倍率
+	required uint32	limitcount = 13; //限购购买次数
+	required uint32	limitcounted = 14; //限购已购买次数
+	required uint32	price  = 15;   //现价
+	required string res  = 16;     //资源
+	required uint32	preview  = 17;   //是否显示
+}
+
+message LimitBuy
+{
+	required uint32	shopid = 1;
+	required uint32	subid  = 2;     
+	required uint32	limitcounted = 3; //限购已购买次数
+}
+
+message ShopRsp
+{
+	required uint32	shopid = 1;
+	repeated ShopVec shopvec = 2;
+	repeated ShopStu shopstu = 3;
+}
+
+message ShopBuy
+{
+	required uint32 shopid = 1;
+	required uint32 subid = 2;
+	required uint32 num = 3;
+}
+
+message PilotIdFavor
+{
+	required uint32 id = 1;
+	required uint32 favor = 2;
+}
+message DeclareLove
+{
+	required uint32 pilotId = 1;
+	required uint32 itemId = 2;
+}
+
+message DeclareLoveRsp
+{
+	required uint32	 errorCode = 1;
+	repeated PilotIdFavor pilotFavor = 2;
+}
+
+message TouchPilot
+{
+	required uint32 pilotId = 1;
+	required uint32 part = 2;
+}
+
+message TouchPilotRsp
+{
+	required uint32 pilotId = 1;
+	required uint32 addFavor = 2;
+	required uint32 touchneedtime = 3;
+	required uint32 touchremainCount = 4;
+}
+
+message SentGiftPilotReq
+{
+        required uint32 pilotId = 1;
+        required uint32 itemId = 2;
+        required uint32 itemNum = 3;
+}
+
+message SendGiftPilotRsp
+{
+        required uint32 pilotId = 1;
+        required uint32 addFavor = 2;
+}
+
+message AddAI
+{
+
+}
+
+message StopBattleServerRsp
+{
+}
+
+message Report
+{
+	required uint32 bereported = 1;
+	required uint32 type = 2;
+	required uint32 reporttype = 3;
+	required string msg  = 4;
+	required string talk = 5;
+	required uint32 reporterres = 6;
+	required uint32 bereportedres = 7;
+}
+
+// 涂装
+message CoatingData
+{
+    required uint32 id = 1;
+    required uint32 type = 2;
+    required uint32 isEquip = 3;
+    required uint32 obtainTime = 4;
+}
+
+message CoatingInfoReq
+{
+}
+
+message CoatingInfo
+{
+        required uint32 tankId = 1;
+        repeated CoatingData dataList = 2;
+}
+
+message CoatingInfoRsp
+{
+	repeated CoatingInfo dataList = 1;
+}
+
+message CoatingBuyReq
+{
+	required uint32 tankId = 1;
+}
+
+message CoatingBuyRsp
+{
+	required uint32 state = 1; // 1成功　２成功折换成金币　３　失败
+	optional uint32 tankId = 2;
+	optional CoatingData info = 3;
+}
+
+message CoatingEquipOptionReq
+{
+	required uint32 type = 1; // 1装备　２脱掉
+	required uint32 tankId = 2;
+	required uint32 coatingId = 3;
+}
+
+message CoatingEquipOptionRsp
+{
+	required uint32 type = 1;
+	required uint32 tankId = 2;
+    required CoatingData info  = 3;
+}
+
+message CorpsLvNameInfo
+{
+	required uint32 lv = 1;
+	required string name = 2;
+}
+
+message ApplyMemberInfo
+{
+	required uint32 playerid = 1;
+	required string playername = 2;
+	required uint32 playerlevel = 3;
+	required uint32 head = 4;
+}
+
+message CorpsMemberInfo
+{
+	required uint32 playerid = 1;
+	required string playername = 2;
+	required uint32 playerlevel = 3;
+	required uint32 memberlevel = 4;
+	required uint32 vip = 5;
+	required uint32 head = 6;
+	required uint32 active = 7;
+}
+
+message CorpsInfo
+{	
+	required uint32 	corpsid = 1;
+	required uint32 	corpslevel = 2;
+	required uint32		corpsiconid = 3;
+	required uint32		autoagree = 4;
+	required string 	corpsname = 5;
+	repeated CorpsLvNameInfo 	corpslvname = 6;
+	required string 	corpsintroduce = 7;
+	repeated CorpsMemberInfo 	members = 8;
+	repeated ApplyMemberInfo	applylist = 9;
+}
+
+//get corps info
+message GetCorpsInfo
+{
+	required uint32 corpsid = 1;
+}
+
+message GetCorpsInfoRsp
+{
+	required uint32 errcode = 1;
+	required CorpsInfo  corpsInfo = 2;
+}
+
+//get corps apply
+message GetCorpsApply
+{
+	required uint32 corpsid = 1;
+}
+
+message GetCorpsApplyRsp
+{	
+	required uint32 errcode = 1;
+	repeated ApplyMemberInfo apply = 2;
+}
+
+//create
+message CreateCorps
+{
+	required string corpsname = 1;
+	required uint32 iconid = 2;
+}
+
+message CreateCorpsRsp
+{
+	required uint32 errcode = 1;
+	required CorpsInfo corps = 2;
+}
+
+
+//apply enter
+message ApplyEnterCorps
+{
+	required uint32 corpsid = 1;
+}
+
+message ApplyEnterCorpsRsp
+{
+	required uint32 errcode = 1;
+	optional uint32 time = 2;
+}
+
+//noti someone apply enter corps
+message NewApplyNoti
+{
+	
+}
+
+//agree apply
+message AgreeApplyCorps
+{
+	required uint32 playerid = 1;
+	required bool   agree = 2;
+}
+
+message AgreeApplyCorpsRsp
+{
+	required uint32 errcode = 1;
+	required uint32 playerid = 2;
+}
+
+message AgreeApplyCorpsNoti
+{
+	required uint32 corpsid = 1;
+	required string corpsname = 2;
+	required bool 	agree = 3;
+}
+
+//kick out
+message KickOutCorpsMember
+{
+	required uint32 playerid = 1;	
+}
+
+
+message KickOutCorpsMemberRsp
+{
+	required uint32 errcode = 1;
+	required uint32 playerid = 2;	
+}
+
+message KickOutCorpsMemberNoti
+{
+	required uint32 opplayerid = 1;
+	required string opplayername = 2;
+	required uint32 corpsid = 3;
+	required string corpsname = 4;
+}
+
+//leave
+message LeaveCorps
+{
+	
+}
+message LeaveCorpsRsp
+{
+	required uint32 errcode = 1;
+}
+
+
+//change corps name
+message ChangeCorpsName
+{
+	required string newname = 1;
+}
+message ChangeCorpsNameRsp
+{
+	required uint32 errcode = 1;
+	optional uint32 time = 2;
+}
+
+//change corps introduce
+message ChangeCorpsIntroduce
+{
+	required string newintroduce = 1;
+}
+message ChangeCorpsIntroduceRsp
+{
+	required uint32 errcode = 1;
+}
+
+//appoint subleader
+message AppointSubLeader
+{
+	required uint32 playerid = 1;
+	required uint32 down = 2;
+}
+message AppointSubLeaderRsp
+{
+	required uint32 errcode = 1;
+}
+message AppointSubLeaderNoti
+{
+	required uint32 subleaderid = 1;
+	required uint32 memberlevel = 2;
+}
+
+//change corps lv name
+message ChangeCorpsLvName
+{
+	repeated CorpsLvNameInfo newlvname = 1;
+}
+message ChangeCorpsLvNameRsp
+{
+	required uint32 errcode = 1;
+}
+
+//search corps
+message SearchCorps
+{
+	required uint32 corpsid = 1;
+}
+
+message SearchCorpsRsp
+{
+	required uint32 errcode = 1;
+	repeated CorpsInfo corps = 2;
+}
+
+//change icon id
+message ChangeCorpsIcon
+{
+	required uint32 iconid = 1;
+}
+message ChangeCorpsIconRsp
+{
+	required uint32 errcode = 1;
+}
+
+//set auto agree 
+message CorpsAutoAgree
+{
+	required uint32 autoagree = 1; 
+}
+message CorpsAutoAgreeRsp
+{
+	required uint32 errcode = 1;
+}
+//donate item
+message CorpsWantItem
+{
+	required uint32 wantid = 1;
+	required uint32 itemid = 2;
+	required uint32 done = 3;
+	required uint32 total = 4;
+	required uint32 vip = 5;
+	required string name = 6;
+	required uint32 time = 7;
+}
+//want list
+message CorpsWantList
+{
+	required uint32 corpsid = 1;
+}
+
+message CorpsWantListRsp
+{
+	required uint32 errcode = 1;
+	repeated CorpsWantItem otheritems = 2;
+	repeated CorpsWantItem myitems = 3;
+}
+//want 
+message CorpsWant
+{
+	repeated uint32 itemid = 1;
+}
+
+message CorpsWantRsp
+{
+	required uint32 errcode = 1;
+	repeated CorpsWantItem item = 2;
+}
+
+
+//donate
+message CorpsDonate
+{
+	required uint32 wantid = 1;
+}
+
+message CorpsDonateRsp
+{
+	required uint32 errcode = 1;
+	required uint32 wantid = 2;
+}
+
+//has want noti
+message HasWantNoti
+{
+	required CorpsWantItem items = 1;
+} 
+
+message ChangeKeyValue
+{	
+	required uint32 key = 1;
+	required uint32 value = 2;
+}
+
+message ChangeNoti
+{
+	repeated ChangeKeyValue changes = 1;
+}
+
+//in room list
+enum CorpsRoomMemberState
+{	
+	enm_online = 1;
+	enm_offline = 2;
+	enm_inbattle = 3;
+	enm_inroom = 4;
+}
+enum RoomMemberOp
+{
+	enm_modify = 1;
+	enm_del = 2;
+	enm_add = 3;
+}
+message CorpsRoomMember
+{
+	required uint32 playerid = 1;
+	required uint32 playerlevel = 2;
+	required uint32 head = 3;
+	required string playername = 4;
+	required string corpslvname = 5;
+	required CorpsRoomMemberState state = 6;
+	required RoomMemberOp op = 7;
+}
+
+message CorpsRoomList
+{
+	required uint32 corpsid = 1;
+}
+message CorpsRoomListRsp
+{
+	required uint32 errcode = 1;
+	repeated CorpsRoomMember member = 2;
+}
+
+message CorpsRoomMemberNoti
+{
+	required CorpsRoomMember member = 1;
+}
+
+message FriendCorpsInfoChangeNoti
+{
+	required uint32 playerid = 1;
+	required string corpsname = 2;
+	required string lvname = 3;
+}
+
+
+//////////
+message KickMyAss
+{
+
+}
+message ItemInfo
+{
+	required uint32 itemId = 1;
+	required uint32 count = 2;
+}
+
+message PPVEBattleResultRsp
+{
+	required uint32 parameter = 1;
+	required uint32 gold = 2;
+	required uint32 exp = 3;
+	required uint32 rate = 4;
+	repeated ItemInfo itemList = 5;
+	repeated ItemInfo itemListSuper = 6;
+}
+
+message PPVETaskData
+{
+	required uint32 group = 1;
+	required uint32 count = 2;
+	required uint32 reset = 3;
+}
+
+message PPVETaskUpdateRsp
+{
+	repeated PPVETaskData taskDataList = 1;
+}
+
+
+message DailySignInfoReq
+{
+
+}
+
+message DailySignInfoRsp
+{
+        required uint32 month = 1;
+        required uint32 today = 2;
+        required uint32 buqiantimes = 3;
+        repeated uint32 signList = 4;
+        repeated uint32 rewardList = 5;
+}
+
+message DailySignInReq
+{
+        required uint32 type = 1; // 1 正常签到 2 购买签到
+}
+
+message DailySignInRsq
+{
+        required uint32 pos = 1;
+        required uint32 buqiantimes = 2;
+}
+
+message DailySignGetRewardReq
+{
+        required uint32 index = 1;
+}
+
+message DailySignGetRewardRsq
+{
+        repeated uint32 rewardList = 1;
+}
+
+message StagingPostInfoReq
+{
+	required uint32 type = 1;// 0正常请求 1免费刷新 2钻石刷新
+}
+
+message StagingPostData
+{
+        required uint32 id = 1;
+        required uint32 isBuy = 2;
+}
+
+message StagingPostInfoRsp
+{
+	required uint32 refreshTimes = 1;
+        repeated StagingPostData shopList = 2;
+}
+
+message StagingPostBuyReq
+{
+	required uint32 index = 1;
+}
+
+message StagingPostBuyRsq
+{
+        required uint32 index = 1;
+}
+
+message TurntableInfoReq
+{
+        required uint32 type = 1;// 0正常请求 1金币免费 2金币一次 3金币十次 4钻石免费 5钻石一次 6钻石十次 7 成员免费 8成员钻石一次 9成员钻石10次
+}
+
+message TurntableWheelInfo
+{
+        required uint32 itemId = 1;
+        required uint32 itemNum = 2;
+        required uint32 pos = 3;
+}
+
+message TurntableInfoRsp
+{
+        required uint32 type = 1;
+        required uint32 goldRemainTime = 2; // 金币倒计时剩余时间
+        required uint32 goldRecoverTimes = 3; // 可以恢复次数
+        required uint32 diamondRemainTime = 4; // 钻石免费倒计时
+        required uint32 diamondTenTimes = 5; // 钻石十连抽总次数
+        required uint32 diamondBottomTimes = 6; // 中大奖次数
+        required uint32 pilotRemainTime = 7; // 成员免费倒计时
+        required uint32 bigrewarditemid = 8; // 大奖id
+        required uint32 bigrewarditemnum = 9; // 大奖数量
+        required uint32 bigrewarditempos = 10; // 大奖位置
+        repeated TurntableWheelInfo wheelInfo = 11;
+}
+
+message Invite
+{
+	required uint32 inviteId = 1;
+}
+
+message InviteRsp
+{
+	required uint32 id = 1; 
+}
+
+message InviteList
+{
+
+}
+
+message InvitePlayerInfo
+{
+	required uint32 id = 1;
+	required uint32 level = 2;
+	required uint32 icon = 3;
+	required uint32 vip = 4;
+	required string name = 5;
+}
+
+message InviteListRsp
+{
+	repeated InvitePlayerInfo infoList = 1;
+}
+
+message InviteTask
+{
+
+}
+
+message InviteTaskRsp
+{
+	repeated uint32 id = 1;
+}
+
+message InviteTaskReward
+{
+	required uint32 id = 1;
+}
+
+message InviteTaskRewardRsp
+{
+	required uint32 id = 1;
+}
+
+message HeadNoti
+{
+	required uint32 head = 1;
+}
+
+message SvnVersion
+{
+	
+}
+
+message SvnVersionRsp
+{
+	required uint32 serverVer = 1;
+	required uint32 serverConfig = 2;
+	required uint32 serverLua = 3;
+}
+
+message TankDevExpChangeGlobalExpReq
+{
+        required uint32 exp = 1;  
+        repeated uint32 tankId = 2;
+}
+
+message TankDevExpChangeGlobalExpRsp
+{
+        required uint32 state = 1;
+}
+
+message CollegeUnopened
+{
+	required uint32 interaction = 1;
+	repeated uint32 id = 2;
+}
+
+message PveRush
+{
+	required uint32 id = 1;
+	required uint32 count = 2;
+}
+
+message RewardInfo
+{
+	required uint32 gold = 1;
+	required uint32 exp = 2;
+	repeated ItemInfo itemList = 3; 
+}
+
+message PveRushRsp
+{
+	required uint32 rate = 1;
+	repeated RewardInfo reward = 2;
+}
+
+message PveReset
+{
+	required uint32 id = 1;
+}
+
+message PveResetRsp
+{
+	required uint32 id = 1;
+	required uint32 count = 2;
+}
+
+message RechargeRet
+{
+	required uint32 price = 1;
+	required string	gameorder = 2;
+}
+
+message Pair
+{
+	required uint32 first = 1;
+        required uint32 second = 2;
+}
+
+message PlayerExtraInfo
+{
+        repeated Pair info = 1;
+}
+
+enum OpFriendType
+{
+	enm_del_friend = 1;
+	enm_refuse_friend = 2;
+	enm_accept_friend = 3;
+}
+message BatchOpFriend
+{
+	required OpFriendType type = 1;
+	repeated uint32 id = 2;
+}
+
+message BatchOpFriendRsp
+{
+	required uint32 errcode = 1;
+	required OpFriendType type = 2;
+}
+
+message BattleQuickChat
+{
+        required uint32 playerId = 1;
+        required uint32 cmd  = 2;
+}
+
+enum BattleResult
+{
+	BATTLE_RESULT_KILL_WIN = 1;
+	BATTLE_RESULT_CAPTUREFLAG_WIN = 2;
+	BATTLE_RESULT_KILL_FAIL = 3;
+	BATTLE_RESULT_CAPTUREFLAG_FAIL = 4;
+	
+}
+
+message TankChestReq
+{
+	required uint32 type = 1; //1平民弹药 2超级弹药
+	required uint32 choice = 2; //宝箱编号1-3
+	required uint32 ten = 3; //1一发 2十连
+}
+
+message TankChestRsp
+{
+	required uint32 errcode = 1;
+}
+
+message BuySuperBullet
+{
+	required uint32 count = 1;
+	required uint32 choice = 2; //宝箱编号1-3
+}
+
+message BuySuperBulletRsp
+{
+	required uint32 errcode = 1;
+}
+
+message TankDecorationInfoData
+{
+        required uint32 tankid = 1;
+        required uint32 decid  = 2;
+        required bool isequip  = 3;
+}
+
+message TankDecorationInfoReq
+{
+}
+
+message TankDecorationInfoRsp
+{
+        repeated TankDecorationInfoData info = 1;
+}
+
+message TankDecorationBuyReq
+{
+        required uint32 tankid = 1;
+        required uint32 decid = 2;
+}
+
+message TankDecorationBuyRsp
+{
+        required uint32 state = 1;
+        required TankDecorationInfoData data = 2;
+}
+
+message TankDecorationEquipReq
+{
+        required uint32 tankid = 1;
+        required uint32 decid = 2;
+}
+
+message TankDecorationEquipRsp
+{
+       required TankDecorationInfoData data = 1;
+}        
+
+//assignment
+
+message Assigninfo
+{
+	required uint32 id = 1;
+	required uint32 taskid = 2;
+	required uint32 accepttime = 3;//接任务时间戳
+	required uint32 successpct = 4;//成功率
+	required uint32 tankid = 5;
+	required uint32 pilotid = 6;
+	required uint32 state = 7;//1未接取 2进行中 3成功完成可领取 4失败完成可领取
+}
+
+message AssignList
+{
+}
+
+message AssignListRsp
+{
+	repeated Assigninfo assignlist = 1;
+}
+
+message Assign
+{
+	required uint32 id = 1;
+}
+
+message AssignRsp
+{
+	required Assigninfo assign = 1;
+}
+
+message AcceptAssign//接取
+{
+	required uint32 id = 1;
+	required uint32 tankid = 2;
+	required uint32 pilotid = 3;
+}
+
+message GetRewardAssign//领取奖励
+{
+	required uint32 id = 1;
+}
+
+message RefreshAssign//刷新
+{
+	required uint32 byenergy = 1; //0免费刷新 1钻石刷新
+}
+
+message CancelAssign//取消
+{
+	required uint32 id = 1;
+}
+
+message ItemExchangeReq
+{
+        required uint32 id = 1;
+        required uint32 num = 2;
+}
+
+message Best_kill_info
+{
+	required string name = 1;
+	required uint32 kill = 2;
+}
+
+message WorldMapInfoReq
+{
+	
+}
+message WorldMapInfoRsp
+{
+       	required uint32 d_kill = 1;
+	required uint32 s_kill = 2;
+	required uint32 m_kill = 3;
+	repeated Best_kill_info best_commander = 4;
+	repeated Best_kill_info best_corps = 5;
+	required uint32 mine_kill = 6;
+	required uint32 corps_kill = 7;
+}
+
+message TankRepeatObtainItemRsp
+{
+        required uint32 tankdId = 1;
+        required uint32 itemId = 2;
+        required uint32 itemNum = 3;
+}
+
+message AssignSuccesspct//委派成功率
+{
+	required uint32 taskid = 1;
+	required uint32 tankid = 2;
+	required uint32 pilotid = 3;
+}
+
+message AssignSuccesspctRsp//委派成功率
+{
+	required uint32 taskid = 1;
+	required uint32 tankid = 2;
+	required uint32 pilotid = 3;
+	required uint32 successpct = 4;
+}
+
+message AssignResultRsp//委派结果
+{
+	required uint32 id = 1;
+	required uint32 taskid = 2;
+	required uint32 result = 3;//1成功2失败
+}
+
+message QuickMatch
+{
+
+}
+
+message QuickMatchRsp
+{
+	required uint32 battleId = 1;
+	required uint32 roomType = 2;
+}

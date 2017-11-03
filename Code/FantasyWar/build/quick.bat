@@ -1,0 +1,1 @@
+build.bat quick gen_res
