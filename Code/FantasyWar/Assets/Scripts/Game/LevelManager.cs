@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using SuperBoBo;
 
 public class LevelManager : MonoBehaviour
 {
@@ -16,9 +17,9 @@ public class LevelManager : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        TextAsset ta = ResManager.Load("MapDatas/" + "level1") as TextAsset;
-        string data = ta.text;
-        mapData = LitJson.JsonMapper.ToObject<MapData>(data);
+        mapData = ResManager.Load("MapDatas/" + "level1") as MapData;
+        //string data = ta.text;
+        //mapData = LitJson.JsonMapper.ToObject<MapData>(data);
         GenMap();
         GenActor(1);
         PrepareCamera();

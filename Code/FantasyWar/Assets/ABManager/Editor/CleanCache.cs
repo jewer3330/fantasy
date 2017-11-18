@@ -3,20 +3,22 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-
-public class CleanCache
+namespace SuperBoBo
 {
-
-
-
-    [MenuItem("Package/工具/清空缓存目录")]
-    public static void Main()
+    public class CleanCache
     {
-        if (Directory.Exists(Application.persistentDataPath))
+
+
+
+        [MenuItem("Package/工具/清空缓存目录")]
+        public static void Main()
         {
-            Directory.Delete(Application.persistentDataPath, true);
+            if (Directory.Exists(Application.persistentDataPath))
+            {
+                Directory.Delete(Application.persistentDataPath, true);
+            }
         }
+
+
     }
-
-
 }

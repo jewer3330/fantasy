@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using UnityEditor.Animations;
 using UnityEditor;
+using SuperBoBo;
 
 namespace Assets.Editor.AnimatorEditor
 {

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using System;
+using SuperBoBo;
 
 public class MapEditorTool : EditorWindow
 {
@@ -191,14 +192,13 @@ public class MapEditorTool : EditorWindow
     private void Load()
     {
         
-        string path = EditorUtility.OpenFilePanel("打开", mapSavePath, "json");
+        string path = EditorUtility.OpenFilePanel("打开", mapSavePath, "asset");
         if (string.IsNullOrEmpty(path))
         {
             Debug.LogError("地图名称是空");
             return;
         }
-        string d = FileUtilTool.ReadFile(path);
-        MapData data = LitJson.JsonMapper.ToObject<MapData>(d);
+        MapData data = AssetDatabase.LoadAssetAtPath<MapData>(path);
 
         if (data == null)
         {
@@ -234,13 +234,13 @@ public class MapEditorTool : EditorWindow
     void Save()
     {
 
-        string mapName = EditorUtility.SaveFilePanelInProject("保存", "new.json", "json", "保存地图配置", mapSavePath);
+        string mapName = EditorUtility.SaveFilePanelInProject("保存", "new.asset", "asset", "保存地图配置", mapSavePath);
         if (string.IsNullOrEmpty(mapName))
         {
             Debug.LogError("地图名称是空");
             return;
         }
-        MapData map = new MapData();
+        MapData map = ScriptableObject.CreateInstance<MapData>();
         foreach (var k in garbage)
         {
             MapCell mapCell = k.GetComponent<MapCell>();
@@ -253,10 +253,8 @@ public class MapEditorTool : EditorWindow
         map.mapHeight = mapHeight;
         map.mapWidth = mapWidth;
 
-        string d = LitJson.JsonMapper.ToJson(map);
 
-        FileUtilTool.WriteFile(mapName, d);
-
+        AssetDatabase.CreateAsset(map, mapName);
         AssetDatabase.Refresh();
         AssetDatabase.SaveAssets();
     }

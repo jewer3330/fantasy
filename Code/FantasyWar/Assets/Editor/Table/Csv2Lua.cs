@@ -60,7 +60,7 @@ public class Csv2Lua
 
         string path = string.Format("{0}/{1}.lua","Assets/Lua/Table",name);
 
-        FileUtils.WriteFile(path,ret,false);
+        SuperBoBo.FileUtils.WriteFile(path,ret,false);
     }
 
     public static string luaTableFormat = @"

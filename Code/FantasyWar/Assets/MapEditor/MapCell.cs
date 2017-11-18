@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MapData
+public class MapData : ScriptableObject
 {
     public List<MapCellData> cells = new List<MapCellData>();
     public int mapWidth;
