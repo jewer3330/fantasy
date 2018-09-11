@@ -23,43 +23,7 @@ public class MapEditorTool : EditorWindow
 
     public void Start()
     {
-        string  [] dirs = System.IO.Directory.GetDirectories(Application.dataPath + "/Resources/MapRes");
-
-        foreach (var k in dirs)
-        {
-            string []files = System.IO.Directory.GetFiles(k,"*.prefab");
-            List<ObjectInfo> objects = new List<ObjectInfo>();
-            string path = k.Replace("\\", "/");
-            string y = path.Substring(path.LastIndexOf('/') + 1);
-            int key = int.Parse(y);
-            List<GUIContent> contents = new List<GUIContent>();
-            foreach (var f in files)
-            {
-                ObjectInfo oi = new ObjectInfo();
-                oi.path = f.Replace("\\", "/");
-                string p = oi.path.Substring(oi.path.IndexOf("Resources") + "Resources".Length + 1);
-                string prefab = p.Substring(0, p.LastIndexOf("."));
-                oi.prefabName = prefab;
-                oi.go = Resources.Load(prefab);
-                Texture2D tex = AssetPreview.GetAssetPreview(oi.go);
-                while (tex == null)
-                {
-                    tex = AssetPreview.GetAssetPreview(oi.go);
-                    System.Threading.Thread.Sleep(1);
-                }
-                oi.texture = Instantiate(tex);
-                oi.id = key;
-                objects.Add(oi);
-                contents.Add(new GUIContent(oi.texture, oi.prefabName));
-            }
-
-
-            ObjectPathInfo opi = new ObjectPathInfo();
-            opi.id = key;
-            opi.objInfos = objects;
-            opi.contents = contents;
-            paths.Add(opi);
-        }
+        
 
 
     }
@@ -69,38 +33,22 @@ public class MapEditorTool : EditorWindow
         Repaint();
     }
 
-    public class ObjectInfo
-    {
-        public string path;
-        public string prefabName;
-        public UnityEngine.Object go;
-        public Texture2D texture;
-        public int id;
-       
-    }
+ 
 
-    public class ObjectPathInfo
-    {
-        public int id;
-        public List<ObjectInfo> objInfos = new List<ObjectInfo>();
-        public int select = -1;
-        public List<GUIContent> contents = new List<GUIContent>();
 
-    }
 
 
     private int mapWidth = 10;
     private int mapHeight = 10;
     private List<GameObject> garbage = new List<GameObject>();
-
-    public List<ObjectPathInfo> paths = new List<ObjectPathInfo>();
-
-    private ObjectInfo currentSelect;
+    private GameObject currentSelect;
     private Vector2 scrollPosition;
+
+
     private void OnGUI()
     {
-        mapWidth = EditorGUILayout.IntField("地图宽度", mapWidth);
-        mapHeight = EditorGUILayout.IntField("地图高度", mapHeight);
+        mapWidth = EditorGUILayout.IntField("mapWidth", mapWidth);
+        mapHeight = EditorGUILayout.IntField("mapHeight", mapHeight);
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("create"))
         {
@@ -112,6 +60,8 @@ public class MapEditorTool : EditorWindow
         }
         EditorGUILayout.EndHorizontal();
 
+        currentSelect = EditorGUILayout.ObjectField("select go", currentSelect, typeof(GameObject), true) as GameObject;
+
 
         GUI.color = Color.green;
         if (GUILayout.Button("save"))
@@ -119,90 +69,47 @@ public class MapEditorTool : EditorWindow
             Save();
         }
         GUI.color = Color.white;
-        GUILayout.Label("当前Cell信息");
+        GUILayout.Label("info");
+        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
         if (Selection.gameObjects != null)
         {
             foreach (var k in Selection.gameObjects)
             {
                 MapCell cell = k.gameObject.GetComponent<MapCell>();
-
-                cell.start = EditorGUILayout.Toggle("startpoint", cell.start);
-            }
-        }
-
-        scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-        foreach (var k in paths)
-        {
-
-            
-            GUILayout.BeginHorizontal();
-            GUILayout.Label(Table.Map.Get(k.id).Name);
-            GUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-
-            int select = GUILayout.SelectionGrid(k.select, k.contents.ToArray(), 3);
-
-            //foreach (var v in k.objInfos)
-            //{
-            //    if (v.texture == null )
-            //    {
-            //        v.texture = AssetPreview.GetAssetPreview(v.go);
-            //    }
-            //}
-            
-
-            if (k.select != select)
-            {
-                k.select = select;
-                if (currentSelect != null)
+                if (cell)
                 {
-                    var pathInfo = FindPathInfo(currentSelect);
-                    if (pathInfo != null && pathInfo != k)
-                    {
-                        pathInfo.select = -1;
-                    }
-                }
-
-                currentSelect = k.objInfos[k.select];
-            }
-
-            EditorGUILayout.EndHorizontal();
-            EditorGUILayout.Space();
-        }
-
-        GUILayout.EndScrollView();
-    }
-
-    private ObjectPathInfo FindPathInfo(ObjectInfo info)
-    {
-        foreach (var k in paths)
-        {
-            foreach (var v in k.objInfos)
-            {
-                if (v == info)
-                {
-                    return k;
+                    cell.start = EditorGUILayout.Toggle("startpoint", cell.start);
+                    cell.id = EditorGUILayout.IntField("id", cell.id);
+                    EditorGUILayout.LabelField(cell.x.ToString());
+                    EditorGUILayout.LabelField(cell.y.ToString());
+                    EditorGUILayout.LabelField(cell.h.ToString());
+                    EditorGUILayout.LabelField(cell.res);
                 }
             }
         }
-        return null;
+
+        EditorGUILayout.EndScrollView();
     }
+
+  
 
     private void Load()
     {
         
         string path = EditorUtility.OpenFilePanel("打开", mapSavePath, "asset");
+
         if (string.IsNullOrEmpty(path))
         {
-            Debug.LogError("地图名称是空");
+            Debug.LogError("name is empty");
             return;
         }
+        path = path.Substring(path.IndexOf("Assets/"));
+        //Debug.Log(path);
         MapData data = AssetDatabase.LoadAssetAtPath<MapData>(path);
 
         if (data == null)
         {
-            Debug.LogError("地图格式不正确");
+            Debug.LogError("mapdata error");
             return;
         }
 
@@ -216,7 +123,7 @@ public class MapEditorTool : EditorWindow
 
         for (int i = 0; i < data.cells.Count; i++)
         {
-            GameObject go = GameObject.Instantiate(Resources.Load(data.cells[i].res)) as GameObject;
+            GameObject go = GameObject.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(data.cells[i].res));
             go.transform.position = new Vector3(data.cells[i].x, data.cells[i].h, data.cells[i].y);
             MapCell cell = go.AddComponent<MapCell>();
             cell.x = data.cells[i].x;
@@ -284,15 +191,6 @@ public class MapEditorTool : EditorWindow
             GameObject.DestroyImmediate(k);
         }
 
-        foreach (var k in paths)
-        {
-            foreach (var v in k.objInfos)
-            {
-                GameObject.DestroyImmediate(v.texture);
-            }
-        }
-
-        paths.Clear();
         Resources.UnloadUnusedAssets();
         AssetDatabase.Refresh();
     }
@@ -314,17 +212,16 @@ public class MapEditorTool : EditorWindow
             foreach (var k in gos)
             {
                 MapCell cell = k.GetComponent<MapCell>();
-                if (cell != null && cell.res != currentSelect.prefabName)
+                if (cell != null && cell.res != AssetDatabase.GetAssetPath(currentSelect))
                 {
-                    GameObject go = GameObject.Instantiate(currentSelect.go) as GameObject;
+                    GameObject go = GameObject.Instantiate(currentSelect) as GameObject;
                     go.transform.position = k.transform.position;
                     MapCell c = go.AddComponent<MapCell>();
                     c.x = cell.x;
                     c.y = cell.y;
                     c.h = cell.h;
                     c.start = cell.start;
-                    c.res = currentSelect.prefabName;
-                    c.id = currentSelect.id;
+                    c.res = AssetDatabase.GetAssetPath(currentSelect);
                     this.garbage.Remove(k);
                     this.garbage.Add(go);
                     GameObject.DestroyImmediate(k);

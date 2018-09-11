@@ -22,7 +22,7 @@
 	float _BlurSize;
 	float _BlurArea;
 
-	#ifdef SHADER_API_D3D11
+	#if defined(SHADER_API_D3D11) || defined(SHADER_API_GLCORE)
 	#define SAMPLE_TEX(sampler, uv) tex2Dlod(sampler, float4(uv,0,1))
 	#else
 	#define SAMPLE_TEX(sampler, uv) tex2D(sampler, uv)

@@ -13,11 +13,11 @@ public class LevelManager : MonoBehaviour
     public List<MapCell> startPositions = new List<MapCell>();
     public Player player;
     public PlayerCamera playerCamera;
-
+    public string assetPath = "Map/level1";
     // Use this for initialization
     void Start ()
     {
-        mapData = ResManager.Load("MapDatas/" + "level1") as MapData;
+        mapData = ResManager.Load(assetPath) as MapData;
         //string data = ta.text;
         //mapData = LitJson.JsonMapper.ToObject<MapData>(data);
         GenMap();
@@ -32,7 +32,7 @@ public class LevelManager : MonoBehaviour
 
         for (int i = 0; i < mapData.cells.Count; i++)
         {
-            GameObject go = GameObject.Instantiate(Resources.Load(mapData.cells[i].res)) as GameObject;
+            GameObject go = GameObject.Instantiate(ResManager.Load(mapData.cells[i].res.Replace("Assets/Resources/",string.Empty))) as GameObject;
             go.transform.position = new Vector3(mapData.cells[i].x, mapData.cells[i].h, mapData.cells[i].y);
             MapCell cell = go.AddComponent<MapCell>();
             cell.x = mapData.cells[i].x;
