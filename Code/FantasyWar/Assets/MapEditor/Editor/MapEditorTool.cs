@@ -43,7 +43,7 @@ public class MapEditorTool : EditorWindow
     private List<GameObject> garbage = new List<GameObject>();
     private GameObject currentSelect;
     private Vector2 scrollPosition;
-
+    private bool draw;
 
     private void OnGUI()
     {
@@ -60,6 +60,7 @@ public class MapEditorTool : EditorWindow
         }
         EditorGUILayout.EndHorizontal();
 
+        draw = EditorGUILayout.ToggleLeft("draw ?", draw);
         currentSelect = EditorGUILayout.ObjectField("select go", currentSelect, typeof(GameObject), true) as GameObject;
 
 
@@ -80,6 +81,7 @@ public class MapEditorTool : EditorWindow
                 {
                     cell.start = EditorGUILayout.Toggle("startpoint", cell.start);
                     cell.id = EditorGUILayout.IntField("id", cell.id);
+                    cell.cost = EditorGUILayout.IntField("cost", cell.cost);
                     EditorGUILayout.LabelField(cell.x.ToString());
                     EditorGUILayout.LabelField(cell.y.ToString());
                     EditorGUILayout.LabelField(cell.h.ToString());
@@ -126,12 +128,7 @@ public class MapEditorTool : EditorWindow
             GameObject go = GameObject.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(data.cells[i].res));
             go.transform.position = new Vector3(data.cells[i].x, data.cells[i].h, data.cells[i].y);
             MapCell cell = go.AddComponent<MapCell>();
-            cell.x = data.cells[i].x;
-            cell.y = data.cells[i].y;
-            cell.h = data.cells[i].h;
-            cell.id = data.cells[i].id;
-            cell.res = data.cells[i].res;
-            cell.start = data.cells[i].start;
+            cell.SetData(data.cells[i]);
             garbage.Add(go);
         }
 
@@ -179,6 +176,7 @@ public class MapEditorTool : EditorWindow
                 cell.y = j;
                 cell.h = height;
                 cell.start = false;
+                cell.cost = 1;
                 garbage.Add(go);
             }
         }
@@ -197,7 +195,7 @@ public class MapEditorTool : EditorWindow
 
     void Update()
     {
-        if (Selection.gameObjects != null)
+        if (Selection.gameObjects != null && draw)
         {
             ChangeGameObjectType(Selection.gameObjects);
         }
@@ -217,10 +215,7 @@ public class MapEditorTool : EditorWindow
                     GameObject go = GameObject.Instantiate(currentSelect) as GameObject;
                     go.transform.position = k.transform.position;
                     MapCell c = go.AddComponent<MapCell>();
-                    c.x = cell.x;
-                    c.y = cell.y;
-                    c.h = cell.h;
-                    c.start = cell.start;
+                    c.SetData(cell);
                     c.res = AssetDatabase.GetAssetPath(currentSelect);
                     this.garbage.Remove(k);
                     this.garbage.Add(go);
