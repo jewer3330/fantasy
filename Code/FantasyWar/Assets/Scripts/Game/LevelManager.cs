@@ -5,6 +5,7 @@ using SuperBoBo;
 
 public class LevelManager : MonoBehaviour
 {
+    
     public MapData mapData;
     public int mapWidth;
     public int mapHeight;
@@ -17,12 +18,16 @@ public class LevelManager : MonoBehaviour
 
 
     public Dictionary<int, MapCell> caches = new Dictionary<int, MapCell>();
+    public List<MapCell> canMoveArea = new List<MapCell>();
+
+    public MapCellIndicator select;
 
     public enum State
     {
         Idle,
         Move,
         DrawPath,
+        SelectPath,
     }
 
     public State state = State.Idle;
@@ -96,26 +101,33 @@ public class LevelManager : MonoBehaviour
         playerCamera = Camera.main.GetComponent<PlayerCamera>();
         playerCamera.player = player;
     }
-    public List<MapCell> movesteps = new List<MapCell>();
 	// Update is called once per frame
 	void Update ()
     {
 	    switch(state)
         {
             case State.Move:
-                movesteps.Clear();
+                canMoveArea.Clear();
                 startPositions[0].G = 0;
-                FindCanMoveArea(startPositions[0], 3, ref movesteps);
+                FindCanMoveArea(startPositions[0], player.data.MV, ref canMoveArea);
                 state = State.DrawPath;
                 break;
             case State.DrawPath:
-                foreach(var k in movesteps)
+                foreach(var k in canMoveArea)
                 {
                     GameObject go = Instantiate<GameObject>(ResManager.Load("CanMove") as GameObject);
+                    var indicator = go.GetComponent<MapCellIndicator>();
+                    indicator.mapCell = k;
+                    indicator.levelManager = this;
                     go.transform.position = new Vector3(k.x, k.h, k.y) + Vector3.up * 1.1f;
                 }
-                state = State.Idle;
+                state = State.SelectPath;
                 break;
+            case State.SelectPath:
+                if(select != null)
+                    select.SetHighLight(true);
+                break;
+                
         }
 	}
 
@@ -148,7 +160,7 @@ public class LevelManager : MonoBehaviour
                     int G = select.G + k.cost;
                     if(G < k.G)
                         k.G = G;
-                    Debug.LogWarning("(" + k.x + " " + k.y + ") " + k.G);
+                    //Debug.LogWarning("(" + k.x + " " + k.y + ") " + k.G);
 
                 }
                 else
@@ -163,7 +175,7 @@ public class LevelManager : MonoBehaviour
                         if (G < k.G)
                             k.G = G;
                     }
-                    Debug.Log("(" + k.x + " " + k.y + ") " + k.G);
+                    //Debug.Log("(" + k.x + " " + k.y + ") " + k.G);
                     if (cells.Contains(k))
                         continue;
                     open.Add(k);
