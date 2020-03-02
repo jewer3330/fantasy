@@ -437,7 +437,7 @@ public class AudioObject : RegisteredComponent
 #if UNITY_5_OR_NEWER
             return primaryAudioSource.panStereo;
 #else
-           return primaryAudioSource.pan;
+           return primaryAudioSource.panStereo;
 #endif
         }
         set
@@ -445,7 +445,7 @@ public class AudioObject : RegisteredComponent
 #if UNITY_5_OR_NEWER
             primaryAudioSource.panStereo = value;
 #else
-            primaryAudioSource.pan = value;
+            primaryAudioSource.panStereo = value;
 #endif
         }
     }
@@ -1141,7 +1141,7 @@ public class AudioObject : RegisteredComponent
        _audioSource2.spatialBlend = _audioSource1.spatialBlend;
        _audioSource2.outputAudioMixerGroup = _audioSource1.outputAudioMixerGroup;
 #else
-       _audioSource2.panLevel = _audioSource1.panLevel;
+       _audioSource2.spatialBlend = _audioSource1.spatialBlend;
 #endif
        _audioSource2.velocityUpdateMode = _audioSource1.velocityUpdateMode;
        _audioSource2.ignoreListenerVolume = _audioSource1.ignoreListenerVolume;

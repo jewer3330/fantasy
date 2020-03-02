@@ -166,16 +166,16 @@ namespace SuperBoBo
                     return "Android";
                 case BuildTarget.iOS:
                     return "iOS";
-                case BuildTarget.WebGL:
-                    return "WebGL";
-                case BuildTarget.WebPlayer:
-                    return "WebPlayer";
+                // case BuildTarget.WebGL:
+                //     return "WebGL";
+                // case BuildTarget.WebPlayer:
+                    // return "WebPlayer";
                 case BuildTarget.StandaloneWindows:
                 case BuildTarget.StandaloneWindows64:
                     return "Windows";
                 case BuildTarget.StandaloneOSXIntel:
                 case BuildTarget.StandaloneOSXIntel64:
-                case BuildTarget.StandaloneOSXUniversal:
+                case BuildTarget.StandaloneOSX:
                     return "OSX";
                 // Add more build targets for your own.
                 // If you add more targets, don't forget to add the same platforms to GetPlatformForAssetBundles(RuntimePlatform) function.
@@ -192,11 +192,11 @@ namespace SuperBoBo
                     return "Android";
                 case RuntimePlatform.IPhonePlayer:
                     return "iOS";
-                case RuntimePlatform.WebGLPlayer:
-                    return "WebGL";
-                case RuntimePlatform.OSXWebPlayer:
-                case RuntimePlatform.WindowsWebPlayer:
-                    return "WebPlayer";
+                // case RuntimePlatform.WebGLPlayer:
+                //     return "WebGL";
+                // case RuntimePlatform.OSXWebPlayer:
+                // case RuntimePlatform.WindowsWebPlayer:
+                    // return "WebPlayer";
                 case RuntimePlatform.WindowsPlayer:
                     return "Windows";
                 case RuntimePlatform.OSXPlayer:

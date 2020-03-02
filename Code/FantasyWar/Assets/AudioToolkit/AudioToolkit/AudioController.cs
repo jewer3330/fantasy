@@ -3011,7 +3011,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>, ISeriali
         sndObj.primaryAudioSource.panStereo = subItem.Pan2D;
         //sndObj.primaryAudioSource.spatialBlend = audioItem.spatialBlend;
 #else
-        sndObj.primaryAudioSource.pan = subItem.Pan2D;
+        sndObj.primaryAudioSource.panStereo = subItem.Pan2D;
 #endif
 
         if ( subItem.RandomStartPosition )

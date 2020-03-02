@@ -42,7 +42,7 @@ public class SelectGameObject : MonoBehaviour
         
         Vector3 position = Vector3.zero;
 #if UNITY_EDITOR
-        if (Input.GetMouseButtonUp(0) && !UICamera.isOverUI)
+        if (Input.GetMouseButtonUp(0))
         {
             position = Input.mousePosition;
         }

@@ -368,7 +368,7 @@ namespace SuperBoBo
         [MenuItem("Package/静默打包")]
         public static void StartBuildQuiet()
         {
-            Caching.CleanCache();
+            Caching.ClearCache();
             lastestCSMD5.Clear();
             newCSMD5.Clear();
             ReadLastBuildLog();
@@ -381,7 +381,7 @@ namespace SuperBoBo
         //[MenuItem("Package/工程")]
         public static void StartBuildQuietProject()
         {
-            Caching.CleanCache();
+            Caching.ClearCache();
             lastestCSMD5.Clear();
             newCSMD5.Clear();
             ReadLastBuildLog();
@@ -395,7 +395,7 @@ namespace SuperBoBo
         public static void StartBuild()
         {
 
-            Caching.CleanCache();
+            Caching.ClearCache();
             lastestCSMD5.Clear();
             newCSMD5.Clear();
             if (EditorUtility.DisplayDialog("打包", "请确认Resources目录和StreamingAssets目录为SVN最新资源", "是", "否"))
@@ -483,7 +483,7 @@ namespace SuperBoBo
                 case BuildTarget.StandaloneLinuxUniversal:
                 case BuildTarget.StandaloneOSXIntel:
                 case BuildTarget.StandaloneOSXIntel64:
-                case BuildTarget.StandaloneOSXUniversal:
+                case BuildTarget.StandaloneOSX:
                 case BuildTarget.StandaloneWindows:
                 case BuildTarget.StandaloneWindows64:
                     StandaloneTool.BuildStandaloneFull();

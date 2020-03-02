@@ -37,8 +37,8 @@ public class PlayerCamera : MonoBehaviour {
         if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
 #endif
         {
-            if (UICamera.isOverUI)
-                return;
+            // if (UICamera.isOverUI)
+            //     return;
             delta_x = Input.GetAxis("Mouse X");
             delta_y = Input.GetAxis("Mouse Y");
         }

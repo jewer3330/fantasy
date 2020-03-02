@@ -75,7 +75,7 @@ namespace SuperBoBo
                 string apkPath = string.Format("{0}/{1}", ResSetting.AssetBundlesOutputPath, ResSetting.GetChannelRes());
                 string location = string.Format("{0}/{1}", apkPath, v);
                 UnityEditor.PlayerSettings.bundleVersion = FileUtilTool.ReadFile("IOS_Build/appleversion.dat").Replace("\r\n", "\n").Replace("\n", "");
-                UnityEditor.PlayerSettings.bundleIdentifier = "com.yxm.tankwar";
+                UnityEditor.PlayerSettings.applicationIdentifier = "com.yxm.tankwar";
                 UnityEditor.PlayerSettings.iOS.buildNumber = BuildTool.versionCode.ToString();
                 FileUtilTool.CreateFolderForFile(location);
                 if (BuildTool.isDev)
