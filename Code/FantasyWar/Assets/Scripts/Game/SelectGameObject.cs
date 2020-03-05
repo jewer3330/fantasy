@@ -47,7 +47,7 @@ public class SelectGameObject : MonoBehaviour
             position = Input.mousePosition;
         }
 #else
-        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended && !UICamera.isOverUI)
+        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended)
         {
             position = Input.touches[0].position;
         }

@@ -3,31 +3,77 @@ using System.Collections;
 using System.Collections.Generic;
 using SuperBoBo;
 
+public class EasyPool<T>
+{
+    private Queue<T> caches = new Queue<T>();
+    private System.Func<T> action;
+    public void Init(System.Func<T> gen)
+    {
+        action = gen;
+    }
+
+    public T Get()
+    {
+        T ret = default(T);
+        if (caches.Count > 0)
+        {
+            ret = caches.Dequeue();
+        }
+        else
+        {
+            ret = action();
+        }
+        return ret;
+    }
+
+    public void Return(T t)
+    {
+        if (t != null && !caches.Contains(t))
+        {
+            caches.Enqueue(t);
+        }
+    }
+
+}
+
 public class LevelManager : MonoBehaviour
 {
-    
+
+
+    private GameObject pool;
+    private GameObject mapRoot;
+
+    EasyPool<MapCellIndicator> indicators = new EasyPool<MapCellIndicator>();
+
     public MapData mapData;
     public int mapWidth;
     public int mapHeight;
 
     public List<MapCell> cells = new List<MapCell>();
     public List<MapCell> startPositions = new List<MapCell>();
+    public MapCell start;
     public Player player;
     public PlayerCamera playerCamera;
     public string assetPath = "Map/level1";
 
 
     public Dictionary<int, MapCell> caches = new Dictionary<int, MapCell>();
+    public Dictionary<int, Player> all = new Dictionary<int, Player>();
+    [System.NonSerialized]
     public List<MapCell> canMoveArea = new List<MapCell>();
+
+    public List<MapCell> way = new List<MapCell>();
 
     public MapCellIndicator select;
 
     public enum State
     {
         Idle,
-        Move,
+        Area,
         DrawPath,
-        SelectPath,
+        Select,
+        FindWay,
+        WalkTo,
     }
 
     public State state = State.Idle;
@@ -53,10 +99,20 @@ public class LevelManager : MonoBehaviour
     void Start ()
     {
         mapData = ResManager.Load(assetPath) as MapData;
+        indicators.Init(() =>
+        {
+            GameObject go = Instantiate<GameObject>(ResManager.Load("CanMove") as GameObject);
+            var indicator = go.GetComponent<MapCellIndicator>();
+            return indicator;
+        });
         //string data = ta.text;
         //mapData = LitJson.JsonMapper.ToObject<MapData>(data);
+        pool = new GameObject("pool");
+        mapRoot = new GameObject("mapRoot");
+        
         GenMap();
-        GenActor(1);
+        GenActor(1,startPositions[0]);
+        GenActor(2,startPositions[1]);
         PrepareCamera();
     }
 
@@ -76,23 +132,25 @@ public class LevelManager : MonoBehaviour
             {
                 startPositions.Add(cell);
             }
-
+            go.transform.parent = mapRoot.transform;
             cells.Add(cell);
         }
     }
 
-    void GenActor(int id)
+    void GenActor(int id,MapCell position)
     {
         var data = Table.Character.Get(id);
         GameObject go = Instantiate( ResManager.Load("Charactors/"+ data.Res)) as GameObject;
 
-        player = go.AddComponent<Player>();
+        player = go.GetComponent<Player>();
         player.data = data;
+        player.levelManager = this;
+        start = position;
+        player.transform.position = new Vector3(start.x, start.h, start.y) + Vector3.up;
 
-        player.transform.position = new Vector3(startPositions[0].x,  startPositions[0].h, startPositions[0].y) + Vector3.up;
+        state = State.Area;
 
-        state = State.Move;
-
+        all.Add(player.GetInstanceID(),player);
     }
 
 
@@ -101,31 +159,66 @@ public class LevelManager : MonoBehaviour
         playerCamera = Camera.main.GetComponent<PlayerCamera>();
         playerCamera.player = player;
     }
-	// Update is called once per frame
-	void Update ()
+
+    public void ResetState(MapCell at)
+    {
+        state = State.Area;
+        foreach (var k in canMoveArea)
+        {
+            k.indicator.gameObject.SetActive(false);
+            k.steps = int.MaxValue;
+            k.prev = null;
+            indicators.Return(k.indicator);
+        }
+        select.SetHighLight(false);
+        select = null;
+        start = at;
+    }
+    // Update is called once per frame
+    void Update ()
     {
 	    switch(state)
         {
-            case State.Move:
+            case State.Area:
                 canMoveArea.Clear();
-                startPositions[0].G = 0;
-                FindCanMoveArea(startPositions[0], player.data.MV, ref canMoveArea);
+                FindCanMoveArea(start, player.data.MV, ref canMoveArea);
                 state = State.DrawPath;
                 break;
             case State.DrawPath:
                 foreach(var k in canMoveArea)
                 {
-                    GameObject go = Instantiate<GameObject>(ResManager.Load("CanMove") as GameObject);
-                    var indicator = go.GetComponent<MapCellIndicator>();
+                    var indicator = indicators.Get();
+                    indicator.gameObject.SetActive(true);
                     indicator.mapCell = k;
                     indicator.levelManager = this;
-                    go.transform.position = new Vector3(k.x, k.h, k.y) + Vector3.up * 1.1f;
+                    indicator.transform.position = new Vector3(k.x, k.h, k.y) + Vector3.up * 1.01f;
+                    k.indicator = indicator;
+                    indicator.transform.parent = pool.transform;
                 }
-                state = State.SelectPath;
+                state = State.Select;
                 break;
-            case State.SelectPath:
-                if(select != null)
+            case State.Select:
+                if (select != null)
+                {
                     select.SetHighLight(true);
+                    state = State.FindWay;
+                }
+                break;
+            case State.FindWay:
+                way.Clear();
+                var current = select.mapCell;
+                while (current.prev)
+                {
+                    way.Add(current);
+                    current = current.prev;
+                }
+                way.Reverse();
+                state = State.WalkTo;
+                break;
+            case State.WalkTo:
+                player.Move(way);
+                state = State.Idle;
+                
                 break;
                 
         }
@@ -134,106 +227,43 @@ public class LevelManager : MonoBehaviour
 
 
 
-    void FindCanMoveArea(MapCell start,int step,ref List<MapCell> cells)
+    void FindCanMoveArea(MapCell start, int step, ref List<MapCell> way)
     {
         List<MapCell> open = new List<MapCell>();
         open.Add(start);
+        start.steps = 0;
         int count = 0;
         while(open.Count > 0)
         {
             count++;
             if (count > 10000) break;//break endless loop 
-            var select = open[0];
+            var select = open[0];//从记录里找一个坑
             open.RemoveAt(0);
 
-            if (select.G > step)
+            if (select.steps > step) //如果当前的所有的步伐超过了能行走的步伐，则这个节点不能在往前走了
                 continue;
-            if(!cells.Contains(select))
-                cells.Add(select);
+            if (!way.Contains(select))//看看这个坑有没有踩过，踩过就不在踩了
+            {
+                way.Add(select);
+            }//但是仍要去更新哦
             
             var closeCells = select.GetCloseCells();
-            foreach(var k in closeCells)
+            foreach(var k in closeCells)//记录前后左右的坑
             {
-                
-                if(open.Contains(k))
-                {
-                    int G = select.G + k.cost;
-                    if(G < k.G)
-                        k.G = G;
-                    //Debug.LogWarning("(" + k.x + " " + k.y + ") " + k.G);
 
-                }
-                else
+                if (!open.Contains(k)) //这个坑之前没记录过
                 {
-                    if (k.G == 0)
-                    {
-                        k.G = select.G + k.cost;
-                    }
-                    else
-                    {
-                        int G = select.G + k.cost;
-                        if (G < k.G)
-                            k.G = G;
-                    }
-                    //Debug.Log("(" + k.x + " " + k.y + ") " + k.G);
-                    if (cells.Contains(k))
-                        continue;
                     open.Add(k);
+                }
+                int G = select.steps + k.cost;
+                if (G < k.steps)
+                {
+                    k.steps = G;
+                    k.prev = select;
+                    //Debug.LogWarningFormat("way ({0},{1}) G=> {2}", k.x, k.y, k.steps);
                 }
             }
         }
     }
 
-    //猫会重复以下步骤来找到最短路径：
-    //将方块添加到open列表中，该列表有最小的和值。且将这个方块称为S吧。
-    //将S从open列表移除，然后添加S到closed列表中。
-    //对于与S相邻的每一块可通行的方块T：
-    //如果T在closed列表中：不管它。
-    //如果T不在open列表中：添加它然后计算出它的和值。
-    //如果T已经在open列表中：当我们使用当前生成的路径到达那里时，检查F 和值是否更小。如果是，更新它的和值和它的前继。
-    void AStar(MapCell start)
-    {
-        List<MapCell> closed = new List<MapCell>();
-        List<MapCell> open = new List<MapCell>();
-        open.Add(start);
-        do
-        {
-            MapCell s = open[0];
-            foreach (var k in open)
-            {
-                int f = s.G + s.H;
-                if (f > k.G + k.H)
-                {
-                    s = k;
-                }
-            }
-            open.Remove(s);
-            closed.Add(s);
-
-            if (closed.Contains(start))
-                break;
-
-            var closeCells = s.GetCloseCells();
-
-            foreach (var k in closeCells)
-            {
-                if (closed.Contains(k))
-                {
-                    continue;
-                }
-
-                if (!open.Contains(k))
-                {
-                    open.Add(k);
-                    k.G = 0;
-                    k.H = 0;
-                }
-                else
-                {
-
-
-                }
-            }
-        } while (open.Count != 0);
-    }
 }

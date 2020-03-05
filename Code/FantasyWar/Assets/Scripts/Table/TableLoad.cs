@@ -4,6 +4,7 @@
 
 using UnityEngine;
 using System.Collections;
+using SuperBoBo;
 
 namespace Table
 {
@@ -17,11 +18,17 @@ namespace Table
 
         }
 */
-
         public static void LoadFromResources()
         {
             Character.LoadFromResources();
             Map.LoadFromResources();
+
+        }
+
+        public static void LoadBinFromResources()
+        {
+            //Character.LoadBinFromResources();
+            //Map.LoadBinFromResources();
 
         }
 
@@ -36,6 +43,13 @@ namespace Table
         {
             Character.Clear();
             Map.Clear();
+
+        }
+		
+        public static void UnLoad()
+        {
+            //Character.UnLoad();
+            //Map.UnLoad();
 
         }
     }

@@ -29,10 +29,10 @@ public class MapCellIndicator : MonoBehaviour {
 
     void Instance_ClickCallback(GameObject obj)
     {
-        Debug.LogError("Click " + mapCell.x + " " + mapCell.y);
-        if(levelManager)
+        if(levelManager && levelManager.state == LevelManager.State.Select)
         {
-            if (levelManager.select != null)
+            Debug.LogFormat("Click ({0},{1}),G => {2} " , mapCell.x , mapCell.y,mapCell.steps);
+            if (levelManager.select != null )
                 levelManager.select.SetHighLight(false);
             levelManager.select = this;
         }

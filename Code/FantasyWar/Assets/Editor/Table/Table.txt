@@ -12,7 +12,7 @@ namespace Table
 {
     public partial class {Name}
     {
-	    static bool loaded = false;
+	    
 {Struct_Field}
 {Member_Count}
         public {Struct_Name}()
@@ -24,59 +24,91 @@ namespace Table
 {Struct_Construct_Assign}
         }
         public static Dictionary<{Key_Type}, {Struct_Name}> _datas = new Dictionary<{Key_Type}, {Struct_Name}>();
-		
-		    public static  Dictionary<{Key_Type}, {Struct_Name}>  datas
+		public static bool loaded = false;
+		public static  Dictionary<{Key_Type}, {Struct_Name}> datas
         {
             get
             {
-                if(!loaded)
-                {
-                    loaded = true;
-                    LoadFromResources();
-                }
+				if(!loaded)
+				{
+				LoadBinFromResources();
+				}
                 return _datas;
             }
 			
 			set
 			{
-			_datas = value;
+				_datas = value;
 			}
         }
-		
+{LoadFromBinanry}		
 {LoadFromString}
         public static void LoadFromResources()
         {           
-		TextAsset data = null;
-            #if UNITY_IOS
-                data = ResManager.Load("{Path_IOS}.csv") as TextAsset;
-            #else
-                data = ResManager.Load("{Path}.csv") as TextAsset;
-            #endif
+			Clear();
+			string path = "";
+			TextAsset data = null;
             
+				
+					path = "{Path}.csv"; 
+				
+ 				
+           
+                data = ResManager.Load(path) as TextAsset;
 				if(data == null)
 				{
-				    Debug.LogError("{Path}.csv 不存在！！！！");
-#if UNITY_EDITOR
-                    UnityEditor.EditorApplication.isPaused = true;
-#endif
-                    
-					
+				    Debug.LogError(path + " 不存在！！！！");
+					#if UNITY_EDITOR
+                    	UnityEditor.EditorApplication.isPaused = true;
+					#endif
 					return;
 				}
                 string text = data.text;
 				if(string.IsNullOrEmpty(text))
 				{
 					
-				    Debug.LogError("{Path}.csv 没有内容");
-#if UNITY_EDITOR
-                    UnityEditor.EditorApplication.isPaused = true;
-#endif
-                    
-				
+				    Debug.LogError(path + " 没有内容");
+					#if UNITY_EDITOR
+                    	UnityEditor.EditorApplication.isPaused = true;
+					#endif
 					return;
 				}
                 {Name}.LoadFromString(text);
         }
+
+        public static void LoadBinFromResources()
+        {           
+			Clear();
+			loaded = true;
+			string path = "";
+			TextAsset data = null;
+            
+				
+					path = "{Path_Bin}.bytes"; 
+				 
+            
+                data = ResManager.Load(path) as TextAsset;
+				if(data == null)
+				{
+				    Debug.LogError(path + " 不存在！！！！");
+					#if UNITY_EDITOR
+                    	UnityEditor.EditorApplication.isPaused = true;
+					#endif
+					return;
+				}
+                byte [] text = data.bytes;
+				if(text == null || text.Length == 0)
+				{
+					
+				    Debug.LogError(path + " 没有内容");
+					#if UNITY_EDITOR
+                    	UnityEditor.EditorApplication.isPaused = true;
+					#endif
+					return;
+				}
+                {Name}.LoadFromBinanry(text);
+        }
+
         public static void LoadFromStreaming()
         {
             try
@@ -93,12 +125,18 @@ namespace Table
         }
 
 
+		public static void UnLoad()
+		{
+			Clear();
+		}
         public static void Clear()
         {
-            datas.Clear();
+        	if(_datas != null && _datas.Count != 0)
+            	_datas.Clear();
         }
 
 {Contains}
+
 {Get}
 
 {Get_Field}

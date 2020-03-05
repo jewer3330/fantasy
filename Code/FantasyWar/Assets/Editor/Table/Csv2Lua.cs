@@ -6,7 +6,7 @@ using UnityEditor;
 
 public class Csv2Lua 
 {
-    [MenuItem("Tools/CSV2Lua")]
+    [MenuItem("Tools/Table/CSV2Lua")]
     public static void Run()
     {
         string[] files = Directory.GetFiles("Assets/Resources/Table","*.csv");

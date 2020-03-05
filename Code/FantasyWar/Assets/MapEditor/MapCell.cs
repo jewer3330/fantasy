@@ -1,11 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
-
-
-
-
 public class MapCell : MonoBehaviour
 {
     public int x;
@@ -16,8 +11,10 @@ public class MapCell : MonoBehaviour
     public bool start;
     public int cost;
 
-    public int G;
-    public int H;
+    public int steps = int.MaxValue;
+    public MapCell prev;
+
+    public MapCellIndicator indicator;
 
     public void SetData(MapCellData data)
     {
@@ -40,6 +37,26 @@ public class MapCell : MonoBehaviour
         start = data.start;
         cost = data.cost;
     }
+
+    public bool IsSame(MapCell cell)
+    {
+        return x == cell.x && y == cell.y && h == cell.h;
+    }
+
+    public static float Distance(MapCell left, MapCell right)
+    {
+        if (left && right)
+        {
+            return Vector3.Distance(left.transform.position, right.transform.position);
+        }
+        return 0;
+    }
+
+    public float Distance(MapCell cell)
+    {
+        return Distance(this, cell);
+    }
+
 
     public LevelManager levelManager
     {
@@ -94,7 +111,7 @@ public class MapCell : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    
 	}
 
     public List<MapCell> GetCloseCells()
@@ -119,4 +136,19 @@ public class MapCell : MonoBehaviour
 
         return cells;
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        if (prev)
+        {
+            var end = prev.transform.position + 2 * Vector3.up;
+            var start = transform.position + 2 * Vector3.up;
+            var fwd = (end - start).normalized;
+            Gizmos.DrawLine(start, end);
+            Gizmos.DrawLine(start, start + Quaternion.Euler(0,45,0)  * fwd * 0.2f);
+            Gizmos.DrawLine(start, start + Quaternion.Euler(0,-45,0) * fwd * 0.2f);
+        }
+    }
+
 }
