@@ -9,48 +9,45 @@ using System.Threading;
 namespace TableTool
 {
 
-    public class TableConfigEditorWindow : EditorWindow
+    public class Config
     {
+        public string sourcePath = "Resources/Table";
+        public string tableCSPath = "Scripts/Table";
+        public string pluginPath = Application.dataPath + "/Editor/Table";
+        static string key = "table config info";
 
-        public class Config
+        public static void Save(Config data)
         {
-            public string sourcePath = "Resources/Table";
-            public string tableCSPath = "Scripts/Table";
-            public string svnpath = Application.dataPath + @"/../../../Design/配置文件/client";
-            public string pluginPath = Application.dataPath + "/Editor/Table";
-            static string key = "table config info";
-
-            public static void Save(Config data)
-            {
-                string store = LitJson.JsonMapper.ToJson(data);
-                EditorPrefs.SetString(key, store);
-            }
-
-            public static Config Load()
-            {
-                string store = EditorPrefs.GetString(key);
-                Config config = LitJson.JsonMapper.ToObject<Config>(store);
-                if (config == null)
-                    return new Config();
-                return config;
-            }
+            string store = LitJson.JsonMapper.ToJson(data);
+            EditorPrefs.SetString(key, store);
         }
 
+        public static Config Load()
+        {
+            string store = EditorPrefs.GetString(key);
+            Config config = LitJson.JsonMapper.ToObject<Config>(store);
+            if (config == null)
+                return new Config();
+            return config;
+        }
+    }
 
+    public class TableConfigEditorWindow : EditorWindow
+    {
 
         [MenuItem("Tools/Table/表单设置")]
         public static void ShowWindow()
         {
             TableConfigEditorWindow w = (TableConfigEditorWindow)EditorWindow.GetWindow(typeof(TableConfigEditorWindow));
-            w.Show();
             w.data = Config.Load();
+            w.ShowPopup();
         }
         public Config data = new Config();
+
         void OnGUI()
         {
             data.sourcePath = EditorGUILayout.TextField("csv资源存放路径", data.sourcePath);
             data.tableCSPath = EditorGUILayout.TextField("cs代码存放路径", data.tableCSPath);
-            data.svnpath = EditorGUILayout.TextField("svn更新路径", data.svnpath);
             data.pluginPath = EditorGUILayout.TextField("插件路径", data.pluginPath);
 
             if (GUILayout.Button("Save"))
@@ -83,7 +80,7 @@ namespace TableTool
     public class TableToolEditor
     {
 
-        public static TableConfigEditorWindow.Config config = new TableConfigEditorWindow.Config();
+        public static Config config = new Config();
         public static string resPath;
         public const char SplitChar = ',';
 
@@ -92,27 +89,24 @@ namespace TableTool
         {
             try
             {
-                config = TableConfigEditorWindow.Config.Load();
+                config = Config.Load();
                 resPath = string.Format("{0}/{1}", Application.dataPath, config.sourcePath);
 
                 Debug.ClearDeveloperConsole();
 
-                float progress = 0f;
-                EditorUtility.DisplayProgressBar("Table", "Table", progress);
 
-                CallShellCommand();
 
-                EditorUtility.DisplayProgressBar("Table", "Table", 0.5f);
 
                 GenBinaryTable(resPath);
 
-                EditorUtility.DisplayProgressBar("Table", "Table", 0.8f);
 
                 AutoGenTableResAndScript();
 
                 EditorUtility.DisplayProgressBar("Table", "Table", 1f);
 
                 EditorUtility.ClearProgressBar();
+                AssetDatabase.Refresh();
+                AssetDatabase.SaveAssets();
 
             }
             catch (System.Exception e)
@@ -343,52 +337,19 @@ namespace TableTool
 
 
 
-        public static void CallShellCommand()
-        {
-            string srcdir = config.svnpath;
-
-            if (Directory.Exists(srcdir))
-            {
-
-                srcdir = srcdir.Replace("\\", "/");
-
-                System.Diagnostics.Process p = new System.Diagnostics.Process();
-
-                p.StartInfo.FileName = "svn";
-                p.StartInfo.WorkingDirectory = srcdir;
-
-                p.StartInfo.Arguments = "update";
-                p.StartInfo.CreateNoWindow = true;
-                Debug.Log("cmd-> " + p.StartInfo.FileName + p.StartInfo.Arguments);
-                p.Start();
-                p.WaitForExit();
-            }
-            else
-            {
-                Debug.LogError(string.Format("配置错误{0}", srcdir));
-            }
-        }
 
 
         public static void AutoGenTableResAndScript()
         {
-            if (!Directory.Exists(resPath))
-            {
-                Directory.CreateDirectory(resPath);
-            }
-            foreach (var k in Directory.GetFiles(config.svnpath))
-            {
-                File.Copy(k, k.Replace(config.svnpath, resPath), true);
-            }
-
-            AssetDatabase.Refresh();
-            AssetDatabase.SaveAssets();
+            
 
             TableToolEditor tool = new TableToolEditor();
 
             string[] arrFileName = Directory.GetFiles(resPath);
+            int fileCount = 0;
             foreach (string fileName in arrFileName)
             {
+                EditorUtility.DisplayProgressBar("Table", fileName, (float)fileCount++ / (float)arrFileName.Length);
 
                 tool.GenerateCSharpClass(fileName);
 
@@ -399,8 +360,7 @@ namespace TableTool
 
             tool.GenerateTableLoad(arrFileName);
 
-            AssetDatabase.Refresh();
-            AssetDatabase.SaveAssets();
+            
 
         }
 
@@ -599,7 +559,7 @@ namespace TableTool
                 string line = lines[i];
                 line = line.Replace(""\r"", """");
                 if(string.IsNullOrEmpty(line)) continue;
-                string[] values = line.Split('');
+                string[] values = line.Split(',');
                 if(values.Length != memberCount)
                 {
                     Debug.LogError(""{Struct_Name}严重错误，表头和表数据长度不一样"");
