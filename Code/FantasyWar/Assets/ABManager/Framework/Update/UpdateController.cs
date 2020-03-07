@@ -26,11 +26,11 @@ public class UpdateController : MonoBehaviour {
     public Text text;
 
 
-    ActionFuncTimeOut downResVersionListAction;
-    ActionFuncTimeOut compareVersionAction;
-    ActionFuncTimeOut downMD2Action;
-    ActionFuncTimeOut downMDAction;
-    ActionFuncTimeOut downTipAction;
+    ActionTimeOut downResVersionListAction;
+    ActionTimeOut compareVersionAction;
+    ActionTimeOut downMD2Action;
+    ActionTimeOut downMDAction;
+    ActionTimeOut downTipAction;
 
 
 
@@ -62,11 +62,11 @@ public class UpdateController : MonoBehaviour {
 
         updater = gameObject.AddComponent<GameUpdater>();
         updater.CheckIsFirstStart();
-        downResVersionListAction = new ActionFuncTimeOut(updater.DownloadResVersionList, 5f, IgnoreVersion);
-        compareVersionAction = new ActionFuncTimeOut(updater.CompareVersion, 5f, TimeOut);
-        downMD2Action = new ActionFuncTimeOut(updater.DownloadMD2File, 5f, TimeOut);
-        downMDAction = new ActionFuncTimeOut(updater.DownloadMD, 5, TimeOut);
-        downTipAction = new ActionFuncTimeOut(updater.DownLoadTips, 5, TimeOut);
+        downResVersionListAction = new ActionTimeOut(updater.DownloadResVersionList, 5f, IgnoreVersion);
+        compareVersionAction = new ActionTimeOut(updater.CompareVersion, 5f, TimeOut);
+        downMD2Action = new ActionTimeOut(updater.DownloadMD2File, 5f, TimeOut);
+        downMDAction = new ActionTimeOut(updater.DownloadMD, 5, TimeOut);
+        downTipAction = new ActionTimeOut(updater.DownLoadTips, 5, TimeOut);
 
         Timer.Instance.Run(downResVersionListAction);
 	}
@@ -95,7 +95,7 @@ public class UpdateController : MonoBehaviour {
         text.text = updater.tip;
 	}
 
-    void UpdaterHandle(string e, object[] args)
+    void UpdaterHandle(string e, object args)
     {
         switch (e)
         {

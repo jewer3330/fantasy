@@ -14,22 +14,21 @@ namespace SuperBoBo
 		public float delay = 0;
 		public float timeStart = 0;
 		public bool isFinished = false;
-		public Func func;
+		public System.Action func;
 
 		public float delta = 0;
 		public bool isPaused = false;
 		public float timePause = 0;
 
-		public ActionDelay (float time)
+		public ActionDelay ()
+		{
+			
+		}
+
+		public ActionDelay (float time, System.Action func)
 		{
 			this.delay = time;
 			this.timeStart = Timer.Instance.timeTick;
-			//.Log("ActionDelay timeStart " + timeStart);
-		}
-
-		public ActionDelay (float time, Func func)
-			: this (time)
-		{
 			if (func != null)
 				this.func = func;
 

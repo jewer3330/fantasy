@@ -70,7 +70,7 @@ namespace SuperBoBo
                 UnityEditor.PlayerSettings.bundleVersion = FileUtilTool.ReadFile("IOS_Build/appleversion.dat");
                 UnityEditor.PlayerSettings.applicationIdentifier = "com.yxm.tankwar";
                 FileUtilTool.CreateFolderForFile(location);
-                string result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.StandaloneWindows64, BuildOptions.None);
+                var result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.StandaloneWindows64, BuildOptions.None);
             }
             catch (System.Exception e)
             {

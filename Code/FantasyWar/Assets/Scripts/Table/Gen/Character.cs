@@ -12,7 +12,7 @@ namespace Table
 {
     public partial class Character
     {
-	    static bool loaded = false;
+	    
         public int ID;
         public string Name;
         public int Type;
@@ -32,7 +32,7 @@ namespace Table
         public string Magic;
         public string Res;
 
-static int memberCount = 18 ; 
+        static int memberCount = 18 ; 
         public Character()
         {
         }
@@ -60,23 +60,70 @@ static int memberCount = 18 ;
 
         }
         public static Dictionary<int, Character> _datas = new Dictionary<int, Character>();
-		
-		    public static  Dictionary<int, Character>  datas
+		public static bool loaded = false;
+		public static  Dictionary<int, Character> datas
         {
             get
             {
-                if(!loaded)
-                {
-                    loaded = true;
-                    LoadFromResources();
-                }
+				if(!loaded)
+				{
+				LoadBinFromResources();
+				}
                 return _datas;
             }
 			
 			set
 			{
-			_datas = value;
+				_datas = value;
 			}
+        }
+        
+        public static void LoadFromBinanry(byte[] bytes)
+        {
+            System.IO.MemoryStream ms = new System.IO.MemoryStream(bytes);
+            System.IO.BinaryReader br = new System.IO.BinaryReader(ms);
+            int length = br.ReadInt32();
+            
+            for (int i = 0; i < length; i++)
+            {
+                br.ReadByte();
+            }
+
+            int looplength = br.ReadInt32();
+            for (int i = 0; i < looplength; i++)
+            {
+                
+                Character dataCharacter = new Character();
+                dataCharacter.ID = br.ReadInt32();
+                dataCharacter.Name = br.ReadString();
+                dataCharacter.Type = br.ReadInt32();
+                dataCharacter.Level = br.ReadInt32();
+                dataCharacter.Icon = br.ReadString();
+                dataCharacter.AT = br.ReadInt32();
+                dataCharacter.DF = br.ReadInt32();
+                dataCharacter.MAT = br.ReadInt32();
+                dataCharacter.MDF = br.ReadInt32();
+                dataCharacter.MP = br.ReadInt32();
+                dataCharacter.MV = br.ReadInt32();
+                dataCharacter.Control = br.ReadInt32();
+                dataCharacter.ArmAT = br.ReadInt32();
+                dataCharacter.ArmDF = br.ReadInt32();
+                dataCharacter.ArmLimit = br.ReadInt32();
+                dataCharacter.ArmType = br.ReadString();
+                dataCharacter.Magic = br.ReadString();
+                dataCharacter.Res = br.ReadString();
+                if (_datas.ContainsKey(dataCharacter.ID))
+                {
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPaused = true;
+#endif
+                    throw new ArgumentException("数据有误,主键重复:" + dataCharacter.ID);
+                }
+                _datas.Add(dataCharacter.ID,dataCharacter);
+                
+            }
+            br.Close();
+            ms.Close();
         }
 		
         public static void LoadFromString(string data)
@@ -91,15 +138,14 @@ static int memberCount = 18 ;
                 string line = lines[i];
                 line = line.Replace("\r", "");
                 if(string.IsNullOrEmpty(line)) continue;
-                string[] values = line.Split('\t');
+                string[] values = line.Split(',');
                 if(values.Length != memberCount)
                 {
                     Debug.LogError("Character严重错误，表头和表数据长度不一样");
 #if UNITY_EDITOR
-                     UnityEditor.EditorApplication.isPaused = true;
+                    UnityEditor.EditorApplication.isPaused = true;
 #endif
                     throw new ArgumentException("Character严重错误，表头和表数据长度不一样");
-                    return;
                 }
                 Character dataCharacter = new Character();
                 if(!int.TryParse(values[0],out dataCharacter.ID))
@@ -239,9 +285,9 @@ static int memberCount = 18 ;
                 dataCharacter.Res = values[17];
                 if (datas.ContainsKey(dataCharacter.ID))
                 {
-               #if UNITY_EDITOR
-                     UnityEditor.EditorApplication.isPaused = true;
-                #endif
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPaused = true;
+#endif
                     throw new ArgumentException("数据有误,主键重复:" + dataCharacter.ID);
                 }
                 datas.Add(dataCharacter.ID,dataCharacter);
@@ -251,37 +297,70 @@ static int memberCount = 18 ;
 
         public static void LoadFromResources()
         {           
-		TextAsset data = null;
-            #if UNITY_IOS
-                data = ResManager.Load("Table_IOS/Character.csv") as TextAsset;
-            #else
-                data = ResManager.Load("Table/Character.csv") as TextAsset;
-            #endif
+			Clear();
+			string path = "";
+			TextAsset data = null;
             
+				
+					path = "Table/Character.csv"; 
+				
+ 				
+           
+                data = ResManager.Load(path) as TextAsset;
 				if(data == null)
 				{
-				    Debug.LogError("Table/Character.csv 不存在！！！！");
-#if UNITY_EDITOR
-                    UnityEditor.EditorApplication.isPaused = true;
-#endif
-                    
-					
+				    Debug.LogError(path + " 不存在！！！！");
+					#if UNITY_EDITOR
+                    	UnityEditor.EditorApplication.isPaused = true;
+					#endif
 					return;
 				}
                 string text = data.text;
 				if(string.IsNullOrEmpty(text))
 				{
 					
-				    Debug.LogError("Table/Character.csv 没有内容");
-#if UNITY_EDITOR
-                    UnityEditor.EditorApplication.isPaused = true;
-#endif
-                    
-				
+				    Debug.LogError(path + " 没有内容");
+					#if UNITY_EDITOR
+                    	UnityEditor.EditorApplication.isPaused = true;
+					#endif
 					return;
 				}
                 Character.LoadFromString(text);
         }
+
+        public static void LoadBinFromResources()
+        {           
+			Clear();
+			loaded = true;
+			string path = "";
+			TextAsset data = null;
+            
+				
+					path = "TableBin/Character.bytes"; 
+				 
+            
+                data = ResManager.Load(path) as TextAsset;
+				if(data == null)
+				{
+				    Debug.LogError(path + " 不存在！！！！");
+					#if UNITY_EDITOR
+                    	UnityEditor.EditorApplication.isPaused = true;
+					#endif
+					return;
+				}
+                byte [] text = data.bytes;
+				if(text == null || text.Length == 0)
+				{
+					
+				    Debug.LogError(path + " 没有内容");
+					#if UNITY_EDITOR
+                    	UnityEditor.EditorApplication.isPaused = true;
+					#endif
+					return;
+				}
+                Character.LoadFromBinanry(text);
+        }
+
         public static void LoadFromStreaming()
         {
             try
@@ -298,15 +377,21 @@ static int memberCount = 18 ;
         }
 
 
+		public static void UnLoad()
+		{
+			Clear();
+		}
         public static void Clear()
         {
-            datas.Clear();
+        	if(_datas != null && _datas.Count != 0)
+            	_datas.Clear();
         }
 
         public static bool Contains(int ID)
         {    
             return datas.ContainsKey(ID);
         }
+
 
         public static Character Get(int ID)
         {

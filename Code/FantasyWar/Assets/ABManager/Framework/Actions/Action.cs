@@ -8,9 +8,6 @@ namespace SuperBoBo
 /// </summary>
 public class Action
 {
-	public delegate void Func ();
-
-	public delegate void TimeFunc (float delta);
 
 	public virtual void Reset ()
 	{

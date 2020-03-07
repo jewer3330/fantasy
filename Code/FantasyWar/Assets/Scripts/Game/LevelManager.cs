@@ -114,6 +114,17 @@ public class LevelManager : MonoBehaviour
         GenActor(1,startPositions[0]);
         GenActor(2,startPositions[1]);
         PrepareCamera();
+        ShowTurnStart(Language.TAKETURNS_THEY_START);
+    }
+
+    void ShowTurnStart(string title)
+    {
+        ResManager.LoadAsync("UI/UITaketurns", (go) =>
+        {
+            var ins = Instantiate(go);
+            UIManager.Instance.AddWidget(ins as GameObject);
+            SuperBoBo.EventManager.Instance.FireEvent(UITaketurns.ChangeName, title);
+        });
     }
 
     void GenMap()

@@ -27,8 +27,8 @@ namespace Table
 
         public static void LoadBinFromResources()
         {
-            //Character.LoadBinFromResources();
-            //Map.LoadBinFromResources();
+            Character.LoadBinFromResources();
+            Map.LoadBinFromResources();
 
         }
 
@@ -48,8 +48,8 @@ namespace Table
 		
         public static void UnLoad()
         {
-            //Character.UnLoad();
-            //Map.UnLoad();
+            Character.UnLoad();
+            Map.UnLoad();
 
         }
     }

@@ -12,13 +12,13 @@ namespace Table
 {
     public partial class Map
     {
-	    static bool loaded = false;
+	    
         public int ID;
         public string Name;
         public int MoveCost;
         public int Advantage;
 
-static int memberCount = 4 ; 
+        static int memberCount = 4 ; 
         public Map()
         {
         }
@@ -32,23 +32,56 @@ static int memberCount = 4 ;
 
         }
         public static Dictionary<int, Map> _datas = new Dictionary<int, Map>();
-		
-		    public static  Dictionary<int, Map>  datas
+		public static bool loaded = false;
+		public static  Dictionary<int, Map> datas
         {
             get
             {
-                if(!loaded)
-                {
-                    loaded = true;
-                    LoadFromResources();
-                }
+				if(!loaded)
+				{
+				LoadBinFromResources();
+				}
                 return _datas;
             }
 			
 			set
 			{
-			_datas = value;
+				_datas = value;
 			}
+        }
+        
+        public static void LoadFromBinanry(byte[] bytes)
+        {
+            System.IO.MemoryStream ms = new System.IO.MemoryStream(bytes);
+            System.IO.BinaryReader br = new System.IO.BinaryReader(ms);
+            int length = br.ReadInt32();
+            
+            for (int i = 0; i < length; i++)
+            {
+                br.ReadByte();
+            }
+
+            int looplength = br.ReadInt32();
+            for (int i = 0; i < looplength; i++)
+            {
+                
+                Map dataMap = new Map();
+                dataMap.ID = br.ReadInt32();
+                dataMap.Name = br.ReadString();
+                dataMap.MoveCost = br.ReadInt32();
+                dataMap.Advantage = br.ReadInt32();
+                if (_datas.ContainsKey(dataMap.ID))
+                {
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPaused = true;
+#endif
+                    throw new ArgumentException("数据有误,主键重复:" + dataMap.ID);
+                }
+                _datas.Add(dataMap.ID,dataMap);
+                
+            }
+            br.Close();
+            ms.Close();
         }
 		
         public static void LoadFromString(string data)
@@ -63,15 +96,14 @@ static int memberCount = 4 ;
                 string line = lines[i];
                 line = line.Replace("\r", "");
                 if(string.IsNullOrEmpty(line)) continue;
-                string[] values = line.Split('\t');
+                string[] values = line.Split(',');
                 if(values.Length != memberCount)
                 {
                     Debug.LogError("Map严重错误，表头和表数据长度不一样");
 #if UNITY_EDITOR
-                     UnityEditor.EditorApplication.isPaused = true;
+                    UnityEditor.EditorApplication.isPaused = true;
 #endif
                     throw new ArgumentException("Map严重错误，表头和表数据长度不一样");
-                    return;
                 }
                 Map dataMap = new Map();
                 if(!int.TryParse(values[0],out dataMap.ID))
@@ -107,9 +139,9 @@ static int memberCount = 4 ;
                 }
                 if (datas.ContainsKey(dataMap.ID))
                 {
-               #if UNITY_EDITOR
-                     UnityEditor.EditorApplication.isPaused = true;
-                #endif
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPaused = true;
+#endif
                     throw new ArgumentException("数据有误,主键重复:" + dataMap.ID);
                 }
                 datas.Add(dataMap.ID,dataMap);
@@ -119,37 +151,70 @@ static int memberCount = 4 ;
 
         public static void LoadFromResources()
         {           
-		TextAsset data = null;
-            #if UNITY_IOS
-                data = ResManager.Load("Table_IOS/Map.csv") as TextAsset;
-            #else
-                data = ResManager.Load("Table/Map.csv") as TextAsset;
-            #endif
+			Clear();
+			string path = "";
+			TextAsset data = null;
             
+				
+					path = "Table/Map.csv"; 
+				
+ 				
+           
+                data = ResManager.Load(path) as TextAsset;
 				if(data == null)
 				{
-				    Debug.LogError("Table/Map.csv 不存在！！！！");
-#if UNITY_EDITOR
-                    UnityEditor.EditorApplication.isPaused = true;
-#endif
-                    
-					
+				    Debug.LogError(path + " 不存在！！！！");
+					#if UNITY_EDITOR
+                    	UnityEditor.EditorApplication.isPaused = true;
+					#endif
 					return;
 				}
                 string text = data.text;
 				if(string.IsNullOrEmpty(text))
 				{
 					
-				    Debug.LogError("Table/Map.csv 没有内容");
-#if UNITY_EDITOR
-                    UnityEditor.EditorApplication.isPaused = true;
-#endif
-                    
-				
+				    Debug.LogError(path + " 没有内容");
+					#if UNITY_EDITOR
+                    	UnityEditor.EditorApplication.isPaused = true;
+					#endif
 					return;
 				}
                 Map.LoadFromString(text);
         }
+
+        public static void LoadBinFromResources()
+        {           
+			Clear();
+			loaded = true;
+			string path = "";
+			TextAsset data = null;
+            
+				
+					path = "TableBin/Map.bytes"; 
+				 
+            
+                data = ResManager.Load(path) as TextAsset;
+				if(data == null)
+				{
+				    Debug.LogError(path + " 不存在！！！！");
+					#if UNITY_EDITOR
+                    	UnityEditor.EditorApplication.isPaused = true;
+					#endif
+					return;
+				}
+                byte [] text = data.bytes;
+				if(text == null || text.Length == 0)
+				{
+					
+				    Debug.LogError(path + " 没有内容");
+					#if UNITY_EDITOR
+                    	UnityEditor.EditorApplication.isPaused = true;
+					#endif
+					return;
+				}
+                Map.LoadFromBinanry(text);
+        }
+
         public static void LoadFromStreaming()
         {
             try
@@ -166,15 +231,21 @@ static int memberCount = 4 ;
         }
 
 
+		public static void UnLoad()
+		{
+			Clear();
+		}
         public static void Clear()
         {
-            datas.Clear();
+        	if(_datas != null && _datas.Count != 0)
+            	_datas.Clear();
         }
 
         public static bool Contains(int ID)
         {    
             return datas.ContainsKey(ID);
         }
+
 
         public static Map Get(int ID)
         {

@@ -80,12 +80,12 @@ namespace SuperBoBo
                 FileUtilTool.CreateFolderForFile(location);
                 if (BuildTool.isDev)
                 {
-                    string result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.iOS, BuildOptions.Il2CPP | BuildOptions.ConnectWithProfiler | BuildOptions.Development);
+                    var result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.iOS, BuildOptions.ConnectWithProfiler | BuildOptions.Development);
 
                 }
                 else
                 {
-                    string result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.iOS, BuildOptions.Il2CPP);
+                    var result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.iOS, BuildOptions.None);
                 }
             }
             catch (System.Exception e)

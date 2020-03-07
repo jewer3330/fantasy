@@ -7,27 +7,26 @@ namespace SuperBoBo
 	/// <summary>
 	/// 在Func必须是抛出事件的不阻塞方法，否则请不要使用这个类
 	/// </summary>
-	public class ActionFuncTimeOut : Action
+	public class ActionTimeOut : Action
 	{
-        /// <summary>
-        /// 该方法必须是非阻塞方法，且成功后应发出事件，跳出当前的Action
-        /// </summary>
-        public delegate void EventFunc();
+		/// <summary>
+		/// 该方法必须是非阻塞方法，且成功后应发出事件，跳出当前的Action
+		/// </summary>
+		public System.Action func;
 
 		public float timeout;
 
-        public TimeFunc timeoutFunc;
+        public System.Action<float> timeoutFunc;
         
         public float timeStart;
 
         public bool isTimeoutFuncCalled;
 
-        public EventFunc func;
 
         public bool isPaused;
 
         public bool isFinished;
-        public ActionFuncTimeOut(EventFunc func, float timeout, TimeFunc timeOutFunc = null)
+        public ActionTimeOut(System.Action func, float timeout, System.Action<float> timeOutFunc = null)
 		{
 			this.func = func;
             this.timeout = timeout;

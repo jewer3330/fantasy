@@ -6,13 +6,13 @@ namespace SuperBoBo
 {
 	public class ActionDelayFrame : Action
 	{
-		Func fun;
+		System.Action fun;
 		int delayFrameCount;
 		bool ispause = false;
 		int currentFrame = 0;
 		bool isFinished = false;
 
-		public ActionDelayFrame (int frameCount, Func f)
+		public ActionDelayFrame (int frameCount, System.Action f)
 		{
 			fun = f;
 			delayFrameCount = frameCount;

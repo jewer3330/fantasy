@@ -29,20 +29,20 @@ namespace SuperBoBo
 
                 if (BuildTool.isDev)
                 {
-                    string result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.ConnectWithProfiler | BuildOptions.Development);
+                    var result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.ConnectWithProfiler | BuildOptions.Development);
                 }
                 else
                 {
-                    string result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.None);
+                    var result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.None);
                 }
 
                 if (BuildTool.isDev)
                 {
-                    string result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.ConnectWithProfiler | BuildOptions.Development | BuildOptions.AcceptExternalModificationsToPlayer);
+                    var result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.ConnectWithProfiler | BuildOptions.Development | BuildOptions.AcceptExternalModificationsToPlayer);
                 }
                 {
                     UnityEditor.PlayerSettings.bundleVersion = v.ToString();
-                    string result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
+                    var result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
                 }
             }
             catch (System.Exception e)
@@ -84,22 +84,22 @@ namespace SuperBoBo
 
                     if (BuildTool.isDev)
                     {
-                        string result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.ConnectWithProfiler | BuildOptions.Development);
+                        var result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.ConnectWithProfiler | BuildOptions.Development);
                     }
                     else
                     {
-                        string result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.None);
+                        var result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.None);
                     }
                 }
                 else
                 {
                     if (BuildTool.isDev)
                     {
-                        string result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.ConnectWithProfiler | BuildOptions.Development | BuildOptions.AcceptExternalModificationsToPlayer);
+                        var result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.ConnectWithProfiler | BuildOptions.Development | BuildOptions.AcceptExternalModificationsToPlayer);
                     }
                     else
                     {
-                        string result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
+                        var result = BuildPipeline.BuildPlayer(levels, location, BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
                     }
                 }
             }
