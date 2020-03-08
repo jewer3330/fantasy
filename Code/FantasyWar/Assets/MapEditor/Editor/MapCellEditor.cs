@@ -6,7 +6,7 @@ using UnityEditor;
 [CustomEditor(typeof(MapCell))]
 public class MapCellEditor : Editor {
 
-    public GUIStyle style;
+    private GUIStyle style;
 
     void OnSceneGUI()
     {
@@ -22,14 +22,15 @@ public class MapCellEditor : Editor {
         }
 
         Handles.color = Color.red;
-
-        Handles.Label(cell.transform.position + Vector3.up * 2,
-            cell.steps.ToString(),style);
+        if (Application.isPlaying)
+            Handles.Label(cell.transform.position + Vector3.up * 2,cell.steps.ToString(), style);
         Handles.BeginGUI();
-
-        if (GUILayout.Button(cell.steps.ToString(), GUILayout.Width(100)))
-        {
-        }
+        GUILayout.BeginArea(new Rect(10, 10, 200, 400));
+        if(Application.isPlaying)
+            GUILayout.Label("cost " + cell.steps.ToString(), GUILayout.Width(100));
+        else
+            Draw(cell);
+        GUILayout.EndArea();
         Handles.EndGUI();
 
 
@@ -47,5 +48,22 @@ public class MapCellEditor : Editor {
         //        1);
 
         
+    }
+
+    public static void Draw(MapCell cell)
+    {
+        cell.data.start = EditorGUILayout.Toggle("startpoint", cell.data.start);
+        if (cell.data.start)
+        {
+            cell.data.ActorID = EditorGUILayout.IntField("actorID", cell.data.ActorID);
+            cell.data.playerType = (MapCellData.PlayerType)EditorGUILayout.EnumPopup(cell.data.playerType);
+        }
+        cell.data.id = EditorGUILayout.IntField("id", cell.data.id);
+        cell.data.cost = EditorGUILayout.IntField("cost", cell.data.cost);
+        EditorGUILayout.LabelField(string.Format("pos ({0},{1})" ,cell.data.x.ToString(),cell.data.y.ToString()));
+        //EditorGUILayout.LabelField(cell.y.ToString());
+        //EditorGUILayout.LabelField(cell.h.ToString());
+        EditorGUILayout.LabelField("res path : "+ cell.data.res);
+
     }
 }

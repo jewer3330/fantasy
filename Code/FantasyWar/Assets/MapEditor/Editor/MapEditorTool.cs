@@ -21,11 +21,12 @@ public class MapEditorTool : EditorWindow
 
     }
 
+    public GameObject flag;
+    public Material playerMat;
+    public Material enemyMat;
+
     public void Start()
     {
-        
-
-
     }
 
     private void OnSceneFunc(SceneView sceneView)
@@ -33,11 +34,24 @@ public class MapEditorTool : EditorWindow
         Repaint();
     }
 
- 
+
+    private GameObject CreateFlag()
+    {
+        if (!flag)
+        {
+            flag = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Editor/flag.prefab");
+            playerMat = Instantiate(flag.GetComponent<Renderer>().sharedMaterial);
+            enemyMat = Instantiate(flag.GetComponent<Renderer>().sharedMaterial);
+            playerMat.color = Color.green;
+            enemyMat.color = Color.red;
+        }
+        var temp = Instantiate(flag);
+        garbage.Add(temp);
+        return temp;
+    }
 
 
-
-
+    private string mapName = string.Empty;
     private int mapWidth = 10;
     private int mapHeight = 10;
     private List<GameObject> garbage = new List<GameObject>();
@@ -47,8 +61,13 @@ public class MapEditorTool : EditorWindow
 
     private void OnGUI()
     {
+
+        EditorGUILayout.LabelField("mapName", mapName);
         mapWidth = EditorGUILayout.IntField("mapWidth", mapWidth);
         mapHeight = EditorGUILayout.IntField("mapHeight", mapHeight);
+        flag = EditorGUILayout.ObjectField("flagObject", flag, typeof(GameObject), true) as GameObject;
+
+
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("create"))
         {
@@ -58,6 +77,11 @@ public class MapEditorTool : EditorWindow
         {
             Load();
         }
+        if (GUILayout.Button("unload"))
+        {
+            Clean();
+        }
+
         EditorGUILayout.EndHorizontal();
 
         draw = EditorGUILayout.ToggleLeft("draw ?", draw);
@@ -79,13 +103,8 @@ public class MapEditorTool : EditorWindow
                 MapCell cell = k.gameObject.GetComponent<MapCell>();
                 if (cell)
                 {
-                    cell.start = EditorGUILayout.Toggle("startpoint", cell.start);
-                    cell.id = EditorGUILayout.IntField("id", cell.id);
-                    cell.cost = EditorGUILayout.IntField("cost", cell.cost);
-                    EditorGUILayout.LabelField(cell.x.ToString());
-                    EditorGUILayout.LabelField(cell.y.ToString());
-                    EditorGUILayout.LabelField(cell.h.ToString());
-                    EditorGUILayout.LabelField(cell.res);
+                    
+                    MapCellEditor.Draw(cell);
                 }
             }
         }
@@ -93,19 +112,35 @@ public class MapEditorTool : EditorWindow
         EditorGUILayout.EndScrollView();
     }
 
-  
+
+
+    private void Clean()
+    {
+        mapName = null;
+        foreach (var k in garbage)
+        {
+            GameObject.DestroyImmediate(k);
+        }
+        flag = null;
+        DestroyImmediate(playerMat);
+        DestroyImmediate(enemyMat);
+        Resources.UnloadUnusedAssets();
+        AssetDatabase.Refresh();
+    }
 
     private void Load()
     {
-        
-        string path = EditorUtility.OpenFilePanel("打开", mapSavePath, "asset");
+        Clean();
 
+        string path = EditorUtility.OpenFilePanel("打开", mapSavePath, "asset");
         if (string.IsNullOrEmpty(path))
         {
             Debug.LogError("name is empty");
             return;
         }
         path = path.Substring(path.IndexOf("Assets/"));
+        mapName = path;
+
         //Debug.Log(path);
         MapData data = AssetDatabase.LoadAssetAtPath<MapData>(path);
 
@@ -115,10 +150,10 @@ public class MapEditorTool : EditorWindow
             return;
         }
 
-        foreach (var k in garbage)
-        {
-            GameObject.DestroyImmediate(k);
-        }
+        //foreach (var k in garbage)
+        //{
+        //    GameObject.DestroyImmediate(k);
+        //}
 
         mapWidth = data.mapWidth;
         mapHeight = data.mapHeight;
@@ -129,6 +164,23 @@ public class MapEditorTool : EditorWindow
             go.transform.position = new Vector3(data.cells[i].x, data.cells[i].h, data.cells[i].y);
             MapCell cell = go.AddComponent<MapCell>();
             cell.SetData(data.cells[i]);
+            if (cell.data.start)
+            {
+                if (cell.data.playerType == MapCellData.PlayerType.Player)
+                {
+       
+                    var temp = CreateFlag();
+                    temp.transform.position = new Vector3(cell.data.x, cell.data.h, cell.data.y) + Vector3.up;
+                    temp.GetComponent<Renderer>().sharedMaterial= playerMat;
+                }
+                else if (cell.data.playerType == MapCellData.PlayerType.Npc)
+                {
+                    var temp = CreateFlag();
+                    temp.transform.position = new Vector3(cell.data.x, cell.data.h, cell.data.y) + Vector3.up;
+                    temp.GetComponent<Renderer>().sharedMaterial = enemyMat;
+
+                }
+            }
             garbage.Add(go);
         }
 
@@ -156,11 +208,14 @@ public class MapEditorTool : EditorWindow
         }
         map.mapHeight = mapHeight;
         map.mapWidth = mapWidth;
+        var path = mapName.Substring(mapName.IndexOf("Assets/"));
+        mapName = path;
 
 
         AssetDatabase.CreateAsset(map, mapName);
         AssetDatabase.Refresh();
         AssetDatabase.SaveAssets();
+        
     }
 
     void CreateMap(int height = 0)
@@ -172,11 +227,12 @@ public class MapEditorTool : EditorWindow
                 GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 go.transform.position = new Vector3(i, height, j);
                 MapCell cell = go.AddComponent<MapCell>();
-                cell.x = i;
-                cell.y = j;
-                cell.h = height;
-                cell.start = false;
-                cell.cost = 1;
+                cell.data = new MapCellData();
+                cell.data.x = i;
+                cell.data.y = j;
+                cell.data.h = height;
+                cell.data.start = false;
+                cell.data.cost = 1;
                 garbage.Add(go);
             }
         }
@@ -184,13 +240,7 @@ public class MapEditorTool : EditorWindow
 
     private void OnDestroy()
     {
-        foreach (var k in garbage)
-        {
-            GameObject.DestroyImmediate(k);
-        }
-
-        Resources.UnloadUnusedAssets();
-        AssetDatabase.Refresh();
+        Clean();
     }
 
     void Update()
@@ -210,13 +260,13 @@ public class MapEditorTool : EditorWindow
             foreach (var k in gos)
             {
                 MapCell cell = k.GetComponent<MapCell>();
-                if (cell != null && cell.res != AssetDatabase.GetAssetPath(currentSelect))
+                if (cell != null && cell.data.res != AssetDatabase.GetAssetPath(currentSelect))
                 {
                     GameObject go = GameObject.Instantiate(currentSelect) as GameObject;
                     go.transform.position = k.transform.position;
                     MapCell c = go.AddComponent<MapCell>();
                     c.SetData(cell);
-                    c.res = AssetDatabase.GetAssetPath(currentSelect);
+                    c.data.res = AssetDatabase.GetAssetPath(currentSelect);
                     this.garbage.Remove(k);
                     this.garbage.Add(go);
                     GameObject.DestroyImmediate(k);

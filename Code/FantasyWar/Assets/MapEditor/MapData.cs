@@ -11,6 +11,16 @@ public class MapCellData
     public bool start;
     public int cost = 1;
 
+    public int ActorID = 0;
+
+    public enum PlayerType
+    {
+        Player,
+        Npc,
+    }
+
+    public PlayerType playerType;
+
     public MapCellData()
     {
 
@@ -18,13 +28,16 @@ public class MapCellData
 
     public MapCellData(MapCell mo)
     {
-        this.x = mo.x;
-        this.y = mo.y;
-        this.h = mo.h;
-        this.id = mo.id;
-        this.res = mo.res;
-        this.start = mo.start;
-        this.cost = mo.cost;
+        this.x = mo.data.x;
+        this.y = mo.data.y;
+        this.h = mo.data.h;
+        this.id = mo.data.id;
+        this.res = mo.data.res;
+        this.start = mo.data.start;
+        this.cost = mo.data.cost;
+        this.ActorID = mo.data.ActorID;
+        this.playerType = mo.data.playerType;
+
     }
 }
 

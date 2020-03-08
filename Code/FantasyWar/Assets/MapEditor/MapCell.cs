@@ -3,14 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 public class MapCell : MonoBehaviour
 {
-    public int x;
-    public int y;
-    public int h;
-    public int id;
-    public string res;
-    public bool start;
-    public int cost;
-
+    public MapCellData data = new MapCellData();
     public int steps = int.MaxValue;
     public MapCell prev;
 
@@ -18,29 +11,17 @@ public class MapCell : MonoBehaviour
 
     public void SetData(MapCellData data)
     {
-        x = data.x;
-        y = data.y;
-        h = data.h;
-        id = data.id;
-        res = data.res;
-        start = data.start;
-        cost = data.cost;
+        this.data = data;
     }
 
     public void SetData(MapCell data)
     {
-        x = data.x;
-        y = data.y;
-        h = data.h;
-        id = data.id;
-        res = data.res;
-        start = data.start;
-        cost = data.cost;
+        SetData(data.data);
     }
 
     public bool IsSame(MapCell cell)
     {
-        return x == cell.x && y == cell.y && h == cell.h;
+        return data.x == cell.data.x && data.y == cell.data.y && data.h == cell.data.h;
     }
 
     public static float Distance(MapCell left, MapCell right)
@@ -67,9 +48,9 @@ public class MapCell : MonoBehaviour
     {
         get
         {
-            if (levelManager == null || x == 0)
+            if (levelManager == null || data.x == 0)
                 return null;
-            return levelManager.GetData(x - 1, y);
+            return levelManager.GetData(data.x - 1, data.y);
         }
     }
 
@@ -77,9 +58,9 @@ public class MapCell : MonoBehaviour
     {
         get
         {
-            if (levelManager == null || x == levelManager.mapWidth - 1)
+            if (levelManager == null || data.x == levelManager.mapWidth - 1)
                 return null;
-            return levelManager.GetData(x + 1, y);
+            return levelManager.GetData(data.x + 1, data.y);
         }
     }
 
@@ -88,9 +69,9 @@ public class MapCell : MonoBehaviour
     {
         get
         {
-            if (levelManager == null || y == levelManager.mapHeight - 1)
+            if (levelManager == null || data.y == levelManager.mapHeight - 1)
                 return null;
-            return levelManager.GetData(x , y + 1);
+            return levelManager.GetData(data.x , data.y + 1);
         }
     }
 
@@ -98,9 +79,9 @@ public class MapCell : MonoBehaviour
     {
         get
         {
-            if (levelManager == null || y == 0)
+            if (levelManager == null || data.y == 0)
                 return null;
-            return levelManager.GetData(x, y - 1);
+            return levelManager.GetData(data.x, data.y - 1);
         }
     }
 

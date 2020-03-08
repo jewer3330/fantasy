@@ -86,7 +86,7 @@ public class LevelManager : MonoBehaviour
         {
             data = cells.Find((obj) =>
             {
-                if (obj.x == x && obj.y == y)
+                if (obj.data.x == x && obj.data.y == y)
                     return true;
                 return false;
             });
@@ -111,10 +111,18 @@ public class LevelManager : MonoBehaviour
         mapRoot = new GameObject("mapRoot");
         
         GenMap();
-        GenActor(1,startPositions[0]);
-        GenActor(2,startPositions[1]);
+
+        GenActors();
         PrepareCamera();
         ShowTurnStart(Language.TAKETURNS_THEY_START);
+    }
+
+    void GenActors()
+    {
+        foreach (var k in startPositions)
+        {
+            GenActor(k);
+        }
     }
 
     void ShowTurnStart(string title)
@@ -139,7 +147,7 @@ public class LevelManager : MonoBehaviour
             MapCell cell = go.AddComponent<MapCell>();
             cell.SetData(mapData.cells[i]);
             cell.levelManager = this;
-            if (cell.start)
+            if (cell.data.start)
             {
                 startPositions.Add(cell);
             }
@@ -148,19 +156,26 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    void GenActor(int id,MapCell position)
+    void GenActor(MapCell position)
     {
-        var data = Table.Character.Get(id);
+        if (position.data.ActorID == 0)
+        {
+            Debug.LogErrorFormat("({0},{1}) start position but ActorID 0", position.data.x, position.data.y);
+            return;
+        }
+        var data = Table.Character.Get(position.data.ActorID);
         GameObject go = Instantiate( ResManager.Load("Charactors/"+ data.Res)) as GameObject;
-
-        player = go.GetComponent<Player>();
+        if (position.data.playerType == MapCellData.PlayerType.Player)
+            player = go.AddComponent<Player>();
+        else
+            player = go.AddComponent<NpcPlayer>();
         player.data = data;
         player.levelManager = this;
         start = position;
-        player.transform.position = new Vector3(start.x, start.h, start.y) + Vector3.up;
+        player.transform.position = new Vector3(start.data.x, start.data.h, start.data.y) + Vector3.up;
 
         state = State.Area;
-
+        player.gameObject.AddComponent<AnimationManager>();
         all.Add(player.GetInstanceID(),player);
     }
 
@@ -202,7 +217,7 @@ public class LevelManager : MonoBehaviour
                     indicator.gameObject.SetActive(true);
                     indicator.mapCell = k;
                     indicator.levelManager = this;
-                    indicator.transform.position = new Vector3(k.x, k.h, k.y) + Vector3.up * 1.01f;
+                    indicator.transform.position = new Vector3(k.data.x, k.data.h, k.data.y) + Vector3.up * 1.01f;
                     k.indicator = indicator;
                     indicator.transform.parent = pool.transform;
                 }
@@ -266,7 +281,7 @@ public class LevelManager : MonoBehaviour
                 {
                     open.Add(k);
                 }
-                int G = select.steps + k.cost;
+                int G = select.steps + k.data.cost;
                 if (G < k.steps)
                 {
                     k.steps = G;

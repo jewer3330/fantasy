@@ -31,7 +31,7 @@ public class MapCellIndicator : MonoBehaviour {
     {
         if(levelManager && levelManager.state == LevelManager.State.Select)
         {
-            Debug.LogFormat("Click ({0},{1}),G => {2} " , mapCell.x , mapCell.y,mapCell.steps);
+            Debug.LogFormat("Click ({0},{1}),G => {2} " , mapCell.data.x , mapCell.data.y,mapCell.steps);
             if (levelManager.select != null )
                 levelManager.select.SetHighLight(false);
             levelManager.select = this;
