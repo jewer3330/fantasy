@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
 
 	public Canvas hudRoot;
 
-	public List<GameObject> widgets = new List<GameObject>();
+	public HashSet<GameObject> widgets = new HashSet<GameObject>();
 
 	public enum Type
 	{
@@ -33,6 +33,11 @@ public class UIManager : MonoBehaviour
 			widgets.Add(ui);
 		}
 	}
+
+  
+
+
+
 
     private void Awake()
     {

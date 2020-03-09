@@ -3,8 +3,23 @@ using System.Collections;
 
 public class PlayerCamera : MonoBehaviour {
 
-    public Player player;
-
+    public Player player
+    {
+        set
+        {
+            if (value != _old)
+            {
+                _old = value;
+                needMoveSmooth = true;
+            }
+        }
+        get
+        {
+            return _old;
+        }
+    }
+    private bool needMoveSmooth = false;
+    private Player _old;
     public float delta_x;
     public float delta_y;
 
@@ -17,17 +32,7 @@ public class PlayerCamera : MonoBehaviour {
     public float yMaxLimit;
     public float targetDistance;
 
-    private void Awake()
-    {
-        if (player != null)
-        {
-           
-        }
-    }
-    // Use this for initialization
-    void Start () {
-	    
-	}
+   
 	
 	// Update is called once per frame
 	void Update () {
@@ -39,8 +44,8 @@ public class PlayerCamera : MonoBehaviour {
         {
             // if (UICamera.isOverUI)
             //     return;
-            delta_x = Input.GetAxis("Mouse X");
-            delta_y = Input.GetAxis("Mouse Y");
+            delta_x = Input.GetAxis("Mouse X") * 10;
+            delta_y = Input.GetAxis("Mouse Y") * 10;
         }
         else
         {
@@ -65,9 +70,24 @@ public class PlayerCamera : MonoBehaviour {
             Quaternion rotation = Quaternion.Euler(y, x, 0); //绕x ,y轴 旋转相应的角度
             Vector3 position = rotation * (new Vector3(0, 0, -targetDistance)) + player.transform.position;
 
-            
-            transform.rotation = rotation;//调整摄像机位置
-            transform.position = position;
+            //if (needMoveSmooth)
+            //{
+                
+                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 3 * Time.deltaTime);//调整摄像机位置
+                transform.position = Vector3.Lerp(transform.position, position, 3 * Time.deltaTime);
+            //    if (Quaternion.Angle(transform.rotation, rotation) < 1)
+            //    {
+            //        if (Vector3.Distance(transform.position, position) < 0.1f)
+            //        {
+            //            needMoveSmooth = false;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    transform.rotation = rotation;
+            //    transform.position = position;
+            //}
 
             
         }

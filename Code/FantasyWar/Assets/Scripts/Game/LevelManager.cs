@@ -6,6 +6,7 @@ using SuperBoBo;
 public class EasyPool<T>
 {
     private Queue<T> caches = new Queue<T>();
+    private HashSet<T> _caches = new HashSet<T>();
     private System.Func<T> action;
     public void Init(System.Func<T> gen)
     {
@@ -18,6 +19,7 @@ public class EasyPool<T>
         if (caches.Count > 0)
         {
             ret = caches.Dequeue();
+            _caches.Remove(ret);
         }
         else
         {
@@ -28,9 +30,10 @@ public class EasyPool<T>
 
     public void Return(T t)
     {
-        if (t != null && !caches.Contains(t))
+        if (t != null && !_caches.Contains(t))
         {
             caches.Enqueue(t);
+            _caches.Add(t);
         }
     }
 
@@ -49,10 +52,13 @@ public class LevelManager : MonoBehaviour
     public int mapWidth;
     public int mapHeight;
 
-    public List<MapCell> cells = new List<MapCell>();
     public List<MapCell> startPositions = new List<MapCell>();
-    public MapCell start;
-    public Player player;
+    //public MapCell start;
+    public Player selectPlayer;
+
+    public Dictionary<int,Player> players = new Dictionary<int,Player>();
+    public Dictionary<int, Player> npcPlayers = new Dictionary<int, Player>();
+
     public PlayerCamera playerCamera;
     public string assetPath = "Map/level1";
 
@@ -80,20 +86,26 @@ public class LevelManager : MonoBehaviour
 
     public MapCell GetData(int x, int y)
     {
-        int key = x + y * (mapWidth);
+       
         MapCell data = null;
+        int key = x + y * (mapWidth);
         if (!caches.TryGetValue(key, out data))
         {
-            data = cells.Find((obj) =>
-            {
-                if (obj.data.x == x && obj.data.y == y)
-                    return true;
-                return false;
-            });
-            caches.Add(key, data);
+            
         }
         return data;
     }
+
+    public MapCell GetData(int ID)
+    {
+        MapCell data = null;
+        if (!caches.TryGetValue(ID, out data))
+        {
+
+        }
+        return data;
+    }
+
 
     // Use this for initialization
     void Start ()
@@ -113,8 +125,10 @@ public class LevelManager : MonoBehaviour
         GenMap();
 
         GenActors();
-        PrepareCamera();
-        ShowTurnStart(Language.TAKETURNS_THEY_START);
+
+        AutoSelectPlayer();
+        state = State.Area;
+
     }
 
     void GenActors()
@@ -125,14 +139,27 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+
+    private GameObject uitaketurns;
+
     void ShowTurnStart(string title)
     {
-        ResManager.LoadAsync("UI/UITaketurns", (go) =>
+        if (!uitaketurns)
         {
-            var ins = Instantiate(go);
-            UIManager.Instance.AddWidget(ins as GameObject);
+            ResManager.LoadAsync("UI/UITaketurns", (go) =>
+            {
+                var ins = Instantiate(go) as GameObject;
+                uitaketurns = ins;
+                UIManager.Instance.AddWidget(ins);
+                SuperBoBo.EventManager.Instance.FireEvent(UITaketurns.ChangeName, title);
+            });
+        }
+        else
+        {
+            uitaketurns.gameObject.SetActive(true);
             SuperBoBo.EventManager.Instance.FireEvent(UITaketurns.ChangeName, title);
-        });
+        }
+
     }
 
     void GenMap()
@@ -146,13 +173,14 @@ public class LevelManager : MonoBehaviour
             go.transform.position = new Vector3(mapData.cells[i].x, mapData.cells[i].h, mapData.cells[i].y);
             MapCell cell = go.AddComponent<MapCell>();
             cell.SetData(mapData.cells[i]);
-            cell.levelManager = this;
+            cell.LevelManager = this;
             if (cell.data.start)
             {
                 startPositions.Add(cell);
             }
             go.transform.parent = mapRoot.transform;
-            cells.Add(cell);
+            
+            caches.Add(cell.ID, cell);
         }
     }
 
@@ -165,28 +193,154 @@ public class LevelManager : MonoBehaviour
         }
         var data = Table.Character.Get(position.data.ActorID);
         GameObject go = Instantiate( ResManager.Load("Charactors/"+ data.Res)) as GameObject;
+        Player player;
         if (position.data.playerType == MapCellData.PlayerType.Player)
+        {
             player = go.AddComponent<Player>();
+            players.Add(player.GetInstanceID(), player);
+        }
         else
+        {
             player = go.AddComponent<NpcPlayer>();
+            npcPlayers.Add(player.GetInstanceID(), player);
+        }
+
         player.data = data;
+        player.target = position;
         player.levelManager = this;
-        start = position;
+        var start = position;
         player.transform.position = new Vector3(start.data.x, start.data.h, start.data.y) + Vector3.up;
 
-        state = State.Area;
         player.gameObject.AddComponent<AnimationManager>();
-        all.Add(player.GetInstanceID(),player);
+        all.Add(player.GetInstanceID(), player);
+    }
+
+    public enum StartType
+    {
+        Player,
+        Npc,
+    }
+
+    public StartType startType;
+
+    void AutoSelectPlayer()
+    {
+        StartType temp = startType;
+
+        if (IsAllSelected())
+        {
+            ClearSelectPlayers();
+            temp = startType;
+            selectedCount = 0;
+        }
+
+        
+        switch (temp)
+        {
+            case StartType.Player:
+                if (!IsPlayerAllSelected())
+                {
+                    if(selectedCount == 0)
+                        ShowTurnStart(Language.TAKETURNS_WE_START);
+                    AutoSelectPlayer(players);
+                }
+                else
+                {
+                    ShowTurnStart(Language.TAKETURNS_THEY_START);
+                    AutoSelectPlayer(npcPlayers);
+                }
+                break;
+            case StartType.Npc:
+
+                if (!IsNpcAllSelected())
+                {
+                    if (selectedCount == 0)
+                        ShowTurnStart(Language.TAKETURNS_THEY_START);
+                    AutoSelectPlayer(npcPlayers);
+                }
+                else
+                {
+                    ShowTurnStart(Language.TAKETURNS_WE_START);
+                    AutoSelectPlayer(players);
+                }
+                break;
+            default:
+                break;
+        }
+        
+    }
+
+    void ClearSelectPlayers()
+    {
+        foreach (var k in all)
+        {
+            k.Value.isSelected = false;
+        }
     }
 
 
-    void PrepareCamera()
+    bool IsAllSelected()
+    {
+        return selectedCount == all.Count;
+    }
+
+    bool IsPlayerAllSelected()
+    {
+        bool ret = true;
+        foreach (var k in players)
+        {
+            if (!k.Value.isSelected)
+            {
+                ret = false;
+                break;
+            }
+        }
+        return ret;
+    }
+
+    bool IsNpcAllSelected()
+    {
+        bool ret = true;
+        foreach (var k in npcPlayers)
+        {
+            if (!k.Value.isSelected)
+            {
+                ret = false;
+                break;
+            }
+        }
+        return ret;
+    }
+
+    private int selectedCount = 0;
+
+    void AutoSelectPlayer(Dictionary<int, Player> players)
+    {
+        foreach (var k in players)
+        {
+            if (k.Value.isSelected)
+            {
+                continue;
+            }
+            else
+            {
+                selectedCount++;
+                selectPlayer = k.Value;
+                selectPlayer.isSelected = true;
+                PrepareCamera(selectPlayer);
+                break;
+            }
+        }
+    }
+
+
+    void PrepareCamera(Player player)
     {
         playerCamera = Camera.main.GetComponent<PlayerCamera>();
         playerCamera.player = player;
     }
 
-    public void ResetState(MapCell at)
+    public void ResetState()
     {
         state = State.Area;
         foreach (var k in canMoveArea)
@@ -198,7 +352,8 @@ public class LevelManager : MonoBehaviour
         }
         select.SetHighLight(false);
         select = null;
-        start = at;
+        AutoSelectPlayer();
+
     }
     // Update is called once per frame
     void Update ()
@@ -207,7 +362,7 @@ public class LevelManager : MonoBehaviour
         {
             case State.Area:
                 canMoveArea.Clear();
-                FindCanMoveArea(start, player.data.MV, ref canMoveArea);
+                FindCanMoveArea(selectPlayer.target, selectPlayer.data.MV, ref canMoveArea);
                 state = State.DrawPath;
                 break;
             case State.DrawPath:
@@ -242,7 +397,7 @@ public class LevelManager : MonoBehaviour
                 state = State.WalkTo;
                 break;
             case State.WalkTo:
-                player.Move(way);
+                selectPlayer.Move(way);
                 state = State.Idle;
                 
                 break;
@@ -255,37 +410,45 @@ public class LevelManager : MonoBehaviour
 
     void FindCanMoveArea(MapCell start, int step, ref List<MapCell> way)
     {
-        List<MapCell> open = new List<MapCell>();
-        open.Add(start);
+        List<int> open = new List<int>();
+        HashSet<int> walked = new HashSet<int>();
+
+        open.Add(start.ID);
+        walked.Add(start.ID);
+
         start.steps = 0;
         int count = 0;
         while(open.Count > 0)
         {
             count++;
             if (count > 10000) break;//break endless loop 
-            var select = open[0];//从记录里找一个坑
+            var id = open[0];//从记录里找一个坑
             open.RemoveAt(0);
-
-            if (select.steps > step) //如果当前的所有的步伐超过了能行走的步伐，则这个节点不能在往前走了
-                continue;
-            if (!way.Contains(select))//看看这个坑有没有踩过，踩过就不在踩了
+            MapCell cell = GetData(id);
+            if (cell.steps > step) //如果当前的所有的步伐超过了能行走的步伐，则这个节点不能在往前走了
             {
-                way.Add(select);
+                cell.prev = null;
+                continue;
+            }
+            if (!way.Contains(cell))
+            {
+                way.Add(cell);
             }//但是仍要去更新哦
             
-            var closeCells = select.GetCloseCells();
+            var closeCells = cell.GetCloseCells();
             foreach(var k in closeCells)//记录前后左右的坑
             {
 
-                if (!open.Contains(k)) //这个坑之前没记录过
+                if (!walked.Contains(k.ID)) //这个坑之前走过
                 {
-                    open.Add(k);
+                    open.Add(k.ID);
+                    walked.Add(k.ID);
                 }
-                int G = select.steps + k.data.cost;
+                int G = cell.steps + k.data.cost;
                 if (G < k.steps)
                 {
                     k.steps = G;
-                    k.prev = select;
+                    k.prev = cell;
                     //Debug.LogWarningFormat("way ({0},{1}) G=> {2}", k.x, k.y, k.steps);
                 }
             }

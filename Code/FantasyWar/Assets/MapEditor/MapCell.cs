@@ -14,6 +14,16 @@ public class MapCell : MonoBehaviour
         this.data = data;
     }
 
+    public int ID
+    {
+        get
+        {
+            if (data == null || !LevelManager)
+                return 0;
+            return data.x + data.y * (LevelManager.mapWidth);
+        }
+    }
+
     public void SetData(MapCell data)
     {
         SetData(data.data);
@@ -39,80 +49,91 @@ public class MapCell : MonoBehaviour
     }
 
 
-    public LevelManager levelManager
+    public LevelManager LevelManager
     {
         get;set;
     }
 
-    public MapCell left
+    public MapCell Left
     {
         get
         {
-            if (levelManager == null || data.x == 0)
+            if (_left)
+                return _left;
+            if (LevelManager == null || data.x == 0)
                 return null;
-            return levelManager.GetData(data.x - 1, data.y);
+            _left = LevelManager.GetData(data.x - 1, data.y);
+            return _left;
         }
     }
 
-    public MapCell right
+    public MapCell Right
     {
         get
         {
-            if (levelManager == null || data.x == levelManager.mapWidth - 1)
+            if (_right)
+                return _right;
+            if (LevelManager == null || data.x == LevelManager.mapWidth - 1)
                 return null;
-            return levelManager.GetData(data.x + 1, data.y);
+            _right = LevelManager.GetData(data.x + 1, data.y);
+            return _right;
         }
     }
 
 
-    public MapCell top
+    public MapCell Top
     {
         get
         {
-            if (levelManager == null || data.y == levelManager.mapHeight - 1)
+            if (_top)
+                return _top;
+            if (LevelManager == null || data.y == LevelManager.mapHeight - 1)
                 return null;
-            return levelManager.GetData(data.x , data.y + 1);
+             _top =LevelManager.GetData(data.x , data.y + 1);
+            return _top;
         }
     }
 
-    public MapCell bottom
+    public MapCell Bottom
     {
         get
         {
-            if (levelManager == null || data.y == 0)
+            if (_bottom)
+                return _bottom;
+            if (LevelManager == null || data.y == 0)
                 return null;
-            return levelManager.GetData(data.x, data.y - 1);
+            _bottom = LevelManager.GetData(data.x, data.y - 1);
+            return  _bottom;
         }
     }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	    
-	}
+    private MapCell _bottom;
+    private MapCell _top;
+    private MapCell _left;
+    private MapCell _right;
+
+    private readonly List<MapCell> cells = new List<MapCell>();
 
     public List<MapCell> GetCloseCells()
     {
-        List<MapCell> cells = new List<MapCell>();
-        if(left != null)
+        cells.Clear();
         {
-            cells.Add(left);
-        }
-        if(right != null)
-        {
-            cells.Add(right);
-        }
-        if(top != null)
-        {
-            cells.Add(top);
-        }
-        if(bottom != null)
-        {
-            cells.Add(bottom);
+            if (Left != null)
+            {
+                cells.Add(Left);
+            }
+            if (Right != null)
+            {
+                cells.Add(Right);
+            }
+            if (Top != null)
+            {
+                cells.Add(Top);
+            }
+            if (Bottom != null)
+            {
+                cells.Add(Bottom);
+            }
         }
 
         return cells;

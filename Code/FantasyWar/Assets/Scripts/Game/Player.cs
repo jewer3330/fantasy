@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     private List<MapCell> path = new List<MapCell>();
 
     public bool isMoving = false;
+
+    public bool isSelected = false;
     // Use this for initialization
     protected virtual void Start()
     {
@@ -80,7 +82,7 @@ public class Player : MonoBehaviour
             {
                 currentSpeed = 0;
                 isMoving = false;
-                levelManager.ResetState(target);
+                levelManager.ResetState();
             }
         }
     }
