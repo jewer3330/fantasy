@@ -18,6 +18,8 @@ public class Csv2Lua
         }
     }
 
+    public const char splitor = ',';
+
     /// <summary>
     /// 第一行是变量名称
     /// 第二行是类型
@@ -27,15 +29,15 @@ public class Csv2Lua
     public static void Parse(string name,string content)
     {
         string[] lines = content.Replace("\r\n", "\n").Split('\n');
-        string[] members = lines[0].Split('\t');
-        string[] types = lines[1].Split('\t');
+        string[] members = lines[0].Split(splitor);
+        string[] types = lines[1].Split(splitor);
 
         List<string> all = new List<string>();
 
         for (int i = 2; i < lines.Length - 1;i++)
         {
             string lin = string.Empty;
-            string[] datas = lines[i].Split('\t');
+            string[] datas = lines[i].Split(splitor);
             string cen = string.Empty;
             for(int j = 0; j < datas.Length;j++)
             {

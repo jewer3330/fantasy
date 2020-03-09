@@ -13,8 +13,8 @@ namespace TableTool
     {
         public string sourcePath = "Resources/Table";
         public string tableCSPath = "Scripts/Table";
-        public string pluginPath = Application.dataPath + "/Editor/Table";
         static string key = "table config info";
+        public string pluginPath = "";
 
         public static void Save(Config data)
         {
@@ -24,10 +24,11 @@ namespace TableTool
 
         public static Config Load()
         {
-            string store = EditorPrefs.GetString(key);
+        string store = EditorPrefs.GetString(key);
             Config config = LitJson.JsonMapper.ToObject<Config>(store);
             if (config == null)
-                return new Config();
+                config = new Config();
+            config.pluginPath = Application.dataPath + "/Editor/Table";
             return config;
         }
     }
