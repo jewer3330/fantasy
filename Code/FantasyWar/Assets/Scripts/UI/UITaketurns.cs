@@ -15,13 +15,7 @@ public class UITaketurns : MonoBehaviour {
 		SuperBoBo.EventManager.Instance.Reg<string>(ChangeName, OnChangeTitle);
 
 	}
-	// Use this for initialization
-	void Start ()
-    {
-		Timer.Instance.Run(new ActionDelay(3, () => {
-			gameObject.SetActive(false);
-		}));
-	}
+
 
     private void OnDestroy()
     {
@@ -32,7 +26,10 @@ public class UITaketurns : MonoBehaviour {
 	void OnChangeTitle(string eventName,string title)
 	{
 		SetTitle(title);
-	}
+        Timer.Instance.Run(new ActionDelay(3, () => {
+            gameObject.SetActive(false);
+        }));
+    }
 
 	public void SetTitle(string title)
 	{
