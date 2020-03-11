@@ -138,7 +138,9 @@ public class Player : MonoBehaviour
     {
         if (target != cell)
         {
+            target.player = null;
             target = cell;
+            target.player = this;
         }
     }
 

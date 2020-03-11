@@ -345,7 +345,7 @@ public class LevelManager : MonoBehaviour
         foreach (var k in canMoveArea)
         {
             k.indicator.gameObject.SetActive(false);
-            k.steps = int.MaxValue;
+            k.steps = MapCell.MaxStep;
             k.prev = null;
             indicators.Return(k.indicator);
         }
@@ -408,8 +408,14 @@ public class LevelManager : MonoBehaviour
             case State.FindWay:
                 way.Clear();
                 var current = select.mapCell;
+                int count = 0;
                 while (current.prev)
                 {
+                    if (count++ > 10)
+                    {
+                        Debug.LogError("endless loop");
+                        break;
+                    }
                     way.Add(current);
                     current = current.prev;
                 }
@@ -441,11 +447,11 @@ public class LevelManager : MonoBehaviour
         while(open.Count > 0)
         {
             count++;
-            if (count > 10000) break;//break endless loop 
-            var id = open[0];//从记录里找一个坑
+            if (count > 10000) break;
+            var id = open[0];
             open.RemoveAt(0);
             MapCell cell = GetData(id);
-            if (cell.steps > step) //如果当前的所有的步伐超过了能行走的步伐，则这个节点不能在往前走了
+            if (cell.steps > step) 
             {
                 cell.prev = null;
                 continue;
@@ -453,23 +459,23 @@ public class LevelManager : MonoBehaviour
             if (!way.Contains(cell))
             {
                 way.Add(cell);
-            }//但是仍要去更新哦
+            }
             
             var closeCells = cell.GetCloseCells();
-            foreach(var k in closeCells)//记录前后左右的坑
+            foreach(var k in closeCells)
             {
 
-                if (!walked.Contains(k.ID)) //这个坑之前走过
+                if (!walked.Contains(k.ID)) 
                 {
                     open.Add(k.ID);
                     walked.Add(k.ID);
                 }
-                int G = cell.steps + k.data.cost;
+                int G = cell.steps + k.Cost;
                 if (G < k.steps)
                 {
                     k.steps = G;
                     k.prev = cell;
-                    //Debug.LogWarningFormat("way ({0},{1}) G=> {2}", k.x, k.y, k.steps);
+                    
                 }
             }
         }

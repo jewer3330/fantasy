@@ -3,16 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 public class MapCell : MonoBehaviour
 {
+    public const int MaxStep = 100;
     public MapCellData data = new MapCellData();
-    public int steps = int.MaxValue;
+    public int steps = MaxStep;
     public MapCell prev;
 
     public MapCellIndicator indicator;
+
+    public Player player;
 
     public void SetData(MapCellData data)
     {
         this.data = data;
     }
+
+    public int Cost
+    {
+        get
+        {
+            if (!player)
+                return data.cost;
+            if (player == LevelManager.selectPlayer)
+            {
+                return data.cost;
+            }
+            else
+            {
+                return MaxStep;
+            }
+        }
+    }
+
 
     public int ID
     {
