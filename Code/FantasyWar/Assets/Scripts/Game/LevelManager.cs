@@ -42,7 +42,6 @@ public class EasyPool<T>
 public class LevelManager : MonoBehaviour
 {
 
-
     private GameObject pool;
     private GameObject mapRoot;
 
@@ -355,6 +354,27 @@ public class LevelManager : MonoBehaviour
         AutoSelectPlayer();
 
     }
+
+    public MapCellIndicator FindIndicator(MapCell cell)
+    {
+        foreach (var k in canMoveArea)
+        {
+            if (k == cell)
+            {
+                return k.indicator;
+            }
+        }
+        return null;
+    }
+
+    public void HighLightIndicator(MapCellIndicator cellIndicator)
+    {
+        if (select != null)
+            select.SetHighLight(false);
+        select = cellIndicator;
+    }
+
+
     // Update is called once per frame
     void Update ()
     {

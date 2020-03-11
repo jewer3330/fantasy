@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
+    public enum Type
+    {
+        Player,
+        Npc,
+    }
+
+    public Type type = Type.Player;
 
     public Table.Character data;
 
@@ -22,10 +29,24 @@ public class Player : MonoBehaviour
     public bool isMoving = false;
 
     public bool isSelected = false;
+
+    public bool IsPlayer
+    {
+        get
+        {
+            return type == Type.Player;
+        }
+    }
+
+    protected virtual void Awake()
+    {
+        type = Type.Player;
+    }
+
     // Use this for initialization
     protected virtual void Start()
     {
-
+       
     }
 
     // Update is called once per frame
@@ -99,6 +120,8 @@ public class Player : MonoBehaviour
 
     }
 
+
+    
 
     public void Move(List<MapCell> way)
     {
