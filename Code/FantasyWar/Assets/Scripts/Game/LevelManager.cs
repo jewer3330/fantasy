@@ -454,6 +454,7 @@ public class LevelManager : MonoBehaviour
             if (cell.steps > step) 
             {
                 cell.prev = null;
+                cell.steps = MapCell.MaxStep;
                 continue;
             }
             if (!way.Contains(cell))
@@ -471,7 +472,7 @@ public class LevelManager : MonoBehaviour
                     walked.Add(k.ID);
                 }
                 int G = cell.steps + k.Cost;
-                if (G < k.steps)
+                if (G <= step && G < k.steps)
                 {
                     k.steps = G;
                     k.prev = cell;
@@ -479,6 +480,53 @@ public class LevelManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public MapCell FindNearByCell(List<MapCell> cells,Player player)
+    {
+        MapCell mapCell = null;
+        if (cells != null && player != null)
+        {
+            mapCell = cells[0];
+            int minlength = MapCell.MaxStep;
+            foreach (var k in cells)
+            {
+                int length = Mathf.Abs (k.data.x - player.target.data.x) +
+                    Mathf.Abs(k.data.y - player.target.data.y) ;
+
+                if (length < minlength)
+                {
+                    minlength = length;
+                    mapCell = k;
+                }
+            }
+        }
+
+        return mapCell;
+    }
+
+    public Player FindNearByPlayer(Player player,int maxBlock = 1)
+    {
+        Player ret = null;
+        int min = MapCell.MaxStep;
+        foreach (var k in all)
+        {
+            if (k.Value != player)
+            {
+                int length = Mathf.Abs( k.Value.target.data.x - player.target.data.x)
+                    + Mathf.Abs(k.Value.target.data.y - player.target.data.y);
+                if (length < min)
+                {
+                    ret = k.Value;
+                    min = length;
+                    if (min <= maxBlock)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        return ret;
     }
 
 }
