@@ -5,12 +5,11 @@ public class AnimationManager : MonoBehaviour
 {
 
     private Animator animator;
-    private Player player;
+    public Player player;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        player = GetComponent<Player>();
     }
 
     // Use this for initialization
@@ -33,6 +32,22 @@ public class AnimationManager : MonoBehaviour
         if (animator)
         {
             animator.Play(animation);
+        }
+    }
+
+    public void Attack()
+    {
+        if (animator)
+        {
+            animator.SetTrigger("Melee Right Attack 01");
+        }
+    }
+
+    public void Hurt()
+    {
+        if (animator)
+        {
+            animator.SetTrigger("Take Damage");
         }
     }
 

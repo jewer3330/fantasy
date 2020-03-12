@@ -209,8 +209,9 @@ public class LevelManager : MonoBehaviour
         player.levelManager = this;
         var start = position;
         player.transform.position = new Vector3(start.data.x, start.data.h, start.data.y) + Vector3.up;
-
-        player.gameObject.AddComponent<AnimationManager>();
+        
+        var manager = player.gameObject.GetComponent<AnimationManager>();
+        manager.player = player;
         all.Add(player.GetInstanceID(), player);
     }
 
@@ -349,7 +350,8 @@ public class LevelManager : MonoBehaviour
             k.prev = null;
             indicators.Return(k.indicator);
         }
-        select.SetHighLight(false);
+        if(select)
+            select.SetHighLight(false);
         select = null;
         AutoSelectPlayer();
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using SuperBoBo;
 
 public class Player : MonoBehaviour
 {
@@ -9,6 +10,19 @@ public class Player : MonoBehaviour
         Player,
         Npc,
     }
+
+    public enum Action
+    {
+        None,
+        Idle,
+        Moving,
+        TurnToPlayer,
+        Attack,
+        Attacked,
+    }
+
+    public Action action = Action.None;
+
 
     public Type type = Type.Player;
 
@@ -26,8 +40,6 @@ public class Player : MonoBehaviour
 
     private List<MapCell> path = new List<MapCell>();
 
-    public bool isMoving = false;
-
     public bool isSelected = false;
 
     public bool IsPlayer
@@ -38,53 +50,72 @@ public class Player : MonoBehaviour
         }
     }
 
+    private UIHead head;
+
+    public Player playerNearBy;
+
+    public AnimationManager manager;
+
+    public int Hp = 100;
+
+
     protected virtual void Awake()
     {
         type = Type.Player;
+        manager = GetComponent<AnimationManager>();
+        
     }
+
+    private void GenUI()
+    {
+        ResManager.LoadAsync("UI/UIHead", (obj) =>
+        {
+            var go = Instantiate(obj) as GameObject;
+            head = go.GetComponent<UIHead>();
+            head.SetTarget(this);
+            UIManager.Instance.AddWidget(go);
+        });
+    }
+
 
     // Use this for initialization
     protected virtual void Start()
     {
-       
+        GenUI();
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (isMoving)
+        switch (action)
         {
-            currentSpeed = speed;
-            if (path.Count > 0)
-            {
-                var current = path[0];
-
-                WalkTo(current);
-                targetPos = current.transform.position + Vector3.up;
-                var dir = targetPos - transform.position;
-              
-               
-                currentDis = Vector3.Distance(transform.position, targetPos);
-                //Debug.Log(currentDis);
-                if (currentDis < speed)
+            case Action.Attack:
+                if (playerNearBy)
                 {
-                    //Debug.Log("close to target position");
+                    Attack(playerNearBy);
+                }
+                action = Action.Attacked;
+                break;
+            case Action.Idle:
+                levelManager.ResetState();
+                action = Action.None;
+                break;
+            case Action.Moving:
+                currentSpeed = speed;
+                if (path.Count > 0)
+                {
+                    var current = path[0];
 
-                    bool isOk = false;
-                    if (dir.normalized == Vector3.zero)
-                    {
-                        //Debug.Log("zero dir");
-                        isOk = true;
-                    }
-                    if (Vector3.Dot(dir.normalized, targetDir.normalized) < 0)
-                    {
-                        //Debug.Log("inverse dir");
-                        isOk = true;
-                    }
-                    if (isOk)
+                    WalkTo(current);
+                    targetPos = current.transform.position + Vector3.up;
+                    var dir = targetPos - transform.position;
+
+                    currentDis = Vector3.Distance(transform.position, targetPos);
+                    if (currentDis < speed && (dir.normalized == Vector3.zero || Vector3.Dot(dir.normalized, targetDir.normalized) < 0 ))
                     {
                         path.RemoveAt(0);
-                        return;
+                        break;
+                        
                     }
                     else
                     {
@@ -93,29 +124,38 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
-
-                    targetDir = dir;
+                    currentSpeed = 0;
+                    action = Action.Idle;
+                    if (IsNpcOneBlock(out playerNearBy))
+                    {
+                        targetDir = (playerNearBy.transform.position - transform.position).normalized;
+                        action = Action.TurnToPlayer;
+                    }
                 }
-
-
-            }
-            else
-            {
-                currentSpeed = 0;
-                isMoving = false;
-                levelManager.ResetState();
-            }
+                break;
+            case Action.TurnToPlayer:
+                if (Vector3.Angle(transform.forward, targetDir) < 1)
+                {
+                    action = Action.Attack;
+                }
+                break;
+            case Action.Attacked:
+            default:
+                break;
         }
     }
 
     private void LateUpdate()
     {
-        if (isMoving)
+        switch(action)
         {
-
-            transform.position = targetDir.normalized * currentSpeed + transform.position;
-            //transform.forward = targetDir.normalized;
-            transform.rotation = Quaternion.Slerp(transform.rotation,  Quaternion.LookRotation(targetDir.normalized),Time.deltaTime * 10);
+            case Action.Moving:
+                transform.position = targetDir.normalized * currentSpeed + transform.position;
+                transform.rotation = Quaternion.Slerp(transform.rotation,  Quaternion.LookRotation(targetDir.normalized),Time.deltaTime * 10);
+                break;
+            case Action.TurnToPlayer:
+                transform.rotation = Quaternion.Slerp(transform.rotation,  Quaternion.LookRotation(targetDir.normalized),Time.deltaTime * 10);
+                break;
         }
 
     }
@@ -125,9 +165,9 @@ public class Player : MonoBehaviour
 
     public void Move(List<MapCell> way)
     {
-        if (!isMoving)
+        if (action == Action.None)
         {
-            isMoving = true;
+            action = Action.Moving;
             path.Clear();
             if (path != way)
                 path.AddRange(way);
@@ -142,6 +182,48 @@ public class Player : MonoBehaviour
             target = cell;
             target.player = this;
         }
+    }
+
+    public bool IsNpcOneBlock(out Player player)
+    {
+        player = null;
+        if (target)
+        {
+            var cells = target.GetCloseCells();
+            foreach (var k in cells)
+            {
+                if (k.player && k.player != this)
+                {
+                    player = k.player;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void Attack(Player player)
+    {
+       
+        if (player != this)
+        {
+            manager.Attack();
+            int dmg = data.AT - player.data.DF;
+            Timer.Instance.Run(
+                new ActionDelay(1 ,
+            ()=>{
+                    player.OnHurt(dmg);
+                    action = Action.Idle;
+                }
+            ));
+            
+        }
+    }
+
+    public void OnHurt(int dmg)
+    {
+        Hp -= dmg;
+        manager.Hurt();
     }
 
 

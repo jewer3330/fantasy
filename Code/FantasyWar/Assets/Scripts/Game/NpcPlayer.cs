@@ -14,6 +14,8 @@ public class NpcPlayer : Player
 
     protected override void Awake()
     {
+        base.Awake();
+        type = Type.Npc;
         owner = GetComponent<BehaviourTreeOwner>();
         if (!owner)
         {
@@ -39,13 +41,9 @@ public class NpcPlayer : Player
             blackboard.Deserialize(ta.text);
         });
 
-        type = Type.Npc;
-    }
-
-    protected override void Start()
-    {
         
     }
+
 
     protected override void Update()
     {

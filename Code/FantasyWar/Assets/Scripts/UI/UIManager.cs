@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 
 
 	public Camera UICamera;
+    public Camera mainCamera;
 
 	public Canvas hudRoot;
 
@@ -48,6 +49,7 @@ public class UIManager : MonoBehaviour
 			Debug.LogWarning("uimanager is aready exsit,please keep one");
         }
 		Instance = this;
+        mainCamera = Camera.main;
     }
     private void OnDestroy()
     {
@@ -63,4 +65,20 @@ public class UIManager : MonoBehaviour
 	void Update () {
 		Timer.Instance.Update();
 	}
+
+    public Vector3 WolrdToUICameraPostion(Vector3 world)
+    {
+        //Vector3 sceenPosition = mainCamera.WorldToScreenPoint(world);
+        //if (sceenPosition.z < 0) //
+        //    return Vector3.one * 1000;
+        //Vector3 uiWorldPosition = UICamera.ScreenToWorldPoint(sceenPosition);
+
+        //return hudRoot.transform.InverseTransformPoint(uiWorldPosition);
+
+        return hudRoot.transform.InverseTransformPoint(UICamera.ViewportToWorldPoint(mainCamera.WorldToViewportPoint(world)));
+
+        //return hudRoot.transform.worldToLocalMatrix * UICamera.cameraToWorldMatrix * mainCamera.worldToCameraMatrix * new Vector4(world.x, world.y, world.z, 1);
+
+    }
+
 }

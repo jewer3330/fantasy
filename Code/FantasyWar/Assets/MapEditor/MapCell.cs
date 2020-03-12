@@ -137,7 +137,7 @@ public class MapCell : MonoBehaviour
 
     public List<MapCell> GetCloseCells()
     {
-        cells.Clear();
+        if(cells.Count == 0)
         {
             if (Left != null)
             {
