@@ -51,5 +51,13 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
+
+    public void Dead()
+    {
+        if (animator)
+        {
+            animator.SetTrigger("Die");
+        }
+    }
     
 }

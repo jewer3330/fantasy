@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private UIHead head;
+    public UIHead head;
 
     public Player playerNearBy;
 
@@ -193,7 +193,7 @@ public class Player : MonoBehaviour
             var cells = target.GetCloseCells();
             foreach (var k in cells)
             {
-                if (k.player && k.player != this)
+                if (k.player && k.player != this && k.player.type != type)
                 {
                     player = k.player;
                     return true;
@@ -232,12 +232,22 @@ public class Player : MonoBehaviour
         Hp -= dmg;
         manager.Hurt();
         SuperBoBo.EventManager.Instance.FireEvent(UIHead.HURT, new HurtArgs() { target = this,dmg = dmg});
+        if (Hp <= 0)
+        {
+            OnDead();
+        }
     }
 
 
     public void OnStartAction()
     {
         action = Action.SelectMapCell;
+    }
+
+    public void OnDead()
+    {
+        levelManager.RemovePlayer(GetInstanceID());
+        manager.Dead();
     }
 
 }

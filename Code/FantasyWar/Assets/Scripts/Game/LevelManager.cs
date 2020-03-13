@@ -42,34 +42,40 @@ public class EasyPool<T>
 public class LevelManager : MonoBehaviour
 {
 
-    private GameObject pool;
+    #region player field
+    public Player selectPlayer;
+    public Dictionary<int,Player> players = new Dictionary<int,Player>();
+    public Dictionary<int, Player> npcPlayers = new Dictionary<int, Player>();
+    public Dictionary<int, Player> all = new Dictionary<int, Player>();
+    #endregion
+
+
+    public PlayerCamera playerCamera;
+
+    private GameObject uitaketurns;
+
+    #region map field
+    public string assetPath = "Map/level1";
+    public Dictionary<int, MapCell> caches = new Dictionary<int, MapCell>();
+    [HideInInspector]
+    public List<MapCell> canMoveArea = new List<MapCell>();
+    public List<MapCell> way = new List<MapCell>();
+
     private GameObject mapRoot;
-
-    EasyPool<MapCellIndicator> indicators = new EasyPool<MapCellIndicator>();
-
     public MapData mapData;
     public int mapWidth;
     public int mapHeight;
 
     public List<MapCell> startPositions = new List<MapCell>();
-    //public MapCell start;
-    public Player selectPlayer;
+    #endregion
 
-    public Dictionary<int,Player> players = new Dictionary<int,Player>();
-    public Dictionary<int, Player> npcPlayers = new Dictionary<int, Player>();
+    #region indicator
 
-    public PlayerCamera playerCamera;
-    public string assetPath = "Map/level1";
+    private GameObject pool;
+    EasyPool<MapCellIndicator> indicators = new EasyPool<MapCellIndicator>();
+    public MapCellIndicator selectIndicator;
 
-
-    public Dictionary<int, MapCell> caches = new Dictionary<int, MapCell>();
-    public Dictionary<int, Player> all = new Dictionary<int, Player>();
-    [System.NonSerialized]
-    public List<MapCell> canMoveArea = new List<MapCell>();
-
-    public List<MapCell> way = new List<MapCell>();
-
-    public MapCellIndicator select;
+    #endregion
 
     public enum State
     {
@@ -79,6 +85,26 @@ public class LevelManager : MonoBehaviour
         Select,
         FindWay,
         WalkTo,
+    }
+
+    public void RemovePlayer(int id)
+    {
+        Player player;
+        if (all.TryGetValue(id, out player))
+        {
+            if (player.type == Player.Type.Player)
+            {
+                players.Remove(id);
+            }
+            else
+            {
+                npcPlayers.Remove(id);
+            }
+            all.Remove(id);
+            player.head.gameObject.SetActive(false);
+            Destroy(player.head.gameObject, 1);
+            Destroy(player.gameObject,3);
+        }
     }
 
     public State state = State.Idle;
@@ -104,7 +130,6 @@ public class LevelManager : MonoBehaviour
         }
         return data;
     }
-
 
     // Use this for initialization
     void Start ()
@@ -137,9 +162,6 @@ public class LevelManager : MonoBehaviour
             GenActor(k);
         }
     }
-
-
-    private GameObject uitaketurns;
 
     void ShowTurnStart(string title)
     {
@@ -278,7 +300,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-
     bool IsAllSelected()
     {
         return selectedCount == all.Count;
@@ -334,7 +355,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-
     void PrepareCamera(Player player)
     {
         playerCamera = Camera.main.GetComponent<PlayerCamera>();
@@ -351,9 +371,9 @@ public class LevelManager : MonoBehaviour
             k.prev = null;
             indicators.Return(k.indicator);
         }
-        if(select)
-            select.SetHighLight(false);
-        select = null;
+        if(selectIndicator)
+            selectIndicator.SetHighLight(false);
+        selectIndicator = null;
         AutoSelectPlayer();
 
     }
@@ -372,12 +392,24 @@ public class LevelManager : MonoBehaviour
 
     public void HighLightIndicator(MapCellIndicator cellIndicator)
     {
-        if (select != null)
-            select.SetHighLight(false);
-        select = cellIndicator;
+        if (selectIndicator != null)
+            selectIndicator.SetHighLight(false);
+        selectIndicator = cellIndicator;
     }
 
-
+    void GenIndicators()
+    {
+        foreach (var k in canMoveArea)
+        {
+            var indicator = indicators.Get();
+            indicator.gameObject.SetActive(true);
+            indicator.mapCell = k;
+            indicator.levelManager = this;
+            indicator.transform.position = new Vector3(k.data.x, k.data.h, k.data.y) + Vector3.up * 1.01f;
+            k.indicator = indicator;
+            indicator.transform.parent = pool.transform;
+        }
+    }
     // Update is called once per frame
     void Update ()
     {
@@ -389,28 +421,19 @@ public class LevelManager : MonoBehaviour
                 state = State.DrawPath;
                 break;
             case State.DrawPath:
-                foreach(var k in canMoveArea)
-                {
-                    var indicator = indicators.Get();
-                    indicator.gameObject.SetActive(true);
-                    indicator.mapCell = k;
-                    indicator.levelManager = this;
-                    indicator.transform.position = new Vector3(k.data.x, k.data.h, k.data.y) + Vector3.up * 1.01f;
-                    k.indicator = indicator;
-                    indicator.transform.parent = pool.transform;
-                }
+                GenIndicators();
                 state = State.Select;
                 break;
             case State.Select:
-                if (select != null)
+                if (selectIndicator != null)
                 {
-                    select.SetHighLight(true);
+                    selectIndicator.SetHighLight(true);
                     state = State.FindWay;
                 }
                 break;
             case State.FindWay:
                 way.Clear();
-                var current = select.mapCell;
+                var current = selectIndicator.mapCell;
                 int count = 0;
                 while (current.prev)
                 {
@@ -428,16 +451,12 @@ public class LevelManager : MonoBehaviour
             case State.WalkTo:
                 selectPlayer.Move(way);
                 state = State.Idle;
-                
                 break;
                 
         }
 	}
 
-
-
-
-    void FindCanMoveArea(MapCell start, int step, ref List<MapCell> way)
+    public void FindCanMoveArea(MapCell start, int step, ref List<MapCell> way)
     {
         List<int> open = new List<int>();
         HashSet<int> walked = new HashSet<int>();
