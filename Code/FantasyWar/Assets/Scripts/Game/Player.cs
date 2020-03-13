@@ -220,10 +220,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    public struct HurtArgs
+    {
+        public Player target;
+        public int dmg;
+    }
+
     public void OnHurt(int dmg)
     {
         Hp -= dmg;
         manager.Hurt();
+        SuperBoBo.EventManager.Instance.FireEvent(UIHead.HURT, new HurtArgs() { target = this,dmg = dmg});
     }
 
 

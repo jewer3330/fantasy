@@ -15,6 +15,10 @@ public class UIManager : MonoBehaviour
 
 	public HashSet<GameObject> widgets = new HashSet<GameObject>();
 
+    public EasyPool<UITips> tips = new EasyPool<UITips>();
+
+    private GameObject tipRes;
+
 	public enum Type
 	{
         Background = 0,
@@ -35,8 +39,13 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
-  
 
+    public void ShowTips(Vector2 localposition, string tip)
+    {
+        var uitip = tips.Get();
+        if(uitip)
+            uitip.DoAction(localposition,tip);
+    }
 
 
 
@@ -50,6 +59,24 @@ public class UIManager : MonoBehaviour
         }
 		Instance = this;
         mainCamera = Camera.main;
+
+        
+        ResManager.LoadAsync("UI/UITips", (res) =>
+        {
+            tipRes = res as GameObject;
+        });
+
+        tips.Init(() =>
+        {
+            if (tipRes)
+            {
+                var go = Instantiate(tipRes);
+                var tip = go.GetComponent<UITips>();
+                AddWidget(go);
+                return tip;
+            }
+            return null;
+        });
     }
     private void OnDestroy()
     {
