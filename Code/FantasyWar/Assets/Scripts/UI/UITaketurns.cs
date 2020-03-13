@@ -9,6 +9,9 @@ public class UITaketurns : MonoBehaviour {
 	public const string ChangeName = "ChangeName";
 
 	public Text title;
+
+    private Action act;
+
     private void Awake()
     {
 		title = gameObject.GetComponent<Text>();
@@ -26,9 +29,13 @@ public class UITaketurns : MonoBehaviour {
 	void OnChangeTitle(string eventName,string title)
 	{
 		SetTitle(title);
-        Timer.Instance.Run(new ActionDelay(3, () => {
+        act = new ActionDelay(3, () =>
+        {
             gameObject.SetActive(false);
-        }));
+        });
+        act.Reset();
+
+        Timer.Instance.Run(act);
     }
 
 	public void SetTitle(string title)

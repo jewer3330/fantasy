@@ -327,6 +327,7 @@ public class LevelManager : MonoBehaviour
                 selectedCount++;
                 selectPlayer = k.Value;
                 selectPlayer.isSelected = true;
+                selectPlayer.action = Player.Action.SelectMapCell;
                 PrepareCamera(selectPlayer);
                 break;
             }

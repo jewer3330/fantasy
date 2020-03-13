@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public enum Action
     {
         None,
+        SelectMapCell,
         Idle,
         Moving,
         TurnToPlayer,
@@ -165,7 +166,7 @@ public class Player : MonoBehaviour
 
     public void Move(List<MapCell> way)
     {
-        if (action == Action.None)
+        if (action == Action.SelectMapCell)
         {
             action = Action.Moving;
             path.Clear();
@@ -233,5 +234,10 @@ public class Player : MonoBehaviour
         SuperBoBo.EventManager.Instance.FireEvent(UIHead.HURT, new HurtArgs() { target = this,dmg = dmg});
     }
 
+
+    public void OnStartAction()
+    {
+        action = Action.SelectMapCell;
+    }
 
 }

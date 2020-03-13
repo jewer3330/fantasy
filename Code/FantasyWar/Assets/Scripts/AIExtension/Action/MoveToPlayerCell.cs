@@ -23,7 +23,7 @@ namespace NodeCanvas.Tasks.Actions
                 }
                 else
                 {
-                    return "not find cell";
+                    return "Go to player";
                 }
 
             }

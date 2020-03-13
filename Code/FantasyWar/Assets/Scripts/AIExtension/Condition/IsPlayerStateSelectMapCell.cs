@@ -8,7 +8,7 @@ namespace NodeCanvas.Tasks.Conditions
 {
 
     [Category("✫ Blackboard")]
-    public class IsNpcTurn : ConditionTask<Player>
+    public class IsPlayerStateSelectMapCell : ConditionTask<Player>
     {
 
 
@@ -16,7 +16,7 @@ namespace NodeCanvas.Tasks.Conditions
         {
             get
             {
-                return "ai start";
+                return "player select map cell ";
             }
         }
 
@@ -24,13 +24,7 @@ namespace NodeCanvas.Tasks.Conditions
         {
             if (!agent)
                 return false;
-            if (!agent.levelManager)
-                return false;
-            if (!agent.IsPlayer)
-            {
-                return agent.levelManager.selectPlayer == agent;
-            }
-            return false;
+            return agent.action == Player.Action.SelectMapCell;
         }
 
 

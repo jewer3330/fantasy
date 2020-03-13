@@ -45,10 +45,6 @@ public class NpcPlayer : Player
     }
 
 
-    protected override void Update()
-    {
-        base.Update();
-        blackboard.SetValue("State", levelManager.state);
-    }
+  
 
 }
