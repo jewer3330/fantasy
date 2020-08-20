@@ -4,7 +4,6 @@
 
 using UnityEngine;
 using System.Collections;
-using SuperBoBo;
 
 namespace Table
 {
@@ -31,14 +30,14 @@ namespace Table
             Map.LoadBinFromResources();
 
         }
-
+/*
         public static void LoadFromStreaming()
         {
             Character.LoadFromStreaming();
             Map.LoadFromStreaming();
 
         }
-
+*/
         public static void Clear()
         {
             Character.Clear();

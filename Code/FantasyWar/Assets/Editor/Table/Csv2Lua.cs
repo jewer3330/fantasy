@@ -3,38 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using TableTool;
 
 public class Csv2Lua 
 {
-    [MenuItem("Tools/Table/CSV2Lua")]
-    public static void Run()
+    //[MenuItem("Tools/Table/CSV2Lua")]
+    public static void Run(Config config)
     {
-        string[] files = Directory.GetFiles("Assets/Resources/Table","*.csv");
+        splitor = config.SplitChar;
+        outPutPath = "Assets/" + config.tableluaPath;
+        string[] files = Directory.GetFiles("Assets/"+ config.sourcePath,"*.csv");
         foreach (var k in files)
         {
             string content = File.ReadAllText(k);
             string fileName = Path.GetFileNameWithoutExtension(k);
-            Parse(fileName, content);
+            Parse(fileName, content,config.offset);
         }
     }
 
-    public const char splitor = ',';
-
+    public static char splitor = ',';
+    public static string outPutPath = "Assets/Lua/Table";
     /// <summary>
     /// 第一行是变量名称
     /// 第二行是类型
     /// 第三行至n行是数据
     /// </summary>
     /// <param name="content"></param>
-    public static void Parse(string name,string content)
+    public static void Parse(string name,string content,int offset)
     {
-        string[] lines = content.Replace("\r\n", "\n").Split('\n');
-        string[] members = lines[0].Split(splitor);
-        string[] types = lines[1].Split(splitor);
+        string[] lines = content.Replace("\r\n", "\n").Split(new char[] { '\n' },System.StringSplitOptions.RemoveEmptyEntries);
+        string[] members = lines[offset + 0].Split(splitor);
+        string[] types = lines[offset + 1].Split(splitor);
 
         List<string> all = new List<string>();
 
-        for (int i = 2; i < lines.Length - 1;i++)
+        for (int i = 2 + offset; i < lines.Length;i++)
         {
             string lin = string.Empty;
             string[] datas = lines[i].Split(splitor);
@@ -60,21 +63,20 @@ public class Csv2Lua
 
         string ret = luaTableFormat.Replace("#Name", name).Replace("#Content", r);
 
-        string path = string.Format("{0}/{1}.lua","Assets/Lua/Table",name);
+        string path = string.Format("{0}/{1}.lua", outPutPath, name);
 
-        SuperBoBo.FileUtils.WriteFile(path,ret,false);
+        //SuperBoBo.FileUtils.WriteFile(path,ret,false);
+        System.IO.File.WriteAllText(path, ret);
     }
 
     public static string luaTableFormat = @"
-    #Name = {#Content
-    }";
+local #Name = {#Content
+    }
+return #Name";
 
     public static string luaFormat = @"
-        [#Key] = {#LineFormat
-        }";
+[#Key] = {#LineFormat},";
 
-    public static string luaLineFormatNum =@"            
-            #Member  = #Data";
-    public static string luaLineFormatString = @"            
-            #Member  = ""#Data""";
+    public static string luaLineFormatNum =@"#Member  = #Data,";
+    public static string luaLineFormatString = @"#Member  = '#Data',";
 }

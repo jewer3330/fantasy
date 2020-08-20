@@ -6,7 +6,6 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using SuperBoBo;
 
 namespace Table
 {
@@ -50,11 +49,11 @@ namespace Table
 			TextAsset data = null;
             
 				
-					path = "{Path}.csv"; 
+					path = "{Path}"; 
 				
  				
            
-                data = ResManager.Load(path) as TextAsset;
+                data = Resources.Load(path) as TextAsset;
 				if(data == null)
 				{
 				    Debug.LogError(path + " 不存在！！！！");
@@ -84,10 +83,10 @@ namespace Table
 			TextAsset data = null;
             
 				
-					path = "{Path_Bin}.bytes"; 
+					path = "{Path_Bin}"; 
 				 
             
-                data = ResManager.Load(path) as TextAsset;
+                data = Resources.Load(path) as TextAsset;
 				if(data == null)
 				{
 				    Debug.LogError(path + " 不存在！！！！");
@@ -108,12 +107,12 @@ namespace Table
 				}
                 {Name}.LoadFromBinanry(text);
         }
-
+/*
         public static void LoadFromStreaming()
         {
             try
             {
-                string url = "{Path}.csv";
+                string url = "{Path}";
                 string content = FileUtils.ReadStringFromStreaming(url);
 
                 LoadFromString(content);
@@ -123,7 +122,7 @@ namespace Table
                 Debug.LogError(string.Format("表{Name}数据有误! ({0})",ex.Message));
             }
         }
-
+*/
 
 		public static void UnLoad()
 		{

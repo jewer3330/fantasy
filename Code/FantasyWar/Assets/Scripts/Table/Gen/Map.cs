@@ -6,7 +6,6 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using SuperBoBo;
 
 namespace Table
 {
@@ -91,12 +90,12 @@ namespace Table
             string[] lines = content.Split('\n');
        
 
-            for (int i = 2; i < lines.Length; i++)
+            for (int i = 3; i < lines.Length; i++)
             {
                 string line = lines[i];
                 line = line.Replace("\r", "");
                 if(string.IsNullOrEmpty(line)) continue;
-                string[] values = line.Split(',');
+                string[] values = line.Split('\t');
                 if(values.Length != memberCount)
                 {
                     Debug.LogError("Map严重错误，表头和表数据长度不一样");
@@ -156,11 +155,11 @@ namespace Table
 			TextAsset data = null;
             
 				
-					path = "Table/Map.csv"; 
+					path = "Table/Map"; 
 				
  				
            
-                data = ResManager.Load(path) as TextAsset;
+                data = Resources.Load(path) as TextAsset;
 				if(data == null)
 				{
 				    Debug.LogError(path + " 不存在！！！！");
@@ -190,10 +189,10 @@ namespace Table
 			TextAsset data = null;
             
 				
-					path = "TableBin/Map.bytes"; 
+					path = "TableBin/Map"; 
 				 
             
-                data = ResManager.Load(path) as TextAsset;
+                data = Resources.Load(path) as TextAsset;
 				if(data == null)
 				{
 				    Debug.LogError(path + " 不存在！！！！");
@@ -214,12 +213,12 @@ namespace Table
 				}
                 Map.LoadFromBinanry(text);
         }
-
+/*
         public static void LoadFromStreaming()
         {
             try
             {
-                string url = "Table/Map.csv";
+                string url = "Table/Map";
                 string content = FileUtils.ReadStringFromStreaming(url);
 
                 LoadFromString(content);
@@ -229,7 +228,7 @@ namespace Table
                 Debug.LogError(string.Format("表Map数据有误! ({0})",ex.Message));
             }
         }
-
+*/
 
 		public static void UnLoad()
 		{

@@ -9,54 +9,53 @@ using System.Threading;
 namespace TableTool
 {
 
-    public class Config
-    {
-        public string sourcePath = "Resources/Table";
-        public string tableCSPath = "Scripts/Table";
-        static string key = "table config info";
-        public string pluginPath = "";
-
-        public static void Save(Config data)
-        {
-            string store = LitJson.JsonMapper.ToJson(data);
-            EditorPrefs.SetString(key, store);
-        }
-
-        public static Config Load()
-        {
-        string store = EditorPrefs.GetString(key);
-            Config config = LitJson.JsonMapper.ToObject<Config>(store);
-            if (config == null)
-                config = new Config();
-            config.pluginPath = Application.dataPath + "/Editor/Table";
-            return config;
-        }
-    }
-
     public class TableConfigEditorWindow : EditorWindow
     {
 
-        [MenuItem("Tools/Table/表单设置")]
+        [MenuItem("Tools/Table")]
         public static void ShowWindow()
         {
             TableConfigEditorWindow w = (TableConfigEditorWindow)EditorWindow.GetWindow(typeof(TableConfigEditorWindow));
-            w.data = Config.Load();
+            w.minSize = new Vector2(400, 300);
             w.ShowPopup();
-        }
-        public Config data = new Config();
 
+        }
+       
+        public Config data;
         void OnGUI()
         {
+            if (!data)
+                data = Config.Load();
+            data.showGroup = EditorGUILayout.BeginToggleGroup("配置", data.showGroup);
+            EditorGUILayout.LabelField("插件路径", data.pluginPath);
             data.sourcePath = EditorGUILayout.TextField("csv资源存放路径", data.sourcePath);
-            data.tableCSPath = EditorGUILayout.TextField("cs代码存放路径", data.tableCSPath);
-            data.pluginPath = EditorGUILayout.TextField("插件路径", data.pluginPath);
-
+            data.tableCSPath = EditorGUILayout.TextField("cs生成路径", data.tableCSPath);
+            data.tableluaPath = EditorGUILayout.TextField("lua生成路径", data.tableluaPath);
+            data.offset = EditorGUILayout.IntField("行偏移", data.offset);
+            var input = EditorGUILayout.TextField("分隔符", data.SplitChar.ToString());
+            EditorGUILayout.EndToggleGroup();
+            if (!char.TryParse(input, out data.SplitChar))
+            {
+                data.SplitChar = '\t';
+            }
             if (GUILayout.Button("Save"))
             {
                 Config.Save(data);
             }
+            if (GUILayout.Button("csv转c#"))
+            {
+                TableToolEditor.GlobalTable();
+            }
+            if (GUILayout.Button("csv转lua"))
+            {
+                Csv2Lua.Run(data);
+            }
         }
 
+        private void OnDisable()
+        {
+            Config.Save(data);
+        }
 
 
     }
@@ -81,11 +80,10 @@ namespace TableTool
     public class TableToolEditor
     {
 
-        public static Config config = new Config();
+        public static Config config;
         public static string resPath;
-        public const char SplitChar = ',';
 
-        [MenuItem("Tools/Table/表一键处理")]
+        //[MenuItem("Tools/Table/表一键处理")]
         public static void GlobalTable()
         {
             try
@@ -134,8 +132,8 @@ namespace TableTool
                     string content = File.ReadAllText(file);
                     content = content.Replace("\r\n", "\n");
                     string[] lines = content.Split(new char[] { '\n' },StringSplitOptions.RemoveEmptyEntries);
-                    string[] headers = lines[1].Split(SplitChar);
-                    string[] comments = lines[0].Split(SplitChar);
+                    string[] headers = lines[config.offset + 1].Split(config.SplitChar);
+                    string[] comments = lines[config.offset + 0].Split(config.SplitChar);
 
                     EditorUtility.DisplayProgressBar("Table", filename, (float)fileCount++ / (float)files.Length);
 
@@ -156,13 +154,13 @@ namespace TableTool
                         bw.Write(data);
                     }
 
-                    int looplength = lines.Length - 2;
+                    int looplength = lines.Length - 2 - config.offset;
                     bw.Write(looplength);
-                    for (int i = 2; i < lines.Length; i++)
+                    for (int i = config.offset + 2; i < lines.Length; i++)
                     {
                         if (string.IsNullOrEmpty(lines[i]))
                             continue;
-                        string[] datas = lines[i].Split(SplitChar);
+                        string[] datas = lines[i].Split(config.SplitChar);
                         for (int j = 0; j < datas.Length; j++)
                         {
                             string type = headers[j];
@@ -388,8 +386,8 @@ namespace TableTool
                 lines = newlines;
             }
 
-            string[] members = lines[0].Split(SplitChar);
-            string[] types = lines[1].Split(SplitChar);
+            string[] members = lines[config.offset + 0].Split(config.SplitChar);
+            string[] types = lines[config.offset + 1].Split(config.SplitChar);
             for (int i = 0; i < types.Length; i++)
             {
                 types[i] = types[i].Replace("\r", "");
@@ -555,12 +553,12 @@ namespace TableTool
             string[] lines = content.Split('\n');
        
 
-            for (int i = 2; i < lines.Length; i++)
+            for (int i = 3; i < lines.Length; i++)
             {
                 string line = lines[i];
                 line = line.Replace(""\r"", """");
                 if(string.IsNullOrEmpty(line)) continue;
-                string[] values = line.Split(',');
+                string[] values = line.Split('\t');
                 if(values.Length != memberCount)
                 {
                     Debug.LogError(""{Struct_Name}严重错误，表头和表数据长度不一样"");
@@ -688,6 +686,12 @@ namespace TableTool
                         break;
                     case "BOOL":
                         content = "                data{Struct_Name}.{Meberrs_I_Name} = br.ReadBoolean();";
+                        break;
+                    case "FLOAT":
+                        content = "                data{Struct_Name}.{Meberrs_I_Name} = br.ReadSingle();";
+                        break;
+                    case "DOUBLE":
+                        content = "                data{Struct_Name}.{Meberrs_I_Name} = br.ReadDouble();";
                         break;
                     default:
                         content = "";
@@ -848,6 +852,9 @@ namespace TableTool
             string value = type;
             switch (type)
             {
+                case "DOUBLE":
+                    value = "double";
+                    break;
                 case "UINT32":
                     value = "uint";
                     break;
@@ -882,6 +889,10 @@ namespace TableTool
                 case "BOOL":
                     value = "bool";
                     break;
+                case "FLOAT":
+                    value = "float";
+                    break;
+                
                 default:
                     value = null;
                     break;
@@ -897,6 +908,8 @@ namespace TableTool
                 case "STRING":
                     value = string.Format("                {0} = {1};", var, val);
                     break;
+                case "DOUBLE":
+                case "FLOAT":
                 case "UINT32":
                 case "INT":
                 case "UINT":
@@ -941,7 +954,7 @@ namespace TableTool
     + "\t\t\t throw new ArgumentException(\"数据有误:\" + " + one + " + \" to int\" + \" 第\"+ i + \"行,第" + num + "列\"); \r\n"
     + "\t\t } \r\n"
     + "\t\t " + two + " = " + three + " == 1;\r\n";
-                    Debug.Log(value);
+                    //Debug.Log(value);
                     break;
                 default:
                     value = string.Format("                {0} = {1};", var, val);

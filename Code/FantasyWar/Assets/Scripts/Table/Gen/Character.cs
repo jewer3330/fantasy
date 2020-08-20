@@ -6,7 +6,6 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using SuperBoBo;
 
 namespace Table
 {
@@ -133,12 +132,12 @@ namespace Table
             string[] lines = content.Split('\n');
        
 
-            for (int i = 2; i < lines.Length; i++)
+            for (int i = 3; i < lines.Length; i++)
             {
                 string line = lines[i];
                 line = line.Replace("\r", "");
                 if(string.IsNullOrEmpty(line)) continue;
-                string[] values = line.Split(',');
+                string[] values = line.Split('\t');
                 if(values.Length != memberCount)
                 {
                     Debug.LogError("Character严重错误，表头和表数据长度不一样");
@@ -302,11 +301,11 @@ namespace Table
 			TextAsset data = null;
             
 				
-					path = "Table/Character.csv"; 
+					path = "Table/Character"; 
 				
  				
            
-                data = ResManager.Load(path) as TextAsset;
+                data = Resources.Load(path) as TextAsset;
 				if(data == null)
 				{
 				    Debug.LogError(path + " 不存在！！！！");
@@ -336,10 +335,10 @@ namespace Table
 			TextAsset data = null;
             
 				
-					path = "TableBin/Character.bytes"; 
+					path = "TableBin/Character"; 
 				 
             
-                data = ResManager.Load(path) as TextAsset;
+                data = Resources.Load(path) as TextAsset;
 				if(data == null)
 				{
 				    Debug.LogError(path + " 不存在！！！！");
@@ -360,12 +359,12 @@ namespace Table
 				}
                 Character.LoadFromBinanry(text);
         }
-
+/*
         public static void LoadFromStreaming()
         {
             try
             {
-                string url = "Table/Character.csv";
+                string url = "Table/Character";
                 string content = FileUtils.ReadStringFromStreaming(url);
 
                 LoadFromString(content);
@@ -375,7 +374,7 @@ namespace Table
                 Debug.LogError(string.Format("表Character数据有误! ({0})",ex.Message));
             }
         }
-
+*/
 
 		public static void UnLoad()
 		{
